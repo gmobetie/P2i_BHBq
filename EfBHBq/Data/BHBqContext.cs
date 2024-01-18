@@ -5,11 +5,14 @@ public class BHBqContext : DbContext
 {
 
   public string DbPath { get; private set; }
+  public DbSet<Entreprise> Entreprises { get; set; } = null!; // BHB-Groupe Infos
+  public DbSet<TauxTVA> TauxTVAs { get; set; } = null!; // Tarification réglementaire
+  public DbSet<Lot> Lots { get; set; } = null!; // Lots réglementaire
 
   public BHBqContext()
   {
     // Path to SQLite database file
-    DbPath = "ApiUniversity.sqlite";
+    DbPath = "ApiBHBq.sqlite";
   }
 
   // The following configures EF to create a SQLite database file locally
