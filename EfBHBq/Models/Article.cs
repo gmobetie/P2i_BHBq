@@ -4,7 +4,9 @@ public class Article
     public int IdLot {get;set;}
     public string Nom { get; set; }
     public string Unite { get; set; }
-    public Prix GammePrix {get;set;}
+    public double PrixH {get;set;}
+    public double PrixM {get;set;}
+    public double PrixB {get;set;}
 
     // Constructeur par défaut
     public Article()
@@ -12,11 +14,13 @@ public class Article
     }
 
     // Constructeur paramétré
-    public Article(int idlot, string nom, string unite, Prix gammeprix)
+    public Article(int idlot, string nom, string unite, double prixH, double prixM, double prixB)
     {
         IdLot=idlot;
         Nom = nom;
         Unite = unite;
-        GammePrix = gammeprix;
+        PrixH = prixH;
+        PrixM = prixM;
+        PrixB = prixB;
     }
 }
