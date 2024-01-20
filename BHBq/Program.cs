@@ -6,6 +6,11 @@ builder.WebHost.UseElectron(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
+builder.Services.AddDbContext<BHBqContext>();
+
+SeedData.Init();
 
 var app = builder.Build();
 
