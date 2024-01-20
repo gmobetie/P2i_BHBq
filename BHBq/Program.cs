@@ -2,12 +2,17 @@ using ElectronNET.API;
 using ElectronNET.API.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseElectron(args);
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<BHBqContext>();
+builder.Services.AddRazorPages();
+
+builder.WebHost.UseElectron(args);
 
 var app = builder.Build();
+SeedData.Init();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -26,11 +31,10 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
 await app.StartAsync();
 
-// Open the Electron-Window here
 await Electron.WindowManager.CreateWindowAsync();
 
 app.WaitForShutdown();
