@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using CsvHelper.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 public static class SeedData
 {
     // Initialisate the app database from csv files
     public static void Init()
     {
-        using var context = new BHBqContext();
+        var options = new DbContextOptionsBuilder<BHBqContext>()
+        .UseSqlite($"Data Source=BHBq.db")
+        .Options;
+
+        using var context = new BHBqContext(options);
         // Look for existing content
         if (context.Entreprises.Any()) 
         {
