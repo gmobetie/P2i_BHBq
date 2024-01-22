@@ -7,10 +7,12 @@ namespace BHBq.Controllers;
 public class DashboardController : Controller
 {
     private readonly ILogger<DashboardController> _logger;
+    private readonly BHBqContext _context;
 
-    public DashboardController(ILogger<DashboardController> logger)
+    public DashboardController(ILogger<DashboardController> logger, BHBqContext context)
     {
         _logger = logger;
+        _context= context;
     }
 
     public IActionResult Index()

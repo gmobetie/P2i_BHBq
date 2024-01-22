@@ -7,7 +7,6 @@ namespace BHBq.Controllers;
 public class EntrepriseController : Controller
 {
     private readonly ILogger<EntrepriseController> _logger;
-
     private readonly BHBqContext _context;
 
     public EntrepriseController(ILogger<EntrepriseController> logger, BHBqContext context)
