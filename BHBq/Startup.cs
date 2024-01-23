@@ -41,7 +41,6 @@ public class Startup
             );
         });
         SeedData.Init();
-
         // Start the application
         Task.Run(async () =>
         {

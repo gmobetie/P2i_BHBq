@@ -8,6 +8,7 @@ namespace BHBq.Controllers;
 public class EntrepriseController : Controller
 {
     private readonly BHBqContext _context;
+    public List<Entreprise> entreprises {get;set;}
 
     public EntrepriseController()
     {  
@@ -16,33 +17,41 @@ public class EntrepriseController : Controller
         .Options;
 
         _context= new BHBqContext(options);
+        entreprises = _context.Entreprises.ToList();
     }
 
     //Get toutes les entreprises
     public IActionResult Entreprises()
     {
-        List<Entreprise> entreprises = _context.Entreprises.ToList();
+        Entreprise entreprise = new Entreprise();
         return View(entreprises);
     }
 
-            // PUT: Mettre à jour une entreprise
-        [HttpPut]
-        [ValidateAntiForgeryToken]
-        public IActionResult ModifierEntreprise(int id, Entreprise entreprise)
-        {
-            if (id != entreprise.Id)
-            {
-                return BadRequest();
-            }
-            if (ModelState.IsValid)
-            {
-                _context.Entry(entreprise).State = EntityState.Modified;
-                _context.SaveChanges();
-                return RedirectToAction("Entreprises");
-            }
+[HttpPut]
+[ValidateAntiForgeryToken]
+public IActionResult ModifierEntreprise(int id, [FromBody] Entreprise entreprise)
+{
 
-            return View(entreprise);
+        // Récupérer l'entreprise existante depuis la base de données
+        var entrepriseExistante = _context.Entreprises.Find(id);
+
+        if (entrepriseExistante == null)
+        {
+            return NotFound(); // Entreprise non trouvée
         }
+    if (ModelState.IsValid)
+    {
+        // Mettre à jour les propriétés de l'entreprise existante avec celles de la nouvelle entreprise
+        _context.Entry(entrepriseExistante).CurrentValues.SetValues(entreprise);
+
+        _context.SaveChanges();
+        return RedirectToAction("Entreprises");
+    }
+    else
+    {
+        return BadRequest("Les informations de mise à jour sont mauvaises !");
+    }
+}
 
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -34,40 +34,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form class="row g-3">
+                <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="ModifierEntreprise"
+                  asp-route-Id="@item.Id">
                   <div class="col-md-12">
-                    <input type="text" class="form-control" placeholder="Nom de l'entreprise">
+                    <input asp-for="@item.NomEntreprise" type="text" class="form-control"
+                      placeholder="Nom de l'entreprise" name="nomEntreprise" required>
                   </div>
                   <div class="col-md-6">
-                    <input type="email" class="form-control" placeholder="Siret">
+                    <input asp-for="@item.Siret" type="text" class="form-control" placeholder="Siret" name="siret"
+                      required>
                   </div>
                   <div class="col-md-6">
-                    <input type="password" class="form-control" placeholder="Password">
+                    <input asp-for="@item.Siege" type="text" class="form-control" placeholder="Siege" name="siege"
+                      required>
                   </div>
                   <div class="col-12">
-                    <input type="text" class="form-control" placeholder="Address">
+                    <input asp-for="@item.Activite" type="text" class="form-control" placeholder="Activite"
+                      name="activite" required>
                   </div>
                   <div class="col-md-6">
-                    <input type="text" class="form-control" placeholder="City">
+                    <input asp-for="@item.APE" type="text" class="form-control" placeholder="APE" name="ape" required>
                   </div>
-                  <div class="col-md-4">
-                    <select id="inputState" class="form-select">
-                      <option selected>Choose...</option>
-                      <option>...</option>
-                    </select>
+                  <div class="col-12">
+                    <div class="form-floating">
+                      <textarea asp-for="@item.Description" class="form-control" id="floatingTextarea"
+                        style="height: 100px;"></textarea>
+                      <label for="floatingTextarea">Description</label>
+                    </div>
                   </div>
-                  <div class="col-md-2">
-                    <input type="text" class="form-control" placeholder="Zip">
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                    <button type="submit" class="btn btn-success">Sauvegarder</button>
                   </div>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="reset" class="btn btn-secondary">Reset</button>
-                  </div>
-                </form><!-- End No Labels Form -->
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
-                <button type="button" class="btn btn-primary">Sauvegarder</button>
+                </form>
               </div>
             </div>
           </div>
