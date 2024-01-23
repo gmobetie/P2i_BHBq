@@ -27,31 +27,39 @@ public class EntrepriseController : Controller
         return View(entreprises);
     }
 
-[HttpPut]
-[ValidateAntiForgeryToken]
-public IActionResult ModifierEntreprise(int id, [FromBody] Entreprise entreprise)
-{
 
-        // Récupérer l'entreprise existante depuis la base de données
-        var entrepriseExistante = _context.Entreprises.Find(id);
 
-        if (entrepriseExistante == null)
+    [HttpPut]
+    [ValidateAntiForgeryToken]
+    public IActionResult ModifierEntreprise(int id, [FromBody] Entreprise entreprise)
+    {
+
+            // Récupérer l'entreprise existante depuis la base de données
+            var entrepriseExistante = _context.Entreprises.Find(id);
+
+            if (entrepriseExistante == null)
+            {
+                return NotFound(); // Entreprise non trouvée
+            }
+        if (ModelState.IsValid)
         {
-            return NotFound(); // Entreprise non trouvée
-        }
-    if (ModelState.IsValid)
-    {
-        // Mettre à jour les propriétés de l'entreprise existante avec celles de la nouvelle entreprise
-        _context.Entry(entrepriseExistante).CurrentValues.SetValues(entreprise);
+            // Mettre à jour les propriétés de l'entreprise existante avec celles de la nouvelle entreprise
+            _context.Entry(entrepriseExistante).CurrentValues.SetValues(entreprise);
 
-        _context.SaveChanges();
-        return RedirectToAction("Entreprises");
+            _context.SaveChanges();
+            return RedirectToAction("Entreprises");
+        }
+        else
+        {
+            return BadRequest("Les informations de mise à jour sont mauvaises !");
+        }
     }
-    else
+
+    [HttpPost]
+    public IActionResult NewEntreprise()
     {
-        return BadRequest("Les informations de mise à jour sont mauvaises !");
+        return View();
     }
-}
 
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
