@@ -56,9 +56,21 @@ public class EntrepriseController : Controller
     }
 
     [HttpPost]
-    public IActionResult NewEntreprise()
+    public async Task<IActionResult> NewEntreprise(Entreprise entreprise)
     {
-        return View();
+        var company = new Entreprise
+        {
+            NomEntreprise=entreprise.NomEntreprise,
+            APE=entreprise.APE,
+            Siret=entreprise.Siret,
+            Description=entreprise.Description,
+            Siege=entreprise.Siege,
+            Activite=entreprise.Activite,
+            Statut=entreprise.Statut
+        };
+        await _context.Entreprises.AddAsync(company);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Entreprises");
     }
 
 
