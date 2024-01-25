@@ -1,22 +1,21 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using BHBq.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BHBq.Controllers;
-
 public class EntrepriseController : Controller
 {
     private readonly BHBqContext _context;
-    public List<Entreprise> entreprises {get;set;}
+    public List<Entreprise> entreprises { get; set; }
 
     public EntrepriseController()
-    {  
+    {
         var options = new DbContextOptionsBuilder<BHBqContext>()
-        .UseSqlite($"Data Source=BHBq.db")
-        .Options;
+            .UseSqlite($"Data Source=BHBq.db")
+            .Options;
 
-        _context= new BHBqContext(options);
+        _context = new BHBqContext(options);
         entreprises = _context.Entreprises.ToList();
     }
 
@@ -27,32 +26,24 @@ public class EntrepriseController : Controller
         return View(entreprises);
     }
 
-
-
-    [HttpPut]
-    [ValidateAntiForgeryToken]
-    public IActionResult ModifierEntreprise(int id, [FromBody] Entreprise entreprise)
+    [HttpPost]
+    public async Task<IActionResult> EditEntreprise(int id, Entreprise entreprise)
     {
+        var existingEntreprise = await _context.Entreprises.FindAsync(id);
 
-            // Récupérer l'entreprise existante depuis la base de données
-            var entrepriseExistante = _context.Entreprises.Find(id);
-
-            if (entrepriseExistante == null)
-            {
-                return NotFound(); // Entreprise non trouvée
-            }
-        if (ModelState.IsValid)
+        if (existingEntreprise == null)
         {
-            // Mettre à jour les propriétés de l'entreprise existante avec celles de la nouvelle entreprise
-            _context.Entry(entrepriseExistante).CurrentValues.SetValues(entreprise);
+            return NotFound();
+        }
 
-            _context.SaveChanges();
-            return RedirectToAction("Entreprises");
-        }
-        else
-        {
-            return BadRequest("Les informations de mise à jour sont mauvaises !");
-        }
+        // Copier les valeurs de l'objet entreprise dans l'objet existant
+        _context.Entry(existingEntreprise).CurrentValues.SetValues(entreprise);
+
+        // Marquer toutes les propriétés comme modifiées
+        _context.Entry(existingEntreprise).State = EntityState.Modified;
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Entreprises");
     }
 
     [HttpPost]
@@ -60,23 +51,40 @@ public class EntrepriseController : Controller
     {
         var company = new Entreprise
         {
-            NomEntreprise=entreprise.NomEntreprise,
-            APE=entreprise.APE,
-            Siret=entreprise.Siret,
-            Description=entreprise.Description,
-            Siege=entreprise.Siege,
-            Activite=entreprise.Activite,
-            Statut=entreprise.Statut
+            NomEntreprise = entreprise.NomEntreprise,
+            APE = entreprise.APE,
+            Siret = entreprise.Siret,
+            Description = entreprise.Description,
+            Siege = entreprise.Siege,
+            Activite = entreprise.Activite,
+            Statut = entreprise.Statut
         };
         await _context.Entreprises.AddAsync(company);
         await _context.SaveChangesAsync();
         return RedirectToAction("Entreprises");
     }
 
-
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(
+            new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }
+        );
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteEntreprise(int id)
+    {
+        var existingEntreprise = await _context.Entreprises.FindAsync(id);
+
+        if (existingEntreprise == null)
+        {
+            return NotFound();
+        }
+
+        _context.Entreprises.Remove(existingEntreprise);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Entreprises");
     }
 }

@@ -27,6 +27,12 @@
       {
         string modalId = $"myModal-{item.Id}";
         <div class="info-box card">
+          <div class="row align-items-end">
+            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@item.Id"
+              method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise?');">
+              <button type="submit" class="btn btn-outline-dark text-end"><i class="ri ri-delete-bin-2-line"></i></button>
+            </form>
+          </div>
           <i class="bi bi-geo-alt"></i>
           <h3>@item.NomEntreprise</h3>
           <p>@item.Activite</p>
@@ -41,7 +47,7 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="ModifierEntreprise"
+                  <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="EditEntreprise"
                     asp-route-Id="@item.Id">
                     <div class="col-md-12">
                       <input asp-for="@item.NomEntreprise" type="text" class="form-control"
@@ -61,6 +67,10 @@
                     </div>
                     <div class="col-md-6">
                       <input asp-for="@item.APE" type="text" class="form-control" placeholder="APE" name="ape" required>
+                    </div>
+                    <div class="col-md-6">
+                      <input asp-for="@item.Statut" type="text" class="form-control" placeholder="Statut" name="statut"
+                        required>
                     </div>
                     <div class="col-12">
                       <div class="form-floating">
@@ -99,26 +109,32 @@
           <div class="modal-body">
             <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="NewEntreprise">
               <div class="col-md-12">
-                <input asp-for="@target.NomEntreprise" type="text" class="form-control" placeholder="Nom de l'entreprise" name="nomEntreprise" required>
+                <input asp-for="@target.NomEntreprise" type="text" class="form-control"
+                  placeholder="Nom de l'entreprise" name="nomEntreprise" required>
               </div>
               <div class="col-md-6">
-                <input asp-for="@target.Siret" type="text" class="form-control" placeholder="Siret" name="siret" required>
+                <input asp-for="@target.Siret" type="text" class="form-control" placeholder="Siret" name="siret"
+                  required>
               </div>
               <div class="col-md-6">
-                <input asp-for="@target.Siege" type="text" class="form-control" placeholder="Siege" name="siege" required>
+                <input asp-for="@target.Siege" type="text" class="form-control" placeholder="Siege" name="siege"
+                  required>
               </div>
               <div class="col-12">
-                <input asp-for="@target.Activite" type="text" class="form-control" placeholder="Activite" name="activite" required>
+                <input asp-for="@target.Activite" type="text" class="form-control" placeholder="Activite"
+                  name="activite" required>
               </div>
               <div class="col-md-6">
                 <input asp-for="@target.APE" type="text" class="form-control" placeholder="APE" name="ape" required>
               </div>
-                <div class="col-md-6">
-                <input asp-for="@target.Statut" type="text" class="form-control" placeholder="Statut" name="statut" required>
+              <div class="col-md-6">
+                <input asp-for="@target.Statut" type="text" class="form-control" placeholder="Statut" name="statut"
+                  required>
               </div>
               <div class="col-12">
                 <div class="form-floating">
-                  <textarea asp-for="@target.Description" class="form-control" id="floatingTextarea" style="height: 100px;"></textarea>
+                  <textarea asp-for="@target.Description" class="form-control" id="floatingTextarea"
+                    style="height: 100px;"></textarea>
                   <label for="floatingTextarea">Description</label>
                 </div>
               </div>
