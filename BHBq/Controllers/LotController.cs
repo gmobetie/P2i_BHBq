@@ -7,8 +7,7 @@ namespace BHBq.Controllers;
 public class LotController : Controller
 {
     private readonly BHBqContext _context;
-    public List<Lot> Lots { get; set; }
-    public List<Entreprise> Entreprises {get;set;}
+    public GetLotsViewModel Listes {get;set;}
 
     public LotController()
     {
@@ -17,14 +16,13 @@ public class LotController : Controller
             .Options;
 
         _context = new BHBqContext(options);
-        Lots = _context.Lots.ToList();
-        Entreprises= _context.Entreprises.ToList();
+        Listes = new GetLotsViewModel();
     }
 
     //Get toutes les Lots
     public IActionResult GetLots()
     {
-        return View(Entreprises);
+        return View(Listes);
     }
 
     [HttpPost]
