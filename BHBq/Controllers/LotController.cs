@@ -8,6 +8,7 @@ public class LotController : Controller
 {
     private readonly BHBqContext _context;
     public List<Lot> Lots { get; set; }
+    public List<Entreprise> Entreprises {get;set;}
 
     public LotController()
     {
@@ -17,13 +18,13 @@ public class LotController : Controller
 
         _context = new BHBqContext(options);
         Lots = _context.Lots.ToList();
+        Entreprises= _context.Entreprises.ToList();
     }
 
     //Get toutes les Lots
     public IActionResult GetLots()
     {
-        Lot Lot = new Lot();
-        return View(Lots);
+        return View(Entreprises);
     }
 
     [HttpPost]
