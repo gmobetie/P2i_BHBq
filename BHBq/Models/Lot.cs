@@ -1,20 +1,25 @@
+using CsvHelper.Configuration.Attributes;
+
 public class Lot
 {
-    public int Id { get; set; }
+    [Ignore] public int Id { get; set; }
+    public string IdLot { get; set; }
+    public int? IdEntreprise { get; set; }
     public string Designation { get; set; }
-    public double CoefPose {get;set;}
-    public List<Article> Articles { get; set; }
+    public double? CoefPose { get; set; }
 
-    // Constructeur par défaut
     public Lot()
     {
-        Articles = new List<Article>();
+
     }
 
-    // Constructeur paramétré
-    public Lot(string designation, List<Article> articles)
+    // Constructeur avec paramètres pour initialiser les propriétés
+    public Lot(int id, string idLot, int? idEntreprise, string designation, double? coefPose)
     {
+        Id = id;
+        IdLot = idLot;
+        IdEntreprise = idEntreprise;
         Designation = designation;
-        Articles = articles ?? new List<Article>();
+        CoefPose = coefPose;
     }
 }

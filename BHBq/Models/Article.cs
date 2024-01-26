@@ -1,6 +1,8 @@
+using CsvHelper.Configuration.Attributes;
 public class Article
 {
-    public int Id { get; set; }
+    [Ignore] public int Id { get; set; }
+    public int IdLot {get;set;}
     public string Nom { get; set; }
     public string Unite { get; set; }
     public double PrixH {get;set;}
@@ -13,12 +15,13 @@ public class Article
     }
 
     // Constructeur paramétré
-    public Article(string nom, string unite, double prixH, double prixM, double prixB)
+    public Article(int idlot, string nom, string unite, double prixH, double prixM, double prixB)
     {
+        IdLot=idlot;
         Nom = nom;
         Unite = unite;
-        PrixB=prixB;
-        PrixH=prixH;
-        PrixM=prixM;
+        PrixH = prixH;
+        PrixM = prixM;
+        PrixB = prixB;
     }
 }

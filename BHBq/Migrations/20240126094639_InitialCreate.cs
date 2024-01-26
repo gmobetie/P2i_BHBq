@@ -26,12 +26,31 @@ namespace BHBq.Migrations
                 {
                     table.PrimaryKey("PK_Entreprises", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Lots",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdLot = table.Column<string>(type: "TEXT", nullable: false),
+                    IdEntreprise = table.Column<int>(type: "INTEGER", nullable: true),
+                    Designation = table.Column<string>(type: "TEXT", nullable: false),
+                    CoefPose = table.Column<double>(type: "REAL", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lots", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Entreprises");
+
+            migrationBuilder.DropTable(
+                name: "Lots");
         }
     }
 }

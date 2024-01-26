@@ -16,11 +16,12 @@ public static class SeedData
 
         using var context = new BHBqContext(options);
         // Look for existing content
-        if (context.Entreprises.Any()) 
+        if (context.Entreprises.Any() && context.Lots.Any()) 
         {
             return; // DB already filled
         }
         context.Entreprises.AddRange(ClassConverter<Entreprise>("Origin/entreprises.csv"));
+        context.Lots.AddRange(ClassConverter<Lot>("Origin/lots.csv"));
 
         // Commit changes into DB
         context.SaveChanges();
