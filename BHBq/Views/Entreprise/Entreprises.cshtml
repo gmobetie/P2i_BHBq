@@ -10,7 +10,6 @@
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Devis</a>
       </li>
-      <li class="breadcrumb-item">Pages</li>
       <li class="breadcrumb-item active">Contact</li>
     </ol>
   </nav>
@@ -25,14 +24,14 @@
     <div class="col-lg-6">
       @foreach (var item in Model)
       {
+        <div class="container-fluid text-end">
+          <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@item.Id"
+            method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise?');">
+            <button type="submit" class="btn btn-outline-dark"><i class="ri-delete-bin-2-line fs-4"></i></button>
+          </form>
+        </div>
         string modalId = $"myModal-{item.Id}";
         <div class="info-box card">
-          <div class="row align-items-end">
-            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@item.Id"
-              method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise?');">
-              <button type="submit" class="btn btn-outline-dark text-end"><i class="ri ri-delete-bin-2-line"></i></button>
-            </form>
-          </div>
           <i class="bi bi-geo-alt"></i>
           <h3>@item.NomEntreprise</h3>
           <p>@item.Activite</p>
