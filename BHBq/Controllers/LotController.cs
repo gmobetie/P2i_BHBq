@@ -50,7 +50,7 @@ public class LotController : Controller
     {
         await _context.Lots.AddAsync(lot);
         await _context.SaveChangesAsync();
-        return RedirectToAction("Lots");
+        return RedirectToAction("GetLots");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -74,6 +74,6 @@ public class LotController : Controller
         _context.Lots.Remove(existingLot);
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("Lots");
+        return RedirectToAction("GetLots");
     }
 }
