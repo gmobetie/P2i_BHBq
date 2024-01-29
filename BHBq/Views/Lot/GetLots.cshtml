@@ -24,11 +24,16 @@
     <div class="tab-pane fade" id="@($"{tabId}-pane")" role="tabpanel" aria-labelledby="@($"{tabId}-tab")" tabindex="0">
       <section class="section">
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-lg-8">
 
+
+            <!-- display des lots -->
             <div class="card">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">LOTS @item.NomEntreprise</h5>
+                <button type="button" class="btn btn-sm btn-dark">Ajouter un lot</button>
+              </div>
               <div class="card-body">
-                <h5 class="card-title">LOTS @item.NomEntreprise</h5>
                 <!-- Boucle des lots -->
                 <div class="accordion" id="accordionLots-@item.Id">
                   @foreach (var lot in lots)
@@ -36,37 +41,92 @@
                     if (!lot.IdLot.Contains("."))
                     {
                       <div class="accordion-item">
-                        <h2 class="accordion-header" id="heading-@lot.Id">
+                        <div class="accordion-header d-flex justify-content-between align-items-center" id="heading-@lot.Id">
                           <button class="accordion-button" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapse-@lot.Id" aria-expanded="false" aria-controls="collapse-@lot.Id">
                             @lot.IdLot @lot.Designation
                           </button>
-                        </h2>
+                          <div class="d-flex justify-content-between align-items-center m-4 gap-2">
+                            <div class="col">
+                              <button type="button" class="btn btn-sm btn-outline-secondary">Modifier</button>
+                            </div>
+                            <div class="col">
+                              <button type="button" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                            </div>
+                          </div>
+                        </div>
                         <div id="collapse-@lot.Id" class="accordion-collapse collapse" aria-labelledby="heading-@lot.Id"
                           data-bs-parent="#accordionLots-@item.Id">
                           <div class="accordion-body">
                             <!-- Boucle des souslots -->
                             <div class="accordion" id="accordionSousLots-@item.Id">
-                            @foreach (var souslot in lots)
-                            {
-                              if (souslot.IdLot.StartsWith($"{lot.IdLot}."))
+                              <div class="d-flex justify-content-end">
+                                <button type="button" class="btn btn-sm btn-dark">Ajouter un sous-lot</button>
+                              </div>
+                              @foreach (var souslot in lots)
                               {
-                                <div class="accordion-item">
-                                  <h2 class="accordion-header" id="heading-@souslot.Id">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                      data-bs-target="#collapse-@souslot.Id" aria-expanded="false" aria-controls="collapse-@souslot.Id">
-                                      @souslot.IdLot @souslot.Designation
-                                    </button>
-                                  </h2>
-                                  <div id="collapse-@souslot.Id" class="accordion-collapse collapse" aria-labelledby="heading-@souslot.Id"
-                                    data-bs-parent="#accordionSousLots-@item.Id">
-                                    <div class="accordion-body">
-                                      Quoicoubeh
+                                if (souslot.IdLot.StartsWith($"{lot.IdLot}."))
+                                {
+                                  <div class="accordion-item">
+                                    <div class="accordion-header d-flex justify-content-between align-items-center"
+                                      id="heading-@souslot.Id">
+                                      <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapse-@souslot.Id" aria-expanded="false"
+                                        aria-controls="collapse-@souslot.Id">
+                                        @souslot.IdLot @souslot.Designation
+                                      </button>
+                                      <div class="d-flex justify-content-between align-items-center m-4 gap-2">
+                                        <div class="col">
+                                          <button type="button" class="btn btn-sm btn-outline-secondary">Modifier</button>
+                                        </div>
+                                        <div class="col">
+                                          <button type="button" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div id="collapse-@souslot.Id" class="accordion-collapse collapse"
+                                      aria-labelledby="heading-@souslot.Id" data-bs-parent="#accordionSousLots-@item.Id">
+                                      <div class="accordion-body">
+                                        <!-- Boucle des lots terminaux -->
+                                        <div class="accordion" id="accordionLotsTerminaux-@item.Id">
+                                          @foreach (var lotTerminal in lots)
+                                          {
+                                            if (souslot.IdLot.StartsWith($"{lot.IdLot}.{souslot.IdLot}"))
+                                            {
+                                              <div class="accordion-item">
+                                                <div class="accordion-header d-flex justify-content-between align-items-center"
+                                                  id="heading-@lotTerminal.Id">
+                                                  <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#collapse-@lotTerminal.Id" aria-expanded="false"
+                                                    aria-controls="collapse-@lotTerminal.Id">
+                                                    @lotTerminal.IdLot @lotTerminal.Designation
+                                                  </button>
+                                                  <div class="d-flex justify-content-between align-items-center m-4 gap-2">
+                                                    <div class="col">
+                                                      <button type="button" class="btn btn-sm btn-outline-secondary">Modifier</button>
+                                                    </div>
+                                                    <div class="col">
+                                                      <button type="button" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <div id="collapse-@lotTerminal.Id" class="accordion-collapse collapse"
+                                                  aria-labelledby="heading-@lotTerminal.Id"
+                                                  data-bs-parent="#accordionLotsTerminaux-@item.Id">
+                                                  <div class="accordion-body">
+                                                    <!-- Boucle des lots terminaux -->
+                                                    Quoicoubeh
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            }
+                                          }
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
+                                }
                               }
-                            }
                             </div>
                           </div>
                         </div>
