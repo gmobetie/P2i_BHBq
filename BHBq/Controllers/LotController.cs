@@ -42,7 +42,7 @@ public class LotController : Controller
         _context.Entry(existingLot).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
-        return RedirectToAction("Lots");
+        return RedirectToAction("GetLots");
     }
 
     [HttpPost]
