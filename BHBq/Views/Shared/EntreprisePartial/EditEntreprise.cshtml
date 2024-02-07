@@ -1,13 +1,16 @@
 @model Entreprise
-@{string modalId = $"myModal-{Model.Id}";}
+@{
+    string modalId = $"myModal-{Model.Id}";
+}
 
-<div class="container-fluid text-end">
-    <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.Id" method="post"
-        onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise?');">
-        <button type="submit" class="btn btn-outline-dark"><i class="ri-delete-bin-2-line fs-4"></i></button>
-    </form>
-</div>
 <div class="info-box card">
+    <div class="col text-end">
+        <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.Id"
+            method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise?');">
+            <button type="submit" class="btn btn-outline-dark"><i class="ri-delete-bin-2-line fs-4"></i></button>
+        </form>
+    </div>
+
     <i class="bi bi-geo-alt"></i>
     <h3>@Model.NomEntreprise</h3>
     <p>@Model.Activite</p>

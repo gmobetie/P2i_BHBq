@@ -24,9 +24,11 @@
     <div class="col-lg-6">
       @foreach (var item in Model)
       {
-        @await Html.PartialAsync("EditEntreprise", item)
+        @await Html.PartialAsync("EntreprisePartial/EditEntreprise", item)
       }
     </div>
+
+    <!-- Ajouter une nouvelle entreprise -->
     <div class="col-lg-6 text-center position-fixed m-4 start-50">
       <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal"
         data-bs-target="#new">
@@ -82,7 +84,7 @@
           </div>
         </div>
       </div>
-    </div><!-- End Vertically centered Modal-->
+    </div>
   </div>
   </div>
 
