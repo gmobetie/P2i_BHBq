@@ -1,6 +1,7 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using BHBq.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BHBq.Controllers;
 
@@ -9,10 +10,15 @@ public class DashboardController : Controller
     private readonly ILogger<DashboardController> _logger;
     private readonly BHBqContext _context;
 
-    public DashboardController(ILogger<DashboardController> logger, BHBqContext context)
+    public DashboardController(ILogger<DashboardController> logger)
     {
         _logger = logger;
-        _context= context;
+
+            var options = new DbContextOptionsBuilder<BHBqContext>()
+            .UseSqlite($"Data Source=BHBq.db")
+            .Options;
+
+        _context = new BHBqContext(options);
     }
 
     public IActionResult Index()

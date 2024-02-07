@@ -2,13 +2,13 @@ using System.Diagnostics;
 using BHBq.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-public class GetLotsViewModel
+public class LotsViewModel
 {
     public List<Entreprise> Entreprises { get; set; }
     public List<Lot> Lots { get; set; }
     private readonly BHBqContext _context;
 
-    public GetLotsViewModel()
+    public LotsViewModel()
     {
         var options = new DbContextOptionsBuilder<BHBqContext>()
             .UseSqlite($"Data Source=BHBq.db")

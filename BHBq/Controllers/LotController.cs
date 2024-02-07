@@ -7,7 +7,7 @@ namespace BHBq.Controllers;
 public class LotController : Controller
 {
     private readonly BHBqContext _context;
-    public GetLotsViewModel Listes {get;set;}
+    public LotsViewModel Listes {get;set;}
 
     public LotController()
     {
@@ -16,11 +16,11 @@ public class LotController : Controller
             .Options;
 
         _context = new BHBqContext(options);
-        Listes = new GetLotsViewModel();
+        Listes = new LotsViewModel();
     }
 
     //Get toutes les Lots
-    public IActionResult GetLots()
+    public IActionResult Lots()
     {
         return View(Listes);
     }

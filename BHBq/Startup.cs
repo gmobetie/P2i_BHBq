@@ -40,7 +40,6 @@ public class Startup
                 pattern: "{controller=Dashboard}/{action=Index}/{id?}"
             );
         });
-        SeedData.Init();
         // Start the application
         Task.Run(async () =>
         {
