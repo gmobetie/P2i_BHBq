@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 public class LotsViewModel
 {
-    public Entreprise Entreprise {get;set;}
-    public Lot Lot {get;set;}
-    public Lot SousLot {get;set;}
-    public Lot LotTerminal {get;set;}
+    public Entreprise Entreprise {get;set;} // Variable qui stocke temporairement l'entreprise sélectionnée
+    public Lot Lot {get;set;} // Variable qui stocke temporairement le lot sélectionnée
+    public Lot SousLot {get;set;} // Variable qui stocke temporairement le sous-lot sélectionnée
+    public Lot LotTerminal {get;set;} // Variable qui stocke temporairement le lot terminal sélectionnée
     public List<Entreprise> Entreprises { get; set; }
     public List<Lot> Lots { get; set; }
     private readonly BHBqContext _context;

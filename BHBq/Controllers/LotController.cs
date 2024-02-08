@@ -42,7 +42,7 @@ public class LotController : Controller
         _context.Entry(existingLot).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
-        return RedirectToAction("GetLots");
+        return RedirectToAction("Lots");
     }
 
     [HttpPost]
@@ -50,7 +50,7 @@ public class LotController : Controller
     {
         await _context.Lots.AddAsync(lot);
         await _context.SaveChangesAsync();
-        return RedirectToAction("GetLots");
+        return RedirectToAction("Lots");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -79,6 +79,6 @@ public class LotController : Controller
         _context.Lots.Remove(existingLot);
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("GetLots");
+        return RedirectToAction("Lots");
     }
 }

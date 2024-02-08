@@ -1,19 +1,19 @@
 @model LotsViewModel
 @{
-Lot temporaryLot = new Lot();
-int comptSL = 0; // Garde en mémoire le nombre de Sous-lots
-var souslots = Model.Lots
-.Where(l => l.IdLot.StartsWith($"{Model.Lot.IdLot}."))
-.ToList();
-comptSL = souslots.Count();
-var newSid = comptSL + 1;
+    Lot temporaryLot = new Lot();
+    int comptSL = 0; // Garde en mémoire le nombre de Sous-lots
+    var souslots = Model.Lots
+    .Where(l => l.IdLot.StartsWith($"{Model.Lot.IdLot}."))
+    .ToList();
+    comptSL = souslots.Count();
+    var newSid = comptSL + 1;
 }
 
 
 <div class="accordion-item">
     <div class="accordion-header d-flex justify-content-between align-items-center" id="heading-@Model.Lot.Id">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@Model.Lot.Id"
-            aria-expanded="false" aria-controls="collapse-@Model.Lot.Id">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapse-@Model.Lot.Id" aria-expanded="false" aria-controls="collapse-@Model.Lot.Id">
             Lot n°@Model.Lot.IdLot | @Model.Lot.Designation | Coéficient de pose : @Model.Lot.CoefPose
         </button>
         <div class="d-flex justify-content-between align-items-center m-4 gap-2">
@@ -21,11 +21,11 @@ var newSid = comptSL + 1;
             <!-- Bouton Modifier Lot -->
             <div class="col">
                 <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                    data-bs-target="#edit-@Model.Entreprise.NomEntreprise">Modifier</button>
+                    data-bs-target="#edit-@Model.Lot.Id">Modifier</button>
             </div>
 
             <!-- Modal de modification de lot -->
-            <div class="modal fade" id="edit-@Model.Entreprise.NomEntreprise" tabindex="-1">
+            <div class="modal fade" id="edit-@Model.Lot.Id" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -75,8 +75,10 @@ var newSid = comptSL + 1;
     <div id="collapse-@Model.Lot.Id" class="accordion-collapse collapse" aria-labelledby="heading-@Model.Lot.Id"
         data-bs-parent="#accordionLots-@Model.Entreprise.Id">
         <div class="accordion-body">
+
+
             <!-- Boucle des souslots -->
-            <div class="accordion" id="accordionSousLots-@Model.Entreprise.Id">
+            <div class="accordion" id="accordionLots-@Model.Lot.Id">
 
                 <!-- Bouton d'ajout d'un sous-lot -->
                 <div class="d-flex justify-content-end">
@@ -123,15 +125,14 @@ var newSid = comptSL + 1;
                         </div>
                     </div>
                 </div><!-- End Vertically centered Modal-->
-
-                @foreach (var souslot in Model.Lots)
-                {
-                    if (souslot.IdLot.StartsWith($"{Model.Lot.IdLot}."))
+                    @foreach (var souslot in Model.Lots)
                     {
-                       Model.SousLot = souslot;
-                      @await Html.PartialAsync("LotPartial/EditSousLot", Model) 
+                        if (souslot.IdLot.StartsWith($"{Model.Lot.IdLot}."))
+                        {
+                            Model.SousLot = souslot;
+                            @await Html.PartialAsync("LotPartial/EditSousLot", Model)
+                        }
                     }
-                }
             </div>
         </div>
     </div>
