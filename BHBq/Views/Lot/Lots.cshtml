@@ -2,7 +2,6 @@
 @{
   ViewData["Title"] = "Gestion des lots";
   Lot temporaryLot = new Lot();
-  int compteurS = 0;
 }
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -21,6 +20,8 @@
     List<Lot> lots = Model.Lots
     .Where(l => l.IdEntreprise == @item.Id)
     .ToList();
+
+    Model.Entreprise=item;
 
     string tabId = $"myTab-{item.Id}";
     <div class="tab-pane fade" id="@($"{tabId}-pane")" role="tabpanel" aria-labelledby="@($"{tabId}-tab")" tabindex="0">
@@ -76,247 +77,12 @@
               <div class="card-body">
                 <!-- Boucle des lots -->
                 <div class="accordion" id="accordionLots-@item.Id">
-                  @foreach (var lot in lots)
+                  @foreach (Lot lot in lots)
                   {
                     if (!lot.IdLot.Contains("."))
                     {
-                      var souslots = Model.Lots
-                      .Where(l => l.IdLot.StartsWith($"{lot.IdLot}."))
-                      .ToList();
-                      compteurS = souslots.Count();
-                      var newSid = compteurS + 1;
-                      <div class="accordion-item">
-                        <div class="accordion-header d-flex justify-content-between align-items-center" id="heading-@lot.Id">
-                          <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse-@lot.Id" aria-expanded="false" aria-controls="collapse-@lot.Id">
-                            Lot n°@lot.IdLot | @lot.Designation | Coéficient de pose : @lot.CoefPose
-                          </button>
-                          <div class="d-flex justify-content-between align-items-center m-4 gap-2">
-
-                            <!-- Bouton Modifier Lot -->
-                            <div class="col">
-                              <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                                data-bs-target="#edit-@item.NomEntreprise">Modifier</button>
-                            </div>
-
-                            <!-- Modal de modification de lot -->
-                            <div class="modal fade" id="edit-@item.NomEntreprise" tabindex="-1">
-                              <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title">Modifier le lot @lot.Designation</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                      aria-label="Close"></button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <form method="post" class="row g-3" asp-controller="Lot" asp-action="EditLot"
-                                      asp-route-Id="@lot.Id">
-                                      <div class="col-md-12">
-                                        <input asp-for="@temporaryLot.IdEntreprise" type="hidden" class="form-control"
-                                          placeholder="IdEntreprise" name="IdEntreprise" value="@item.Id">
-                                      </div>
-                                      <div class="col-md-6">
-                                        <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
-                                          placeholder="Désignation" name="designation" required>
-                                      </div>
-                                      <div class="col-md-6">
-                                        <input asp-for="@temporaryLot.IdLot" type="text" class="form-control"
-                                          placeholder="Identifiant du Lot" name="idLot" required>
-                                      </div>
-                                      <div class="col-12">
-                                        <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
-                                          placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0" max="1">
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                          data-bs-dismiss="modal">Abandonner</button>
-                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                      </div>
-                                    </form>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- Bouton Supprimer -->
-                            <form asp-area="" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@lot.Id" method="post"
-                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce lot ?');">
-                              <div class="col">
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
-                              </div>
-                            </form>
-
-                          </div>
-                        </div>
-                        <div id="collapse-@lot.Id" class="accordion-collapse collapse" aria-labelledby="heading-@lot.Id"
-                          data-bs-parent="#accordionLots-@item.Id">
-                          <div class="accordion-body">
-                            <!-- Boucle des souslots -->
-                            <div class="accordion" id="accordionSousLots-@item.Id">
-
-                              <!-- Bouton d'ajout d'un sous-lot -->
-                              <div class="d-flex justify-content-end">
-                                <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
-                                  data-bs-target="#new-s-@lot.Id">Ajouter un
-                                  sous-lot</button>
-                              </div>
-
-                              <!-- Modal d'ajout de sous-lot -->
-                              <div class="modal fade" id="new-s-@lot.Id" tabindex="-1">
-                                <div class="modal-dialog modal-dialog-centered">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title">Ajoutez un nouveau sous-lot à @lot.Designation</h5>
-                                      <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <form method="post" class="row g-3" asp-controller="Lot" asp-action="NewLot">
-                                        <div class="col-md-12">
-                                          <input asp-for="@temporaryLot.IdEntreprise" type="hidden" class="form-control"
-                                            placeholder="IdEntreprise" name="IdEntreprise" value="@item.Id">
-                                        </div>
-                                        <div class="col-md-6">
-                                          <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
-                                            placeholder="Désignation" name="designation" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                          <input asp-for="@temporaryLot.IdLot" type="hidden" placeholder="IdLot" name="idLot"
-                                            value="@lot.IdLot.@newSid" required>
-                                        </div>
-                                        <div class="col-12">
-                                          <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
-                                            placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0" max="1">
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Abandonner</button>
-                                          <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div><!-- End Vertically centered Modal-->
-
-                              @foreach (var souslot in lots)
-                              {
-                                if (souslot.IdLot.StartsWith($"{lot.IdLot}."))
-                                {
-                                  <div class="accordion-item">
-                                    <div class="accordion-header d-flex justify-content-between align-items-center"
-                                      id="heading-@souslot.Id">
-                                      <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapse-@souslot.Id" aria-expanded="false"
-                                        aria-controls="collapse-@souslot.Id">
-                                        @souslot.IdLot @souslot.Designation
-                                      </button>
-                                      <div class="d-flex justify-content-between align-items-center m-4 gap-2">
-                                        <!-- Bouton Modifier sous-lot -->
-                                        <div class="col">
-                                          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
-                                            data-bs-target="#edit-@souslot.Designation">Modifier</button>
-                                        </div>
-
-                                        <!-- Modal de modification de sous-lot -->
-                                        <div class="modal fade" id="edit-@souslot.Designation" tabindex="-1">
-                                          <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <h5 class="modal-title">Modifier le lot @souslot.Designation</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                  aria-label="Close"></button>
-                                              </div>
-                                              <div class="modal-body">
-                                                <form method="post" class="row g-3" asp-controller="Lot" asp-action="EditLot"
-                                                  asp-route-Id="@souslot.Id">
-                                                  <div class="col-md-12">
-                                                    <input asp-for="@temporaryLot.IdEntreprise" type="hidden" class="form-control"
-                                                      placeholder="IdEntreprise" name="IdEntreprise" value="@item.Id">
-                                                  </div>
-                                                  <div class="col-md-6">
-                                                    <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
-                                                      placeholder="Désignation" name="designation" required>
-                                                  </div>
-                                                  <div class="col-md-6">
-                                                    <input asp-for="@temporaryLot.IdLot" type="hidden" placeholder="IdLot"
-                                                      name="idLot" value="@lot.IdLot.@newSid" required>
-                                                  </div>
-                                                  <div class="col-12">
-                                                    <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
-                                                      placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0"
-                                                      max="1">
-                                                  </div>
-                                                  <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                      data-bs-dismiss="modal">Abandonner</button>
-                                                    <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                                  </div>
-                                                </form>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-
-                                        <!-- Bouton Supprimer sous-lot -->
-                                        <form asp-area="" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@souslot.Id"
-                                          method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce lot ?');">
-                                          <div class="col">
-                                            <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
-                                          </div>
-                                        </form>
-                                      </div>
-                                    </div>
-                                    <div id="collapse-@souslot.Id" class="accordion-collapse collapse"
-                                      aria-labelledby="heading-@souslot.Id" data-bs-parent="#accordionSousLots-@item.Id">
-                                      <div class="accordion-body">
-                                        <!-- Boucle des lots terminaux -->
-                                        <div class="accordion" id="accordionLotsTerminaux-@item.Id">
-                                          <div class="d-flex justify-content-end">
-                                            <button type="button" class="btn btn-sm btn-dark">Ajouter un lot terminal</button>
-                                          </div>
-                                          @foreach (var lotTerminal in lots)
-                                          {
-                                            if (souslot.IdLot.StartsWith($"{lot.IdLot}.{souslot.IdLot}"))
-                                            {
-                                              <div class="accordion-item">
-                                                <div class="accordion-header d-flex justify-content-between align-items-center"
-                                                  id="heading-@lotTerminal.Id">
-                                                  <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapse-@lotTerminal.Id" aria-expanded="false"
-                                                    aria-controls="collapse-@lotTerminal.Id">
-                                                    @lotTerminal.IdLot @lotTerminal.Designation
-                                                  </button>
-                                                  <div class="d-flex justify-content-between align-items-center m-4 gap-2">
-                                                    <div class="col">
-                                                      <button type="button" class="btn btn-sm btn-outline-secondary">Modifier</button>
-                                                    </div>
-                                                    <div class="col">
-                                                      <button type="button" class="btn btn-sm btn-outline-danger">Supprimer</button>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                                <div id="collapse-@lotTerminal.Id" class="accordion-collapse collapse"
-                                                  aria-labelledby="heading-@lotTerminal.Id"
-                                                  data-bs-parent="#accordionLotsTerminaux-@item.Id">
-                                                  <div class="accordion-body">
-                                                    <!-- Boucle des lots terminaux -->
-                                                    Quoicoubeh
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            }
-                                          }
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                }
-                              }
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      Model.Lot = lot;
+                      @await Html.PartialAsync("LotPartial/EditLot", Model)
                     }
                   }
                 </div>
