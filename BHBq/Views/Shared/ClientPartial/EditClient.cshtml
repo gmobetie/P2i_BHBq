@@ -1,0 +1,60 @@
+@model Client
+@{
+    string modalId = $"myModal-{Model.Id}";
+}
+
+<div class="info-box card">
+    <div class="col text-end">
+        <form asp-area="" asp-controller="Client" asp-action="DeleteClient" asp-route-id="@Model.Id"
+            method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce client?');">
+            <button type="submit" class="btn btn-outline-dark"><i class="ri-delete-bin-2-line fs-4"></i></button>
+        </form>
+    </div>
+
+    <i class="bi bi-person"></i>
+    <h3>@Model.Nom</h3>
+    <p>@Model.Adresse</p>
+    <button class="btn btn-outline-dark btn-sm mt-4" type="button" data-bs-toggle="modal"
+        data-bs-target="@($"#{modalId}")">Modifier les informations</button>
+
+    <div class="modal fade" id="@modalId" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mise à jour des informations de @Model.Nom</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="row g-3" asp-controller="Client" asp-action="EditClient"
+                        asp-route-Id="@Model.Id">
+                        <div class="col-md-12">
+                            <input asp-for="Nom" type="text" class="form-control"
+                                placeholder="Nom du client" name="nom">
+                        </div>
+                        <div class="col-md-12">
+                            <input asp-for="Adresse" type="text" class="form-control" placeholder="Adresse"
+                                name="adresse">
+                        </div>
+                        <div class="col-md-12">
+                            <input asp-for="Particulier" type="checkbox" class="form-check-input"
+                                id="particulier" name="particulier">
+                            <label class="form-check-label" for="particulier">Particulier</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="Siret" type="text" class="form-control" placeholder="Siret"
+                                name="siret">
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="TvaIntracom" type="text" class="form-control" placeholder="TVA Intracommunautaire"
+                                name="tvaIntracom">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- Fin du Modal centré verticalement -->
+</div>

@@ -1,0 +1,74 @@
+@model List<Client>
+@{
+    ViewData["Title"] = "Clients";
+    Client target = new Client();
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Devis</a></li>
+            <li class="breadcrumb-item active">Clients</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section contact">
+    <div class="row">
+        <!-- Ajouter un nouveau client -->
+        <div class="col text-center m-4">
+            <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal" data-bs-target="#new">
+                <i class="ri ri-add-line"></i>
+                <h3>Nouveau Client</h3>
+            </button>
+        </div>
+
+        <div class="modal fade" id="new" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nouveau Client</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" class="row g-3" asp-controller="Client" asp-action="NewClient">
+                            <div class="col-md-6">
+                                <input asp-for="@target.Nom" type="text" class="form-control" placeholder="Nom" name="nom" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@target.Adresse" type="text" class="form-control" placeholder="Adresse" name="adresse" required>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" asp-for="@target.Particulier">
+                                    <label class="form-check-label" for="particulier">
+                                        Particulier
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@target.Siret" type="text" class="form-control" placeholder="Siret" name="siret">
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@target.TvaIntracom" type="text" class="form-control" placeholder="TVA Intracommunautaire" name="tvaIntracom">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                                <button type="submit" class="btn btn-success">Sauvegarder</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            @foreach (var client in Model)
+            {
+                @await Html.PartialAsync("ClientPartial/EditClient", client)
+            }
+        </div>
+    </div>
+</section>
