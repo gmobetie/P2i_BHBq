@@ -26,25 +26,46 @@ public class EntrepriseController : Controller
         return View(entreprises);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> EditEntreprise(int id, Entreprise entreprise)
+[HttpPost]
+public async Task<IActionResult> EditEntreprise(int id, Entreprise entreprise)
+{
+    var existingEntreprise = await _context.Entreprises.FindAsync(id);
+
+    if (existingEntreprise == null)
     {
-        var existingEntreprise = await _context.Entreprises.FindAsync(id);
-
-        if (existingEntreprise == null)
-        {
-            return NotFound();
-        }
-
-        // Copier les valeurs de l'objet entreprise dans l'objet existant
-        _context.Entry(existingEntreprise).CurrentValues.SetValues(entreprise);
-
-        // Marquer toutes les propriétés comme modifiées
-        _context.Entry(existingEntreprise).State = EntityState.Modified;
-
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Entreprises");
+        return NotFound();
     }
+
+    // Mettre à jour les propriétés non nulles de l'objet existant
+    if (!string.IsNullOrEmpty(entreprise.NomEntreprise))
+    {
+        existingEntreprise.NomEntreprise = entreprise.NomEntreprise;
+    }
+    if (!string.IsNullOrEmpty(entreprise.Siret))
+    {
+        existingEntreprise.Siret = entreprise.Siret;
+    }
+    if (!string.IsNullOrEmpty(entreprise.Statut))
+    {
+        existingEntreprise.Statut = entreprise.Statut;
+    }
+    if (!string.IsNullOrEmpty(entreprise.Activite))
+    {
+        existingEntreprise.Activite = entreprise.Activite;
+    }
+    if (!string.IsNullOrEmpty(entreprise.Siege))
+    {
+        existingEntreprise.Siege = entreprise.Siege;
+    }
+    if (!string.IsNullOrEmpty(entreprise.APE))
+    {
+        existingEntreprise.APE = entreprise.APE;
+    }
+    existingEntreprise.Description = entreprise.Description;
+
+    await _context.SaveChangesAsync();
+    return RedirectToAction("Entreprises");
+}
 
     [HttpPost]
     public async Task<IActionResult> NewEntreprise(Entreprise entreprise)

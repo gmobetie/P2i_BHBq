@@ -21,71 +21,71 @@
 
   <div class="row">
 
-    <div class="col-lg-6">
+  <!-- Ajouter une nouvelle entreprise -->
+  <div class="col text-center m-4">
+    <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal"
+      data-bs-target="#new">
+      <i class="ri ri-add-line"></i>
+      <h3>Nouvelle Entreprise</h3>
+    </button>
+  </div>
+
+  <div class="modal fade" id="new" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Nouvelle Entreprise</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="NewEntreprise">
+            <div class="col-md-12">
+              <input asp-for="@target.NomEntreprise" type="text" class="form-control" placeholder="Nom de l'entreprise"
+                name="nomEntreprise" required>
+            </div>
+            <div class="col-md-6">
+              <input asp-for="@target.Siret" type="text" class="form-control" placeholder="Siret" name="siret" required>
+            </div>
+            <div class="col-md-6">
+              <input asp-for="@target.Siege" type="text" class="form-control" placeholder="Siege" name="siege" required>
+            </div>
+            <div class="col-12">
+              <input asp-for="@target.Activite" type="text" class="form-control" placeholder="Activite" name="activite"
+                required>
+            </div>
+            <div class="col-md-6">
+              <input asp-for="@target.APE" type="text" class="form-control" placeholder="APE" name="ape" required>
+            </div>
+            <div class="col-md-6">
+              <input asp-for="@target.Statut" type="text" class="form-control" placeholder="Statut" name="statut"
+                required>
+            </div>
+            <div class="col-12">
+              <div class="form-floating">
+                <textarea asp-for="@target.Description" class="form-control" id="floatingTextarea"
+                  style="height: 100px;"></textarea>
+                <label for="floatingTextarea">Description</label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+              <button type="submit" class="btn btn-success">Sauvegarder</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+    <div class="col">
       @foreach (var item in Model)
       {
         @await Html.PartialAsync("EntreprisePartial/EditEntreprise", item)
       }
     </div>
 
-    <!-- Ajouter une nouvelle entreprise -->
-    <div class="col-lg-6 text-center position-fixed m-4 start-50">
-      <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal"
-        data-bs-target="#new">
-        <i class="ri ri-add-line"></i>
-        <h3>Nouvelle Entreprise</h3>
-      </button>
     </div>
-
-    <div class="modal fade" id="new" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Nouvelle Entreprise</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="NewEntreprise">
-              <div class="col-md-12">
-                <input asp-for="@target.NomEntreprise" type="text" class="form-control"
-                  placeholder="Nom de l'entreprise" name="nomEntreprise" required>
-              </div>
-              <div class="col-md-6">
-                <input asp-for="@target.Siret" type="text" class="form-control" placeholder="Siret" name="siret"
-                  required>
-              </div>
-              <div class="col-md-6">
-                <input asp-for="@target.Siege" type="text" class="form-control" placeholder="Siege" name="siege"
-                  required>
-              </div>
-              <div class="col-12">
-                <input asp-for="@target.Activite" type="text" class="form-control" placeholder="Activite"
-                  name="activite" required>
-              </div>
-              <div class="col-md-6">
-                <input asp-for="@target.APE" type="text" class="form-control" placeholder="APE" name="ape" required>
-              </div>
-              <div class="col-md-6">
-                <input asp-for="@target.Statut" type="text" class="form-control" placeholder="Statut" name="statut"
-                  required>
-              </div>
-              <div class="col-12">
-                <div class="form-floating">
-                  <textarea asp-for="@target.Description" class="form-control" id="floatingTextarea"
-                    style="height: 100px;"></textarea>
-                  <label for="floatingTextarea">Description</label>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
-                <button type="submit" class="btn btn-success">Sauvegarder</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
 
 </section>
