@@ -85,14 +85,6 @@ public async Task<IActionResult> EditEntreprise(int id, Entreprise entreprise)
         return RedirectToAction("Entreprises");
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(
-            new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }
-        );
-    }
-
     [HttpPost]
     public async Task<IActionResult> DeleteEntreprise(int id)
     {

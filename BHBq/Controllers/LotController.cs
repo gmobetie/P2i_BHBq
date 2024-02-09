@@ -48,17 +48,23 @@ public class LotController : Controller
     [HttpPost]
     public async Task<IActionResult> NewLot(Lot lot)
     {
+        if(lot.Designation!=null)
+        {
+            return RedirectToAction("Error","Error", new { Message = "Test" });
+        }
+        else
+        {
         await _context.Lots.AddAsync(lot);
         await _context.SaveChangesAsync();
         return RedirectToAction("Lots");
+        }
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    public IActionResult Error(string Message)
     {
-        return View(
-            new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }
-        );
+        ViewBag.Message=Message;
+        ViewBag.Url= HttpContext.Request.Headers["Referer"];
+        return View();
     }
 
     [HttpPost]

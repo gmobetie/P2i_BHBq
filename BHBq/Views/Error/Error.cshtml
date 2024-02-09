@@ -1,0 +1,15 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+<div class="container">
+    <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+        <h1>Erreur</h1>
+        <h2>@ViewBag.Message</h2>
+        <a class="btn" asp-area="" asp-controller="Dashboard" asp-action="Index">Retour à l'accueil</a>
+        <a class="btn" href="@ViewBag.Url">Retour à la page précédente</a>
+        <img src="assets/img/error.jpg" class="img-fluid py-5" alt="Image d'erreur">
+        <div class="credits">
+        </div>
+    </section>
+</div>
