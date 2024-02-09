@@ -40,11 +40,11 @@
         <div class="modal-body">
           <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="NewEntreprise">
             <div class="col-md-12">
-              <input asp-for="@target.NomEntreprise" type="text" class="form-control" placeholder="Nom de l'entreprise"
+              <input asp-for="@target.NomEntreprise" maxlength="20" type="text" class="form-control" placeholder="Nom de l'entreprise"
                 name="nomEntreprise" required>
             </div>
             <div class="col-md-6">
-              <input asp-for="@target.Siret" type="text" class="form-control" placeholder="Siret" name="siret" required>
+              <input asp-for="@target.Siret" maxlength="14" minlength="14" type="text" class="form-control" placeholder="Siret" name="siret" required>
             </div>
             <div class="col-md-6">
               <input asp-for="@target.Siege" type="text" class="form-control" placeholder="Siege" name="siege" required>
@@ -54,12 +54,16 @@
                 required>
             </div>
             <div class="col-md-6">
-              <input asp-for="@target.APE" type="text" class="form-control" placeholder="APE" name="ape" required>
+              <input asp-for="@target.APE" type="text" minlength="5" maxlength="5" class="form-control" placeholder="APE" name="ape" required>
             </div>
             <div class="col-md-6">
               <input asp-for="@target.Statut" type="text" class="form-control" placeholder="Statut" name="statut"
                 required>
             </div>
+            @* <select asp-for="@target.Statut" class="form-select" aria-label="Default select example">
+                      <option selected="">SAS</option>
+                      <option value="1">SARL</option>
+                    </select> A implémenter...*@
             <div class="col-12">
               <div class="form-floating">
                 <textarea asp-for="@target.Description" class="form-control" id="floatingTextarea"
