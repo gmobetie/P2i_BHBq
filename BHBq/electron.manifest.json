@@ -4,7 +4,7 @@
     "imageFile": ""
   },
   "name": "BHBq",
-  "author": "",
+  "author": "Gabin Mobétie",
   "singleInstance": false,
   "environment": "Production",
   "build": {
