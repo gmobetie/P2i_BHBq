@@ -340,12 +340,20 @@ document.addEventListener('DOMContentLoaded', function () {
   nextButtons.forEach(function(button) {
     button.addEventListener('click', function() {
       var currentStep = button.closest('.bs-stepper-pane');
-      var inputField = currentStep.querySelector('input[type="email"], input[type="password"]');
+      var inputFields = currentStep.querySelectorAll('select, input[type="text"], input[type="password"]');
       
-      if (inputField.checkValidity()) {
-        stepper1.next(); // Passer à l'étape suivante si le champ est valide
-      } else {
-        inputField.reportValidity(); // Afficher un message d'erreur de validation sinon
+      // Validez tous les champs de saisie dans l'étape actuelle
+      var allFieldsValid = true;
+      inputFields.forEach(function(inputField) {
+        if (!inputField.checkValidity()) {
+          allFieldsValid = false;
+          inputField.reportValidity(); // Affiche les messages d'erreur de validation pour les champs non valides
+        }
+      });
+      
+      // Passez à l'étape suivante si tous les champs sont valides
+      if (allFieldsValid) {
+        stepper1.next();
       }
     });
   });

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BHBq.Controllers;
+
 public class ClientController : Controller
 {
     private readonly BHBqContext _context;
@@ -25,37 +26,37 @@ public class ClientController : Controller
         return View(clients);
     }
 
-[HttpPost]
-public async Task<IActionResult> EditClient(int id, Client client)
-{
-    var existingClient = await _context.Clients.FindAsync(id);
-
-    if (existingClient == null)
+    [HttpPost]
+    public async Task<IActionResult> EditClient(int id, Client client)
     {
-        return NotFound();
-    }
+        var existingClient = await _context.Clients.FindAsync(id);
 
-    // Mettre à jour les propriétés non nulles de l'objet existant
-    if (!string.IsNullOrEmpty(client.Nom))
-    {
-        existingClient.Nom = client.Nom;
-    }
-    if (!string.IsNullOrEmpty(client.Adresse))
-    {
-        existingClient.Adresse = client.Adresse;
-    }
-    existingClient.Particulier = client.Particulier;
+        if (existingClient == null)
+        {
+            return NotFound();
+        }
 
-    // Mettre à jour les propriétés spécifiques aux professionnels
-    if (client.Particulier == false)
-    {
-        existingClient.Siret = client.Siret;
-        existingClient.TvaIntracom = client.TvaIntracom;
-    }
+        // Mettre à jour les propriétés non nulles de l'objet existant
+        if (!string.IsNullOrEmpty(client.Nom))
+        {
+            existingClient.Nom = client.Nom;
+        }
+        if (!string.IsNullOrEmpty(client.Adresse))
+        {
+            existingClient.Adresse = client.Adresse;
+        }
+        existingClient.Particulier = client.Particulier;
 
-    await _context.SaveChangesAsync();
-    return RedirectToAction("Clients");
-}
+        // Mettre à jour les propriétés spécifiques aux professionnels
+        if (client.Particulier == false)
+        {
+            existingClient.Siret = client.Siret;
+            existingClient.TvaIntracom = client.TvaIntracom;
+        }
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Clients");
+    }
 
     [HttpPost]
     public async Task<IActionResult> NewClient(Client client)

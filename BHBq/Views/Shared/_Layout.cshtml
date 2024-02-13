@@ -33,7 +33,7 @@
     <link href="~/assets/css/style.css" rel="stylesheet" asp-append-version="true">
 
     <!-- Stepper -->
-    <link href="~/lib/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet" asp-append-version="true">
+    <link href="~/lib/bs-stepper/dist/css/bs-stepper.css" rel="stylesheet" asp-append-version="true">
 
 </head>
 
@@ -267,8 +267,8 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-controller="Devis" asp-action="DevisFlow"><i
-                        class="bi bi-grid"></i><span>Devis</span></a>
+                <a class="nav-link collapsed" asp-area="" asp-controller="Projet" asp-action="ProjetFlow"><i
+                        class="bi bi-grid"></i><span>Projet</span></a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
@@ -323,7 +323,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/main.js" asp-append-version="true"></script>
-    <script src="~/lib/bs-stepper/dist/js/bs-stepper.min.js" asp-append-version="true"></script>
+    <script src="~/lib/bs-stepper/dist/js/bs-stepper.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
