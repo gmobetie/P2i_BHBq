@@ -329,3 +329,24 @@
   }
 
 })();
+
+var stepper1;
+
+document.addEventListener('DOMContentLoaded', function () {
+  stepper1 = new Stepper(document.querySelector('#stepper1'));
+  
+  // Ajoutez un écouteur d'événements aux boutons "Next"
+  var nextButtons = document.querySelectorAll('.btn-next-form');
+  nextButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      var currentStep = button.closest('.bs-stepper-pane');
+      var inputField = currentStep.querySelector('input[type="email"], input[type="password"]');
+      
+      if (inputField.checkValidity()) {
+        stepper1.next(); // Passer à l'étape suivante si le champ est valide
+      } else {
+        inputField.reportValidity(); // Afficher un message d'erreur de validation sinon
+      }
+    });
+  });
+});

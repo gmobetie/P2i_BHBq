@@ -31,6 +31,10 @@
 
     <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet" asp-append-version="true">
+
+    <!-- Stepper -->
+    <link href="~/lib/bs-stepper/dist/css/bs-stepper.min.css" rel="stylesheet" asp-append-version="true">
+
 </head>
 
 <body>
@@ -263,20 +267,23 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-controller="Dashboard" asp-action="Index"><i
+                <a class="nav-link collapsed" asp-area="" asp-controller="Devis" asp-action="DevisFlow"><i
                         class="bi bi-grid"></i><span>Devis</span></a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-controller="Entreprise" asp-action="Entreprises"><i class="bi bi-building"></i><span>Entreprises</span></a>
+                <a class="nav-link collapsed" asp-area="" asp-controller="Entreprise" asp-action="Entreprises"><i
+                        class="bi bi-building"></i><span>Entreprises</span></a>
             </li><!-- End Entreprises Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-controller="Lot" asp-action="Lots"><i class="bi bi-list-check"></i><span>Lots</span></a>
+                <a class="nav-link collapsed" asp-area="" asp-controller="Lot" asp-action="Lots"><i
+                        class="bi bi-list-check"></i><span>Lots</span></a>
             </li><!-- End Lots Nav -->
 
-                        <li class="nav-item">
-                <a class="nav-link collapsed" asp-area="" asp-controller="Client" asp-action="Clients"><i class="bi bi-person"></i><span>Clients</span></a>
+            <li class="nav-item">
+                <a class="nav-link collapsed" asp-area="" asp-controller="Client" asp-action="Clients"><i
+                        class="bi bi-person"></i><span>Clients</span></a>
             </li><!-- End Clients Nav -->
 
     </aside><!-- End Sidebar-->
@@ -316,6 +323,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets/js/main.js" asp-append-version="true"></script>
+    <script src="~/lib/bs-stepper/dist/js/bs-stepper.min.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
 </body>
