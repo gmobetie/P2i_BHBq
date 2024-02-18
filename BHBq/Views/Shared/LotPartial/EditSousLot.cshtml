@@ -1,16 +1,21 @@
 @model LotsViewModel
+
 @{
+    string accordionId = $"accordion-{Model.SousLot.Id}";
+    string collapseId = $"collapse-{Model.SousLot.Id}";
+
     Lot temporaryLot = new Lot();
+
     int comptSL = 0; // Garde en mémoire le nombre de Sous-lots
     var souslots = Model.Lots
-    .Where(l => l.IdLot.StartsWith($"{Model.Lot.IdLot}."))
+    .Where(l => l.IdLot.StartsWith($"{Model.Lot.IdLot}.") && l.IdLot.Count(c => c == '.') == 1)
     .ToList();
     comptSL = souslots.Count();
     var newSid = comptSL + 1;
 
     int comptLT = 0; // Garde en mémoire le nombre de lots terminaux
     var lotsTerminaux = Model.Lots
-    .Where(l => l.IdLot.StartsWith($"{Model.Lot.IdLot}.{Model.SousLot.IdLot}."))
+    .Where(l => l.IdLot.StartsWith($"{Model.Lot.IdLot}.") && l.IdLot.Count(c => c == '.') == 2)
     .ToList();
     comptLT = lotsTerminaux.Count();
     var newLTid = comptLT + 1;
@@ -141,12 +146,12 @@
                 <!-- Boucle des lots terminaux -->
                 @foreach (var lotTerminal in Model.Lots)
                 {
-                    if (Model.SousLot.IdLot.StartsWith($"{Model.Lot.IdLot}.{Model.SousLot.IdLot}"))
+                    if (lotTerminal.IdLot.StartsWith($"{Model.SousLot.IdLot}"))
                     {
-                        if (Model.SousLot.IdLot.Count(c => c == '.') != 2)
+                        if (lotTerminal.IdLot.Count(c => c == '.') == 2)
                         {
                             Model.LotTerminal = lotTerminal;
-                            @await Html.PartialAsync("LotPartial/EditLotTerminal", Model)
+                            @await Html.PartialAsync("LotPartial/EditLotTerminal", Model);
                         }
                     }
                 }

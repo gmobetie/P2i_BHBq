@@ -1,5 +1,6 @@
 @model LotsViewModel
 @{
+    string accordionId = $"accordion-{Model.Lot.Id}"; // Generate unique accordion id
     Lot temporaryLot = new Lot();
     int comptSL = 0; // Garde en mémoire le nombre de Sous-lots
     var souslots = Model.Lots
@@ -129,8 +130,11 @@
                     {
                         if (souslot.IdLot.StartsWith($"{Model.Lot.IdLot}."))
                         {
-                            Model.SousLot = souslot;
-                            @await Html.PartialAsync("LotPartial/EditSousLot", Model)
+                            if (souslot.IdLot.Count(c => c == '.') != 2)
+                            {
+                                Model.SousLot = souslot;
+                                @await Html.PartialAsync("LotPartial/EditSousLot", Model)
+                            }
                         }
                     }
             </div>

@@ -48,16 +48,9 @@ public class LotController : Controller
     [HttpPost]
     public async Task<IActionResult> NewLot(Lot lot)
     {
-        if(lot.Designation!=null)
-        {
-            return RedirectToAction("Error","Error", new { Message = "Test" });
-        }
-        else
-        {
         await _context.Lots.AddAsync(lot);
         await _context.SaveChangesAsync();
         return RedirectToAction("Lots");
-        }
     }
 
     public IActionResult Error(string Message)
