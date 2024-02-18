@@ -1,4 +1,6 @@
+using System.Drawing;
 using ElectronNET.API;
+using ElectronNET.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 public class Startup
@@ -12,7 +14,9 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<BHBqContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<BHBqContext>(
+            options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
+        );
         services.AddControllersWithViews();
         services.AddElectron();
     }
@@ -43,7 +47,17 @@ public class Startup
         // Start the application
         Task.Run(async () =>
         {
-            await Electron.WindowManager.CreateWindowAsync();
+            var options = new BrowserWindowOptions
+            {
+                Width = 1024, // Largeur par défaut de la fenêtre
+                Height = 768, // Hauteur par défaut de la fenêtre
+                MinWidth = 800, // Largeur minimale de la fenêtre
+                MinHeight = 600, // Hauteur minimale de la fenêtre
+                MaxWidth = 1920, // Largeur maximale de la fenêtre
+                MaxHeight = 1080, // Hauteur maximale de la fenêtre
+                Center = true,
+            };
+            await Electron.WindowManager.CreateWindowAsync(options);
         });
     }
 }

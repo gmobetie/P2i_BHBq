@@ -1,7 +1,7 @@
 {
   "executable": "BHBq",
   "splashscreen": {
-    "imageFile": ""
+    "imageFile": "wwwroot/assets/img/LogoBHBqIcon.png"
   },
   "name": "BHBq",
   "author": "Gabin Mobétie",
@@ -13,8 +13,12 @@
     "copyright": "Copyright © 2020",
     "buildVersion": "1.0.0",
     "compression": "maximum",
+    "win": {
+      "icon": "Assets/LogoBHBqIcon.ico"
+    },
     "directories": {
-      "output": "../../../bin/Desktop"
+      "output": "../../../bin/Desktop",
+      "buildResources": "Assets"
     },
     "extraResources": [
       {

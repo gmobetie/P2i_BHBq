@@ -1,0 +1,71 @@
+@startuml BHBq_Diagram
+
+skinparam defaultFontName Arial
+skinparam linetype ortho
+skinparam linewidth 2
+skinparam roundcorner 15
+
+class Article #lightblue {
+  + Id: int [ignore]
+  + IdLot: int
+  + Nom: string
+  + Unite: string
+  + PrixH: double
+  + PrixM: double
+  + PrixB: double
+
+  + Article()
+  + Article(idlot: int, nom: string, unite: string, prixH: double, prixM: double, prixB: double)
+}
+
+class Client #lightyellow {
+  + Id: int [ignore]
+  + Nom: string
+  + Adresse: string
+  + Particulier: bool
+  + Siret: string?
+  + TvaIntracom: string?
+
+  + Client()
+  + Client(nom: string, adresse: string, particulier: bool, siret: string?, tvaIntracom: string?)
+}
+
+class Entreprise #lightgreen {
+  + Id: int [ignore]
+  + Nom: string
+  + Adresse: string
+  + Siret: string
+  + TvaIntracom: string
+
+  + Entreprise()
+  + Entreprise(nom: string, adresse: string, siret: string, tvaIntracom: string)
+}
+
+class Lot #orange {
+  + Id: int [ignore]
+  + Numero: int
+  + Date: DateTime
+  + Quantite: int
+  + ArticleId: int
+
+  + Lot()
+  + Lot(numero: int, date: DateTime, quantite: int, articleId: int)
+}
+
+class Projet #lightpink {
+  + Id: int [ignore]
+  + Nom: string
+  + Description: string
+  + DateDebut: DateTime
+  + DateFin: DateTime
+
+  + Projet()
+  + Projet(nom: string, description: string, dateDebut: DateTime, dateFin: DateTime)
+}
+
+Article "*" -- "1" Lot
+Lot "*" -- "1" Projet
+Projet "*" -- "1" Client
+Client "*" -- "1" Entreprise
+
+@enduml
