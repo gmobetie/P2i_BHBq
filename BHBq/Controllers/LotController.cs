@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BHBq.Controllers;
+
 public class LotController : Controller
 {
     private readonly BHBqContext _context;
-    public LotsViewModel Listes {get;set;}
+    public LotsViewModel Listes { get; set; }
 
     public LotController()
     {
@@ -48,19 +49,33 @@ public class LotController : Controller
     [HttpPost]
     public async Task<IActionResult> NewLot(Lot lot)
     {
-        await _context.Lots.AddAsync(lot);
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Lots");
+        // Si le lot existe déjà, retourner une erreur
+        var existingLots = await _context.Lots.AnyAsync(l => l.IdLot == lot.IdLot);
+
+        if (existingLots)
+        {
+            return RedirectToAction(
+                "Error",
+                "Error",
+                new { Message = $"Le lot {lot.IdLot} existe deja !" }
+            );
+        }
+        else
+        {
+            await _context.Lots.AddAsync(lot);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Lots");
+        }
     }
 
     public IActionResult Error(string Message)
     {
-        ViewBag.Message=Message;
-        ViewBag.Url= HttpContext.Request.Headers["Referer"];
+        ViewBag.Message = Message;
+        ViewBag.Url = HttpContext.Request.Headers["Referer"];
         return View();
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> DeleteLot(int id)
     {
         var existingLot = await _context.Lots.FindAsync(id);
@@ -72,7 +87,7 @@ public class LotController : Controller
 
         // Supprimer tous les lots commençant par IdLot. de l'entrée
         var lotsToDelete = _context.Lots.Where(l => l.IdLot.StartsWith(existingLot.IdLot + "."));
-        
+
         _context.Lots.RemoveRange(lotsToDelete);
 
         _context.Lots.Remove(existingLot);

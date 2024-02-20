@@ -72,6 +72,7 @@ class Param #lightgrey {
   + IdProjet: int [FK]
   + Param1: int
   + Param2: int
+  + ...: int
 
   + Param()
 }

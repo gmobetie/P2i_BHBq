@@ -6,7 +6,7 @@
 <div class="info-box card">
     <div class="col text-end">
         <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.Id"
-            method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise?');">
+            method="get" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise?');">
             <button type="submit" class="btn btn-outline-dark"><i class="ri-delete-bin-2-line fs-4"></i></button>
         </form>
     </div>

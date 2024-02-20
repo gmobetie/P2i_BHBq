@@ -113,7 +113,7 @@ public class EntrepriseController : Controller
         }
     }
 
-    [HttpPost]
+    [HttpGet]
     public async Task<IActionResult> DeleteEntreprise(int id)
     {
         var existingEntreprise = await _context.Entreprises.FindAsync(id);
