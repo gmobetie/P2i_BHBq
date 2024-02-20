@@ -6,8 +6,34 @@
 <div class="info-box card">
     <div class="col text-end">
         <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.Id"
-            method="get" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette entreprise?');">
-            <button type="submit" class="btn btn-outline-dark"><i class="ri-delete-bin-2-line fs-4"></i></button>
+            method="post">
+            <!-- Delete button that triggers the modal -->
+            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.Id">
+                <i class="ri-delete-bin-2-line fs-4"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@Model.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Êtes-vous sûr de vouloir supprimer cette entreprise ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise"
+                                asp-route-id="@Model.Id" method="post">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 
@@ -44,12 +70,11 @@
                                 name="activite">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.APE" type="text" class="form-control" placeholder="APE" name="ape"
-                                >
+                            <input asp-for="@Model.APE" type="text" class="form-control" placeholder="APE" name="ape">
                         </div>
                         <div class="col-md-6">
                             <input asp-for="@Model.Statut" type="text" class="form-control" placeholder="Statut"
-                                name="statut" >
+                                name="statut">
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
