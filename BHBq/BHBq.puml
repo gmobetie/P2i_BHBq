@@ -45,6 +45,7 @@ class Entreprise #lightgreen {
 
 ' Classe représentant un lot (ensemble d'articles)
 class Lot #orange {
+
   + Id: int [PK]
   + IdEntreprise: int? [FK]
   + Designation: string
@@ -58,6 +59,7 @@ class Projet #lightpink {
   + Id: int [PK]
   + IdClient: int [FK]
   + Description: string
+  + SiteConstruction: string
   + DateDebut: DateTime
   + DateFin: DateTime
 
@@ -74,13 +76,54 @@ class Param #lightgrey {
   + Param()
 }
 
-' Classe représentant un document type Facture, Devis, Avenant, etc.
+' Classe représentant un document type Facture, Devis, Acompte, Avenant, etc.
 class Document #lightcyan {
+
   + Id: int [PK]
   + IdProjet: int [FK]
   + IdEntreprise: int [FK]
+  + IdTVA: int [FK]
+  + IdGammeAcompte: int [FK]
+  + Facture: bool
+  + NumDocument: string
+  + NumOrigin: string
+  + NumAcompte: int
+  + DateEmission: DateTime
+
 
   + Document()
+}
+
+class TVA #LightSalmon {
+  + Id: int [PK]
+  + Code : string
+  + Taux: double
+
+  + TVA()
+}
+
+class GammeAcompte #LightGoldenRodYellow {
+  + Id: int [PK]
+  + Nom: string
+  + Pourcentage1: double
+  + Pourcentage2: double
+  + Pourcentage3: double
+  + Pourcentage4: double
+  + Pourcentage5: double
+
+  + GammeAcompte()
+}
+
+class CompteBancaire #LightSkyBlue {
+  + Id: int [PK]
+  + IdEntreprise: int [FK]
+  + Adresse: string
+  + IBAN: string
+  + BIC: string
+  + NumCompte: string
+  + NomBanque: string
+
+  + CompteBancaire()
 }
 
 ' Relations entre les classes
@@ -90,5 +133,8 @@ Projet "1" *- "1" Param
 Document *- Lot
 Lot *- Article
 Document "1" -- "1" Entreprise
+Document *- TVA
+Document *- GammeAcompte
+Document "*" -- "1" CompteBancaire
 
 @enduml
