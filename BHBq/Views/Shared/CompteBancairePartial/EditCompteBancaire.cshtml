@@ -5,11 +5,11 @@
 
 <div class="info-box card">
     <div class="row">
-        <div class="col-lg-6 col-md-6st">
+        <div class="col">
             <i class="bi bi-geo-alt"></i>
             <h3>@Model.TargetCompteBancaire.NomBanque</h3>
         </div>
-        <div class="col-lg-6 col-md-6 text-end">
+        <div class="col text-end">
                 <!-- Delete -->
                 <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.TargetCompteBancaire.Id">
                     <i class="ri-delete-bin-2-line fs-2"></i>
@@ -46,6 +46,7 @@
 
             <div class="row m-2">
                 <div class="col-lg-6 col-md-6 text-end">
+                    <i class="bi bi-credit-card"></i>
                     <h5>Numéro de compte :</h5>
                 </div>
                 <div class="col-lg-6 col-md-6">@Model.TargetCompteBancaire.NumCompte</div>
@@ -53,6 +54,7 @@
 
             <div class="row m-2">
                 <div class="col-lg-6 col-md-6 text-end">
+                    <i class="bi bi-geo-alt"></i>
                     <h5>Adresse :</h5>
                 </div>
                 <div class="col-lg-6 col-md-6">@Model.TargetCompteBancaire.Adresse</div>
@@ -62,6 +64,7 @@
         <div class="col-lg-6 col-md-6 justify-content-center">
             <div class="row m-2">
                 <div class="col-lg-6 col-md-6 label text-end">
+                    <i class="bi bi-credit-card-2-front"></i>
                     <h5>Code BIC :</h5>
                 </div>
                 <div class="col-lg-6 col-md-6">@Model.TargetCompteBancaire.BIC</div>
@@ -69,6 +72,7 @@
 
             <div class="row m-2">
                 <div class="col-lg-6 col-md-6 text-end">
+                    <i class="bi bi-credit-card-2-back"></i>
                     <h5>IBAN :</h5>
                 </div>
                 <div class="col-lg-6 col-md-6">@Model.TargetCompteBancaire.IBAN</div>
@@ -93,7 +97,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   <form method="post" class="row g-3" asp-controller="CompteBancaire" asp-action="EditCompteBancaire">
+                <form method="post" class="row g-3" asp-controller="CompteBancaire" asp-action="EditCompteBancaire" asp-route-id="@Model.TargetCompteBancaire.Id">
                                 <input asp-for="@Model.TargetCompteBancaire.IdEntreprise" type="hidden"
                                  name="IdEntreprise" value="@Model.TargetEntreprise.Id" required>
                             <div class="col-md-6">
@@ -114,7 +118,7 @@
                             </div>
                             <div class="col-md-6">
                                 <input asp-for="@Model.TargetCompteBancaire.NumCompte" type="text" class="form-control" placeholder="Numéro de compte bancaire"
-                                    name="numeroCompte" pattern="[0-9]{11}">
+                                    name="numCompte" pattern="[0-9]{11}">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary"

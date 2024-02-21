@@ -67,7 +67,7 @@ namespace BHBq.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("ComptesBancaires",compteBancaire.IdEntreprise);
+            return RedirectToAction("ComptesBancaires", new { idEntreprise = compteBancaire.IdEntreprise });
         }
 
         [HttpPost]
@@ -92,7 +92,7 @@ namespace BHBq.Controllers
             _context.ComptesBancaires.Remove(existingCompteBancaire);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("ComptesBancaires");
+            return RedirectToAction("ComptesBancaires", new { idEntreprise = existingCompteBancaire.IdEntreprise });
         }
     }
 }
