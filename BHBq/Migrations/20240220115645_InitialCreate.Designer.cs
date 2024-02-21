@@ -10,13 +10,42 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHBq.Migrations
 {
     [DbContext(typeof(BHBqContext))]
-    [Migration("20240126094639_InitialCreate")]
+    [Migration("20240220115645_InitialCreate")]
     partial class InitialCreate
     {
+        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
+
+            modelBuilder.Entity("Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Adresse")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Particulier")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Siret")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TvaIntracom")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Clients");
+                });
 
             modelBuilder.Entity("Entreprise", b =>
                 {
@@ -79,6 +108,20 @@ namespace BHBq.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Lots");
+                });
+
+            modelBuilder.Entity("Projet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("IdClient")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projets");
                 });
 #pragma warning restore 612, 618
         }

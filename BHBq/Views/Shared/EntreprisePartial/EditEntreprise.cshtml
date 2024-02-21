@@ -4,44 +4,107 @@
 }
 
 <div class="info-box card">
-    <div class="col text-end">
-        <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.Id"
-            method="post">
-            <!-- Delete button that triggers the modal -->
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.Id">
-                <i class="ri-delete-bin-2-line fs-4"></i>
-            </button>
+    <div class="row">
+        <div class="col-lg-6 col-md-6st">
+            <i class="bi bi-geo-alt"></i>
+            <h3>@Model.NomEntreprise</h3>
+        </div>
+        <div class="col-lg-6 col-md-6 text-end">
+            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.Id"
+                method="post">
+                <!-- Delete -->
+                <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.Id">
+                    <i class="ri-delete-bin-2-line fs-2"></i>
+                </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="deleteModal-@Model.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            Êtes-vous sûr de vouloir supprimer cette entreprise ?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise"
-                                asp-route-id="@Model.Id" method="post">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                            </form>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteModal-@Model.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                Êtes-vous sûr de vouloir supprimer cette entreprise ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise"
+                                    asp-route-id="@Model.Id" method="post">
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
-    <i class="bi bi-geo-alt"></i>
-    <h3>@Model.NomEntreprise</h3>
-    <p>@Model.Activite</p>
-    <button class="btn btn-outline-dark btn-sm mt-4" type="button" data-bs-toggle="modal"
-        data-bs-target="@($"#{modalId}")">Modifier les informations</button>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 justify-content-center">
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 label text-end">
+                    <h5>Statut :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.Statut</div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 text-end">
+                    <h5>Siège :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.Siege</div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 text-end">
+                    <h5>Activité :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.Activite</div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 justify-content-center">
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 label text-end">
+                    <h5>Code APE :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.APE</div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 text-end">
+                    <h5>N° SIRET :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.Siret</div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Description != null)
+    {
+        <h5>Description</h5>
+        <p class="small fst-italic">@Model.Description</p>
+    }
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="btn-group" role="group" aria-label="Actions">
+                <button class="btn btn-outline-secondary btn-sm" type="button">Comptes bancaires</button>
+                <button class="btn btn-outline-secondary btn-sm" type="button">Lots réglementaires</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-end">
+                <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="modal"
+                    data-bs-target="#@modalId">Modifier</button>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="@modalId" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">

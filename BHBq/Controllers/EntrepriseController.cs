@@ -81,7 +81,7 @@ public class EntrepriseController : Controller
             Activite = entreprise.Activite,
             Statut = entreprise.Statut
         };
-        if (!int.TryParse(company.Siret, out int number))
+        if (!long.TryParse(company.Siret, out _))
         {
             return RedirectToAction(
                 "Error",

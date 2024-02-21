@@ -128,14 +128,14 @@ class CompteBancaire #LightSkyBlue {
 }
 
 ' Relations entre les classes
-Projet "1" -- "1" Client
+Projet "*" -- "1" Client
 Projet "1" *- "*" Document
 Projet "1" *- "1" Param
-Document *- Lot
+Entreprise *- Lot
 Lot *- Article
-Document "1" -- "1" Entreprise
+Document "*" -- "1" Entreprise
 Document *- TVA
 Document *- GammeAcompte
-Document "*" -- "1" CompteBancaire
+Entreprise "1" -- "*" CompteBancaire
 
 @enduml
