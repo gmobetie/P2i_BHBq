@@ -1,0 +1,81 @@
+@model EntrepriseViewModel
+@{
+    ViewData["Title"] = "Comptes Bancaires";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+                    asp-action="Index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Entreprise"
+                    asp-action="Entreprises">Entreprises</a>
+            </li>
+            <li class="breadcrumb-item active">ComptesBancaires - @Model.TargetEntreprise.NomEntreprise</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section contact">
+
+    <div class="row">
+
+        <!-- Ajouter un nouveau compte bancaire -->
+        <div class="col text-center m-4">
+            <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal"
+                data-bs-target="#new">
+                <i class="ri ri-add-line"></i>
+                <h3>Nouveau Compte Bancaire @Model.TargetEntreprise.NomEntreprise</h3>
+            </button>
+        </div>
+
+        <div class="modal fade" id="new" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nouveau Compte Bancaire</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" class="row g-3" asp-controller="CompteBancaire" asp-action="NewCompteBancaire">
+                            <input asp-for="@Model.TargetCompteBancaire.IdEntreprise" type="hidden" name="IdEntreprise" value="@Model.TargetEntreprise.Id" required>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.TargetCompteBancaire.NomBanque" type="text" class="form-control" placeholder="Nom de la Banque" name="NomBanque" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.TargetCompteBancaire.Adresse" type="text" class="form-control" placeholder="Adresse" name="Adresse" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.TargetCompteBancaire.IBAN" type="text" class="form-control" placeholder="IBAN" name="iban" pattern="[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}[A-Z0-9]{0,16}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.TargetCompteBancaire.BIC" type="text" class="form-control" placeholder="BIC" name="bic" pattern="[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.TargetCompteBancaire.NumCompte" type="text" class="form-control" placeholder="Numéro de compte bancaire" name="numeroCompte" pattern="[0-9]{11}" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                                <button type="submit" class="btn btn-success">Sauvegarder</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="col">
+        @foreach (var item in Model.ComptesBancaires.Where(x => x.Id == Model.TargetEntreprise.Id))
+        {
+            Model.TargetCompteBancaire = item; // Set the target CompteBancaire to the current item
+            @await Html.PartialAsync("CompteBancairePartial/EditCompteBancaire")
+        }
+    </div>
+
+    </div>
+
+</section>

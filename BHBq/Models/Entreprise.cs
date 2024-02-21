@@ -2,7 +2,8 @@ using CsvHelper.Configuration.Attributes;
 
 public class Entreprise // Informations de chaque entreprise BHB-Groupe
 {
-    [Ignore] public int Id { get; set; }
+    [Ignore]
+    public int Id { get; set; }
     public string NomEntreprise { get; set; }
     public string Siret { get; set; }
     public string Statut { get; set; }
@@ -10,14 +11,22 @@ public class Entreprise // Informations de chaque entreprise BHB-Groupe
     public string Siege { get; set; }
     public string APE { get; set; }
     public string? Description { get; set; }
+    public string? Logo { get; set; }
 
     // Constructeur par défaut
-    public Entreprise()
-    {
-    }
+    public Entreprise() { }
 
     // Constructeur paramétré
-    public Entreprise(string nomEntreprise, string siret, string statut, string activite, string siege, string ape, string? description)
+    public Entreprise(
+        string nomEntreprise,
+        string siret,
+        string statut,
+        string activite,
+        string siege,
+        string ape,
+        string? description,
+        string? logo
+    )
     {
         NomEntreprise = nomEntreprise;
         Siret = siret;
@@ -26,5 +35,6 @@ public class Entreprise // Informations de chaque entreprise BHB-Groupe
         Siege = siege;
         APE = ape;
         Description = description;
+        Logo = logo;
     }
 }

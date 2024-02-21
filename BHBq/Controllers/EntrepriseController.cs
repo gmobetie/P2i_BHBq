@@ -9,6 +9,7 @@ public class EntrepriseController : Controller
 {
     private readonly BHBqContext _context;
     public List<Entreprise> entreprises { get; set; }
+    public EntrepriseViewModel Listes { get; set; }
 
     public EntrepriseController()
     {
@@ -17,14 +18,13 @@ public class EntrepriseController : Controller
             .Options;
 
         _context = new BHBqContext(options);
-        entreprises = _context.Entreprises.ToList();
+        Listes = new EntrepriseViewModel();
     }
 
     //Get toutes les entreprises
     public IActionResult Entreprises()
     {
-        Entreprise entreprise = new Entreprise();
-        return View(entreprises);
+        return View(Listes);
     }
 
     [HttpPost]
@@ -90,6 +90,8 @@ public class EntrepriseController : Controller
             );
         }
         else if (
+            // Vérifie si les quatre premiers caractères sont des chiffres
+            // Vérifie si le cinquième caractère est une lettre
             !char.IsDigit(company.APE[0])
             || !char.IsDigit(company.APE[1])
             || !char.IsDigit(company.APE[2])
@@ -97,8 +99,6 @@ public class EntrepriseController : Controller
             || !char.IsLetter(company.APE[4])
         )
         {
-            // Vérifie si les quatre premiers caractères sont des chiffres
-            // Vérifie si le cinquième caractère est une lettre
             return RedirectToAction(
                 "Error",
                 "Error",

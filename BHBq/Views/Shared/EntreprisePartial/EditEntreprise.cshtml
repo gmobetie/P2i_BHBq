@@ -1,24 +1,24 @@
-@model Entreprise
+@model EntrepriseViewModel
 @{
-    string modalId = $"myModal-{Model.Id}";
+    string modalId = $"myModal-{Model.TargetEntreprise.Id}";
 }
 
 <div class="info-box card">
     <div class="row">
         <div class="col-lg-6 col-md-6st">
             <i class="bi bi-geo-alt"></i>
-            <h3>@Model.NomEntreprise</h3>
+            <h3>@Model.TargetEntreprise.NomEntreprise</h3>
         </div>
         <div class="col-lg-6 col-md-6 text-end">
-            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.Id"
+            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.TargetEntreprise.Id"
                 method="post">
                 <!-- Delete -->
-                <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.Id">
+                <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.TargetEntreprise.Id">
                     <i class="ri-delete-bin-2-line fs-2"></i>
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="deleteModal-@Model.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
+                <div class="modal fade" id="deleteModal-@Model.TargetEntreprise.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -33,7 +33,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                 <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise"
-                                    asp-route-id="@Model.Id" method="post">
+                                    asp-route-id="@Model.TargetEntreprise.Id" method="post">
                                     <button type="submit" class="btn btn-danger">Supprimer</button>
                                 </form>
                             </div>
@@ -50,21 +50,21 @@
                 <div class="col-lg-6 col-md-6 label text-end">
                     <h5>Statut :</h5>
                 </div>
-                <div class="col-lg-6 col-md-6">@Model.Statut</div>
+                <div class="col-lg-6 col-md-6">@Model.TargetEntreprise.Statut</div>
             </div>
 
             <div class="row m-2">
                 <div class="col-lg-6 col-md-6 text-end">
                     <h5>Siège :</h5>
                 </div>
-                <div class="col-lg-6 col-md-6">@Model.Siege</div>
+                <div class="col-lg-6 col-md-6">@Model.TargetEntreprise.Siege</div>
             </div>
 
             <div class="row m-2">
                 <div class="col-lg-6 col-md-6 text-end">
                     <h5>Activité :</h5>
                 </div>
-                <div class="col-lg-6 col-md-6">@Model.Activite</div>
+                <div class="col-lg-6 col-md-6">@Model.TargetEntreprise.Activite</div>
             </div>
         </div>
 
@@ -73,29 +73,29 @@
                 <div class="col-lg-6 col-md-6 label text-end">
                     <h5>Code APE :</h5>
                 </div>
-                <div class="col-lg-6 col-md-6">@Model.APE</div>
+                <div class="col-lg-6 col-md-6">@Model.TargetEntreprise.APE</div>
             </div>
 
             <div class="row m-2">
                 <div class="col-lg-6 col-md-6 text-end">
                     <h5>N° SIRET :</h5>
                 </div>
-                <div class="col-lg-6 col-md-6">@Model.Siret</div>
+                <div class="col-lg-6 col-md-6">@Model.TargetEntreprise.Siret</div>
             </div>
         </div>
     </div>
 
-    @if (Model.Description != null)
+    @if (Model.TargetEntreprise.Description != null)
     {
         <h5>Description</h5>
-        <p class="small fst-italic">@Model.Description</p>
+        <p class="small fst-italic">@Model.TargetEntreprise.Description</p>
     }
 
     <div class="row mt-4">
         <div class="col">
             <div class="btn-group" role="group" aria-label="Actions">
-                <button class="btn btn-outline-secondary btn-sm" type="button">Comptes bancaires</button>
-                <button class="btn btn-outline-secondary btn-sm" type="button">Lots réglementaires</button>
+                <a class="btn btn-outline-secondary btn-sm" asp-controller="CompteBancaire" asp-action="ComptesBancaires" asp-route-idEntreprise="@Model.TargetEntreprise.Id">Comptes bancaires</a>
+                <button class="btn btn-outline-secondary btn-sm" type="button">Lots</button>
             </div>
         </div>
         <div class="col">
@@ -110,38 +110,38 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Mise à jour des informations de @Model.NomEntreprise</h5>
+                    <h5 class="modal-title">Mise à jour des informations de @Model.TargetEntreprise.NomEntreprise</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="EditEntreprise"
-                        asp-route-Id="@Model.Id">
+                        asp-route-Id="@Model.TargetEntreprise.Id">
                         <div class="col-md-12">
-                            <input asp-for="@Model.NomEntreprise" type="text" class="form-control"
+                            <input asp-for="@Model.TargetEntreprise.NomEntreprise" type="text" class="form-control"
                                 placeholder="Nom de l'entreprise" name="nomEntreprise">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.Siret" type="text" class="form-control" placeholder="Siret"
+                            <input asp-for="@Model.TargetEntreprise.Siret" type="text" class="form-control" placeholder="Siret"
                                 name="siret">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.Siege" type="text" class="form-control" placeholder="Siege"
+                            <input asp-for="@Model.TargetEntreprise.Siege" type="text" class="form-control" placeholder="Siege"
                                 name="siege">
                         </div>
                         <div class="col-12">
-                            <input asp-for="@Model.Activite" type="text" class="form-control" placeholder="Activite"
+                            <input asp-for="@Model.TargetEntreprise.Activite" type="text" class="form-control" placeholder="Activite"
                                 name="activite">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.APE" type="text" class="form-control" placeholder="APE" name="ape">
+                            <input asp-for="@Model.TargetEntreprise.APE" type="text" class="form-control" placeholder="APE" name="ape">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.Statut" type="text" class="form-control" placeholder="Statut"
+                            <input asp-for="@Model.TargetEntreprise.Statut" type="text" class="form-control" placeholder="Statut"
                                 name="statut">
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea asp-for="@Model.Description" class="form-control" id="floatingTextarea"
+                                <textarea asp-for="@Model.TargetEntreprise.Description" class="form-control" id="floatingTextarea"
                                     style="height: 100px;"></textarea>
                                 <label for="floatingTextarea">Description</label>
                             </div>

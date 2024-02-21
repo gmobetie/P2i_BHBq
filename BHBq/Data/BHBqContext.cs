@@ -7,7 +7,8 @@ public class BHBqContext : DbContext
     public DbSet<Entreprise> Entreprises { get; set; } = null!; // BHB-Groupe Infos
     public DbSet<Lot> Lots { get; set; } = null!; // BHB-Groupe Infos
     public DbSet<Client> Clients { get; set; } = null!; // Informations clients
-    public DbSet<Projet> Projets { get; set; } = null!; // Informations clients
+    public DbSet<Projet> Projets { get; set; } = null!; // Informations Projets
+    public DbSet<CompteBancaire> ComptesBancaires { get; set; } = null!; // Informations Bancaires des entreprises
 
     // Constructeur pour l'injection de dépendances (production)
     public BHBqContext(DbContextOptions<BHBqContext> options) : base(options) { }
