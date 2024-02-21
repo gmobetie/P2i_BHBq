@@ -71,17 +71,7 @@ public class EntrepriseController : Controller
     [HttpPost]
     public async Task<IActionResult> NewEntreprise(Entreprise entreprise)
     {
-        var company = new Entreprise
-        {
-            NomEntreprise = entreprise.NomEntreprise,
-            APE = entreprise.APE,
-            Siret = entreprise.Siret,
-            Description = entreprise.Description,
-            Siege = entreprise.Siege,
-            Activite = entreprise.Activite,
-            Statut = entreprise.Statut
-        };
-        if (!long.TryParse(company.Siret, out _))
+        if (!long.TryParse(entreprise.Siret, out _))
         {
             return RedirectToAction(
                 "Error",
@@ -92,11 +82,11 @@ public class EntrepriseController : Controller
         else if (
             // Vérifie si les quatre premiers caractères sont des chiffres
             // Vérifie si le cinquième caractère est une lettre
-            !char.IsDigit(company.APE[0])
-            || !char.IsDigit(company.APE[1])
-            || !char.IsDigit(company.APE[2])
-            || !char.IsDigit(company.APE[3])
-            || !char.IsLetter(company.APE[4])
+            !char.IsDigit(entreprise.APE[0])
+            || !char.IsDigit(entreprise.APE[1])
+            || !char.IsDigit(entreprise.APE[2])
+            || !char.IsDigit(entreprise.APE[3])
+            || !char.IsLetter(entreprise.APE[4])
         )
         {
             return RedirectToAction(
@@ -107,7 +97,7 @@ public class EntrepriseController : Controller
         }
         else
         {
-            await _context.Entreprises.AddAsync(company);
+            await _context.Entreprises.AddAsync(entreprise);
             await _context.SaveChangesAsync();
             return RedirectToAction("Entreprises");
         }

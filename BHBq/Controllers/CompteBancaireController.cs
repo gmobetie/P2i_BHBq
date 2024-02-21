@@ -67,25 +67,16 @@ namespace BHBq.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("ComptesBancaires");
+            return RedirectToAction("ComptesBancaires",compteBancaire.IdEntreprise);
         }
 
         [HttpPost]
         public async Task<IActionResult> NewCompteBancaire(CompteBancaire compteBancaire)
         {
-            var newCompteBancaire = new CompteBancaire
-            {
-                IdEntreprise = compteBancaire.IdEntreprise,
-                Adresse = compteBancaire.Adresse,
-                IBAN = compteBancaire.IBAN,
-                BIC = compteBancaire.BIC,
-                NumCompte = compteBancaire.NumCompte,
-                NomBanque = compteBancaire.NomBanque
-            };
 
-            await _context.ComptesBancaires.AddAsync(newCompteBancaire);
+            await _context.ComptesBancaires.AddAsync(compteBancaire);
             await _context.SaveChangesAsync();
-            return RedirectToAction("ComptesBancaires");
+            return RedirectToAction("ComptesBancaires", new { idEntreprise = compteBancaire.IdEntreprise });
         }
 
         [HttpPost]
