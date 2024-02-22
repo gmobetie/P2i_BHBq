@@ -10,16 +10,17 @@
             <h3>@Model.TargetEntreprise.NomEntreprise</h3>
         </div>
         <div class="col text-end">
-            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise" asp-route-id="@Model.TargetEntreprise.Id"
-                method="post">
+            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise"
+                asp-route-id="@Model.TargetEntreprise.Id" method="post">
                 <!-- Delete -->
-                <button type="button" class="btn btn-lg" data-bs-toggle="modal" data-bs-target="#deleteModal-@Model.TargetEntreprise.Id">
+                <button type="button" class="btn btn-lg" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal-@Model.TargetEntreprise.Id">
                     <i class="ri-delete-bin-2-line fs-2"></i>
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="deleteModal-@Model.TargetEntreprise.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="deleteModal-@Model.TargetEntreprise.Id" tabindex="-1"
+                    aria-labelledby="deleteModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -94,8 +95,11 @@
     <div class="row mt-4">
         <div class="col">
             <div class="btn-group" role="group" aria-label="Actions">
-                <a class="btn btn-outline-secondary btn-sm" asp-controller="CompteBancaire" asp-action="ComptesBancaires" asp-route-idEntreprise="@Model.TargetEntreprise.Id">Comptes bancaires</a>
-                <button class="btn btn-outline-secondary btn-sm" type="button">Lots</button>
+                <a class="btn btn-outline-secondary btn-sm" asp-controller="CompteBancaire"
+                    asp-action="ComptesBancaires" asp-route-idEntreprise="@Model.TargetEntreprise.Id">Comptes
+                    bancaires</a>
+                <a class="btn btn-outline-secondary btn-sm" asp-area="" asp-controller="Lot"
+                    asp-action="Lots" asp-route-idEntreprise="@Model.TargetEntreprise.Id">Lots</a>
             </div>
         </div>
         <div class="col">
@@ -121,28 +125,29 @@
                                 placeholder="Nom de l'entreprise" name="nomEntreprise">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.TargetEntreprise.Siret" type="text" class="form-control" placeholder="Siret"
-                                name="siret">
+                            <input asp-for="@Model.TargetEntreprise.Siret" type="text" class="form-control"
+                                placeholder="Siret" name="siret">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.TargetEntreprise.Siege" type="text" class="form-control" placeholder="Siege"
-                                name="siege">
+                            <input asp-for="@Model.TargetEntreprise.Siege" type="text" class="form-control"
+                                placeholder="Siege" name="siege">
                         </div>
                         <div class="col-12">
-                            <input asp-for="@Model.TargetEntreprise.Activite" type="text" class="form-control" placeholder="Activite"
-                                name="activite">
+                            <input asp-for="@Model.TargetEntreprise.Activite" type="text" class="form-control"
+                                placeholder="Activite" name="activite">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.TargetEntreprise.APE" type="text" class="form-control" placeholder="APE" name="ape">
+                            <input asp-for="@Model.TargetEntreprise.APE" type="text" class="form-control"
+                                placeholder="APE" name="ape">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="@Model.TargetEntreprise.Statut" type="text" class="form-control" placeholder="Statut"
-                                name="statut">
+                            <input asp-for="@Model.TargetEntreprise.Statut" type="text" class="form-control"
+                                placeholder="Statut" name="statut">
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea asp-for="@Model.TargetEntreprise.Description" class="form-control" id="floatingTextarea"
-                                    style="height: 100px;"></textarea>
+                                <textarea asp-for="@Model.TargetEntreprise.Description" class="form-control"
+                                    id="floatingTextarea" style="height: 100px;"></textarea>
                                 <label for="floatingTextarea">Description</label>
                             </div>
                         </div>

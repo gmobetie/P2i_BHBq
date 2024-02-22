@@ -21,8 +21,10 @@ public class LotController : Controller
     }
 
     //Get toutes les Lots
-    public IActionResult Lots()
+    public IActionResult Lots(int idEntreprise)
     {
+        Listes.Entreprise = _context.Entreprises.Find(idEntreprise);
+
         return View(Listes);
     }
 
@@ -43,7 +45,7 @@ public class LotController : Controller
         _context.Entry(existingLot).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
-        return RedirectToAction("Lots");
+        return RedirectToAction("Lots", new { idEntreprise = Lot.IdEntreprise });
     }
 
     [HttpPost]
@@ -64,7 +66,7 @@ public class LotController : Controller
         {
             await _context.Lots.AddAsync(lot);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Lots");
+            return RedirectToAction("Lots", new { idEntreprise = lot.IdEntreprise });
         }
     }
 
@@ -93,6 +95,6 @@ public class LotController : Controller
         _context.Lots.Remove(existingLot);
         await _context.SaveChangesAsync();
 
-        return RedirectToAction("Lots");
+        return RedirectToAction("Lots", new { idEntreprise = existingLot.IdEntreprise });
     }
 }
