@@ -75,13 +75,32 @@
                 </div>
             </div>
 
-            <!-- Bouton Supprimer sous-lot -->
-            <form asp-area="" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@Model.SousLot.Id" method="get"
-                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce lot ?');">
-                <div class="col">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
+            <!-- Bouton Supprimer -->
+            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#deleteModal-@Model.SousLot.Id">Supprimer</button>
+
+            <!-- Modal de confirmation de suppression -->
+            <div class="modal fade" id="deleteModal-@Model.SousLot.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Êtes-vous sûr de vouloir supprimer ce sous-lot ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <form asp-area="" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@Model.SousLot.Id"
+                                method="post">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 

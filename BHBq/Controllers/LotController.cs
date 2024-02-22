@@ -70,14 +70,7 @@ public class LotController : Controller
         }
     }
 
-    public IActionResult Error(string Message)
-    {
-        ViewBag.Message = Message;
-        ViewBag.Url = HttpContext.Request.Headers["Referer"];
-        return View();
-    }
-
-    [HttpGet]
+    [HttpPost]
     public async Task<IActionResult> DeleteLot(int id)
     {
         var existingLot = await _context.Lots.FindAsync(id);
@@ -88,11 +81,9 @@ public class LotController : Controller
         }
 
         // Supprimer tous les lots commençant par IdLot. de l'entrée
-        var lotsToDelete = _context.Lots.Where(l => l.IdLot.StartsWith(existingLot.IdLot + "."));
+        var lotsToDelete = _context.Lots.Where(l => l.IdLot.StartsWith(existingLot.IdLot));
 
-        _context.Lots.RemoveRange(lotsToDelete);
-
-        _context.Lots.Remove(existingLot);
+        _context.Lots.RemoveRange(lotsToDelete);;
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Lots", new { idEntreprise = existingLot.IdEntreprise });

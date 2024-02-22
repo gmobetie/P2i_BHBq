@@ -7,6 +7,21 @@
     .Where(l => l.IdEntreprise == Model.Entreprise.Id)
     .ToList();
 }
+<h1>@ViewData["Title"] - @Model.Entreprise.NomEntreprise</h1>
+
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+                    asp-action="Index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Entreprise"
+                    asp-action="Entreprises">Entreprises</a>
+            </li>
+            <li class="breadcrumb-item active">Lots - @Model.Entreprise.NomEntreprise</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
 
       <section class="section">
         <div class="row">

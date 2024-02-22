@@ -12,20 +12,94 @@
 <div class="accordion-item">
     <div class="accordion-header d-flex justify-content-between align-items-center" id="heading-@Model.LotTerminal.Id">
         <button class="accordion-button" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapse-@Model.LotTerminal.Id" aria-expanded="false" aria-controls="collapse-@Model.LotTerminal.Id">
+            data-bs-target="#collapse-@Model.LotTerminal.Id" aria-expanded="false"
+            aria-controls="collapse-@Model.LotTerminal.Id">
             @Model.LotTerminal.IdLot @Model.LotTerminal.Designation
         </button>
         <div class="d-flex justify-content-between align-items-center m-4 gap-2">
             <div class="col">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Modifier</button>
+
+                <!-- Bouton Modifier sous-lot -->
+                <div class="col">
+                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal"
+                        data-bs-target="#edit-@Model.LotTerminal.Id">Modifier</button>
+                </div>
+
+                <!-- Modal de modification de sous-lot -->
+                <div class="modal fade" id="edit-@Model.LotTerminal.Id" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modifier le lot @Model.LotTerminal.Designation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" class="row g-3" asp-controller="Lot" asp-action="EditLot"
+                                    asp-route-Id="@Model.LotTerminal.Id">
+                                    <div class="col-md-12">
+                                        <input asp-for="@temporaryLot.IdEntreprise" type="hidden" class="form-control"
+                                            placeholder="IdEntreprise" name="IdEntreprise" value="@Model.Entreprise.Id">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
+                                            placeholder="Désignation" name="designation" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryLot.IdLot" type="hidden" placeholder="IdLot"
+                                            name="idLot" value="@Model.SousLot.IdLot.@newLTid" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
+                                            placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0"
+                                            max="1">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Abandonner</button>
+                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="col">
-                <button type="button" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                <!-- Bouton Supprimer -->
+                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                    data-bs-target="#deleteModal-@Model.LotTerminal.Id">Supprimer</button>
+
+                <!-- Modal de confirmation de suppression -->
+                <div class="modal fade" id="deleteModal-@Model.LotTerminal.Id" tabindex="-1"
+                    aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                Êtes-vous sûr de vouloir supprimer ce lot ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <form asp-area="" asp-controller="Lot" asp-action="DeleteLot"
+                                    asp-route-id="@Model.LotTerminal.Id" method="post">
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div id="collapse-@Model.LotTerminal.Id" class="accordion-collapse collapse" aria-labelledby="heading-@Model.LotTerminal.Id"
-        data-bs-parent="#accordionLots-@Model.SousLot.Id">
+
+    <div id="collapse-@Model.LotTerminal.Id" class="accordion-collapse collapse"
+        aria-labelledby="heading-@Model.LotTerminal.Id" data-bs-parent="#accordionLots-@Model.SousLot.Id">
         <div class="accordion-body">
             <!-- Boucle des Articles -->
             Quoicoubeh

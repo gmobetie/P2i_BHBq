@@ -64,12 +64,31 @@
             </div>
 
             <!-- Bouton Supprimer -->
-            <form asp-area="" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@Model.Lot.Id" method="get"
-                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce lot ?');">
-                <div class="col">
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
+            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                data-bs-target="#deleteModal-@Model.Lot.Id">Supprimer</button>
+
+            <!-- Modal de confirmation de suppression -->
+            <div class="modal fade" id="deleteModal-@Model.Lot.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Êtes-vous sûr de vouloir supprimer ce lot ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <form asp-area="" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@Model.Lot.Id"
+                                method="post">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
 
         </div>
     </div>
