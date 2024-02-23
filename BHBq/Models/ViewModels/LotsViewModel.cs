@@ -10,6 +10,7 @@ public class LotsViewModel
     public Lot LotTerminal {get;set;} // Variable qui stocke temporairement le lot terminal sélectionnée
     public List<Entreprise> Entreprises { get; set; }
     public List<Lot> Lots { get; set; }
+    public List<Article> Articles { get; set; }
     private readonly BHBqContext _context;
 
     public LotsViewModel()
@@ -21,5 +22,6 @@ public class LotsViewModel
         _context = new BHBqContext(options);
         Lots=_context.Lots.ToList();
         Entreprises=_context.Entreprises.ToList();
+        Articles=_context.Articles.ToList();
     }
 }

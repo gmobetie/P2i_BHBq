@@ -95,4 +95,14 @@ public class LotController : Controller
 
         return RedirectToAction("Lots", new { idEntreprise = existingLot.IdEntreprise });
     }
+
+        [HttpPost]
+        public async Task<IActionResult> NewArticle(Article article, int IdEntreprise)
+        {
+
+            await _context.Articles.AddAsync(article);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Lots", new { idEntreprise = IdEntreprise });
+
+        }
 }
