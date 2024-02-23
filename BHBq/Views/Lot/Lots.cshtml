@@ -25,7 +25,7 @@
 
       <section class="section">
         <div class="row">
-          <div class="col-lg-8">
+          <div class="col">
 
             <!-- display des lots -->
             <div class="card">
@@ -58,8 +58,8 @@
                             name="idLot" required>
                         </div>
                         <div class="col-12">
-                          <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
-                            placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0" max="1">
+                          <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
+                            placeholder="Coéficient de Lot" name="coefPose" pattern="[0-9]+(\.[0-9]+)?" >
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>

@@ -42,15 +42,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
-                                        placeholder="Désignation" name="designation" required>
+                                        placeholder="Désignation" name="designation">
                                 </div>
                                 <div class="col-md-6">
                                     <input asp-for="@temporaryLot.IdLot" type="text" class="form-control"
-                                        placeholder="Identifiant du Lot" name="idLot" required>
+                                        placeholder="Identifiant du Lot" name="idLot">
                                 </div>
                                 <div class="col-12">
-                                    <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
-                                        placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0" max="1">
+                                    <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
+                                        placeholder="Coéficient de Lot" name="coefPose" pattern="[0-9]+(\.[0-9]+)?">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
@@ -131,9 +131,8 @@
                                             name="idLot" value="@Model.Lot.IdLot.@newSid" required>
                                     </div>
                                     <div class="col-12">
-                                        <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
-                                            placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0"
-                                            max="1">
+                                        <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
+                                            placeholder="Coéficient de Lot" name="coefPose" pattern="[0-9]+(\.[0-9]+)?">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -145,17 +144,17 @@
                         </div>
                     </div>
                 </div><!-- End Vertically centered Modal-->
-                    @foreach (var souslot in Model.Lots)
+                @foreach (var souslot in Model.Lots)
+                {
+                    if (souslot.IdLot.StartsWith($"{Model.Lot.IdLot}."))
                     {
-                        if (souslot.IdLot.StartsWith($"{Model.Lot.IdLot}."))
+                        if (souslot.IdLot.Count(c => c == '.') != 2)
                         {
-                            if (souslot.IdLot.Count(c => c == '.') != 2)
-                            {
-                                Model.SousLot = souslot;
-                                @await Html.PartialAsync("LotPartial/EditSousLot", Model)
-                            }
+                            Model.SousLot = souslot;
+                            @await Html.PartialAsync("LotPartial/EditSousLot", Model)
                         }
                     }
+                }
             </div>
         </div>
     </div>

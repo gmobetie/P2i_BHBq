@@ -38,12 +38,19 @@ public class LotController : Controller
             return NotFound();
         }
 
-        // Copier les valeurs de l'objet Lot dans l'objet existant
-        _context.Entry(existingLot).CurrentValues.SetValues(Lot);
-
-        // Marquer toutes les propriétés comme modifiées
-        _context.Entry(existingLot).State = EntityState.Modified;
-
+        // Copy the values from the Lot object to the existing object only if the properties are not null
+        if (Lot.Designation != null)
+        {
+            existingLot.Designation = Lot.Designation;
+        }
+        if (Lot.IdLot != null)
+        {
+            existingLot.IdLot = Lot.IdLot;
+        }
+        if (Lot.CoefPose != null)
+        {
+            existingLot.CoefPose = Lot.CoefPose;
+        }
         await _context.SaveChangesAsync();
         return RedirectToAction("Lots", new { idEntreprise = Lot.IdEntreprise });
     }

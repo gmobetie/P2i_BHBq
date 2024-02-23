@@ -54,15 +54,15 @@
                                 </div>
                                 <div class="col-md-6">
                                     <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
-                                        placeholder="Désignation" name="designation" required>
+                                        placeholder="Désignation" name="designation">
                                 </div>
                                 <div class="col-md-6">
                                     <input asp-for="@temporaryLot.IdLot" type="hidden" placeholder="IdLot" name="idLot"
-                                        value="@Model.Lot.IdLot.@newSid" required>
+                                        value="@Model.Lot.IdLot.@newSid">
                                 </div>
                                 <div class="col-12">
-                                    <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
-                                        placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0" max="1">
+                                    <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
+                                        placeholder="Coéficient de Lot" name="coefPose" pattern="[0-9]+(\.[0-9]+)?">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
@@ -93,8 +93,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <form asp-area="" asp-controller="Lot" asp-action="DeleteLot" asp-route-id="@Model.SousLot.Id"
-                                method="post">
+                            <form asp-area="" asp-controller="Lot" asp-action="DeleteLot"
+                                asp-route-id="@Model.SousLot.Id" method="post">
                                 <button type="submit" class="btn btn-danger">Supprimer</button>
                             </form>
                         </div>
@@ -145,9 +145,8 @@
                                             name="idLot" value="@Model.SousLot.IdLot.@newLTid" required>
                                     </div>
                                     <div class="col-12">
-                                        <input asp-for="@temporaryLot.CoefPose" type="number" class="form-control"
-                                            placeholder="Coéficient de Lot" name="coefPose" step="0.001" min="0"
-                                            max="1">
+                                        <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
+                                            placeholder="Coéficient de Lot" name="coefPose" pattern="[0-9]+(\.[0-9]+)?">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -170,7 +169,8 @@
                         if (lotTerminal.IdLot.Count(c => c == '.') == 2)
                         {
                             Model.LotTerminal = lotTerminal;
-                            @await Html.PartialAsync("LotPartial/EditLotTerminal", Model);
+                            @await Html.PartialAsync("LotPartial/EditLotTerminal", Model)
+                            ;
                         }
                     }
                 }
