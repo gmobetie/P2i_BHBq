@@ -1,0 +1,166 @@
+@model LotsViewModel
+@{
+    Article temporaryArticle = new Article();
+    Lot TargetLot = Model.Lots.FirstOrDefault(lot => lot.Id == Model.TargetLotId);
+}
+    
+<!-- Bouton d'ajout d'un article -->
+<div class="d-flex justify-content-end m-2">
+    <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
+        data-bs-target="#new-a-@TargetLot.Id">Ajouter un
+        article</button>
+</div>
+
+<!-- Modal d'ajout d'un article -->
+<div class="modal fade" id="new-a-@TargetLot.Id" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajoutez un nouvel article à @TargetLot.Designation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" class="row g-3" asp-controller="Lot" asp-action="NewArticle"
+                    asp-route-IdEntreprise="@Model.Entreprise.Id">
+                    <input type="hidden" asp-for="@temporaryArticle.IdLot" value="@TargetLot.Id" name="IdLot" />
+
+                    <div class="mb-3">
+                        <input type="text" asp-for="@temporaryArticle.Libelle" class="form-control"
+                            placeholder="Libellé" name="Libelle" required />
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="text" asp-for="@temporaryArticle.Unite" class="form-control" placeholder="Unité"
+                            name="Unite" required />
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="text" asp-for="@temporaryArticle.PrixH" class="form-control"
+                            placeholder="Prix Haut" name="PrixH" required pattern="[0-9]+(\.[0-9]{1,2})?"
+                            title="Veuillez entrer un nombre valide avec au maximum 2 décimales" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="text" asp-for="@temporaryArticle.PrixM" class="form-control"
+                            placeholder="Prix Moyen" name="PrixM" required pattern="[0-9]+(\.[0-9]{1,2})?"
+                            title="Veuillez entrer un nombre valide avec au maximum 2 décimales" />
+                    </div>
+
+                    <div class="col-md-6">
+                        <input type="text" asp-for="@temporaryArticle.PrixB" class="form-control" placeholder="Prix Bas"
+                            name="PrixB" required pattern="[0-9]+(\.[0-9]{1,2})?"
+                            title="Veuillez entrer un nombre valide avec au maximum 2 décimales" />
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="text" asp-for="@temporaryArticle.Calcul" class="form-control"
+                            placeholder="Modèle de Calcul (format Latex)" name="Calcul" required />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-success">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Affichage des articles -->
+@if (Model.Articles.Any(article => article.IdLot == TargetLot.Id))
+{
+    <!-- Boucle des Articles -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Libellé</th>
+                <th scope="col">Unité</th>
+                <th scope="col">Prix Haut</th>
+                <th scope="col">Prix Moyen</th>
+                <th scope="col">Prix Bas</th>
+                <th scope="col">Modèle de Calcul</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in Model.Articles)
+            {
+                if (article.IdLot == TargetLot.Id)
+                {
+                    <tr>
+                        <td>@article.Libelle</td>
+                        <td>@article.Unite</td>
+                        <td>@article.PrixH</td>
+                        <td>@article.PrixM</td>
+                        <td>@article.PrixB</td>
+                        <td>@article.Calcul</td>
+
+                        <td class="text-end">
+                            <!-- Bouton de modification d'article -->
+                            <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                                data-bs-target="#editarticle-@article.Id">Modifier</button>
+                            <!-- Modal de modification d'article -->
+                            <div class="modal fade" id="editarticle-@article.Id" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Modifier l'article' @article.Libelle</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post" class="row g-3" asp-controller="Lot" asp-action="EditArticle"
+                                                asp-route-id="@article.Id" asp-route-IdEntreprise="@Model.Entreprise.Id">
+                                                <div class="col-md-6">
+                                                    <input asp-for="@temporaryArticle.Libelle" type="text" class="form-control"
+                                                        placeholder="Libellé" name="libelle" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="@temporaryArticle.IdLot" type="hidden" placeholder="IdLot"
+                                                        name="idLot" value="@TargetLot" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="@temporaryArticle.Unite" type="text" class="form-control"
+                                                        placeholder="Unité" name="unite" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="@temporaryArticle.PrixH" type="text" class="form-control"
+                                                        placeholder="Prix Haut" name="prixH" pattern="[0-9]+(\.[0-9]{1,2})?"
+                                                        title="Veuillez entrer un nombre valide avec au maximum 2 décimales" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="@temporaryArticle.PrixM" type="text" class="form-control"
+                                                        placeholder="Prix Moyen" name="prixM" pattern="[0-9]+(\.[0-9]{1,2})?"
+                                                        title="Veuillez entrer un nombre valide avec au maximum 2 décimales" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="@temporaryArticle.PrixB" type="text" class="form-control"
+                                                        placeholder="Prix Bas" name="prixB" pattern="[0-9]+(\.[0-9]{1,2})?"
+                                                        title="Veuillez entrer un nombre valide avec au maximum 2 décimales" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input asp-for="@temporaryArticle.Calcul" type="text" class="form-control"
+                                                        placeholder="Modèle de Calcul (format Latex)" name="calcul" />
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Abandonner</button>
+                                                    <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <form asp-area="" asp-controller="Lot" asp-action="DeleteArticle" asp-route-id="@article.Id"
+                                asp-route-IdEntreprise="@Model.Entreprise.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}

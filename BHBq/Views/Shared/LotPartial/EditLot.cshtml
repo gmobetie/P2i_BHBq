@@ -100,62 +100,72 @@
             <!-- Boucle des souslots -->
             <div class="accordion" id="accordionLots-@Model.Lot.Id">
 
-                <!-- Bouton d'ajout d'un sous-lot -->
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
-                        data-bs-target="#new-s-@Model.Lot.Id">Ajouter un
-                        sous-lot</button>
-                </div>
+                <div class="row">
 
-                <!-- Modal d'ajout de sous-lot -->
-                <div class="modal fade" id="new-s-@Model.Lot.Id" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Ajoutez un nouveau sous-lot à @Model.Lot.Designation</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form method="post" class="row g-3" asp-controller="Lot" asp-action="NewLot">
-                                    <div class="col-md-12">
-                                        <input asp-for="@temporaryLot.IdEntreprise" type="hidden" class="form-control"
-                                            placeholder="IdEntreprise" name="IdEntreprise" value="@Model.Entreprise.Id">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
-                                            placeholder="Désignation" name="designation" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input asp-for="@temporaryLot.IdLot" type="hidden" placeholder="IdLot"
-                                            name="idLot" value="@Model.Lot.IdLot.@newSid" required>
-                                    </div>
-                                    <div class="col-12">
-                                        <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
-                                            placeholder="Coéficient de Lot" name="coefPose" pattern="[0-9]+(\.[0-9]+)?">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Abandonner</button>
-                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                    </div>
-                                </form>
+                    <!-- Bouton d'ajout d'un sous-lot -->
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#new-s-@Model.Lot.Id">Ajouter un
+                            sous-lot</button>
+                    </div>
+
+                    <!-- Modal d'ajout de sous-lot -->
+                    <div class="modal fade" id="new-s-@Model.Lot.Id" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Ajoutez un nouveau sous-lot à @Model.Lot.Designation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" class="row g-3" asp-controller="Lot" asp-action="NewLot">
+                                        <div class="col-md-12">
+                                            <input asp-for="@temporaryLot.IdEntreprise" type="hidden"
+                                                class="form-control" placeholder="IdEntreprise" name="IdEntreprise"
+                                                value="@Model.Entreprise.Id">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
+                                                placeholder="Désignation" name="designation" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input asp-for="@temporaryLot.IdLot" type="hidden" placeholder="IdLot"
+                                                name="idLot" value="@Model.Lot.IdLot.@newSid" required>
+                                        </div>
+                                        <div class="col-12">
+                                            <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
+                                                placeholder="Coéficient de Lot" name="coefPose"
+                                                pattern="[0-9]+(\.[0-9]+)?">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Abandonner</button>
+                                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div><!-- End Vertically centered Modal-->
-                @foreach (var souslot in Model.Lots)
-                {
-                    if (souslot.IdLot.StartsWith($"{Model.Lot.IdLot}."))
+                    </div><!-- End Vertically centered Modal-->
+
+                    @{
+                        Model.TargetLotId = Model.Lot.Id;
+                    }
+                    @await Html.PartialAsync("LotPartial/EditArticle", Model)
+
+                    @foreach (var souslot in Model.Lots)
                     {
-                        if (souslot.IdLot.Count(c => c == '.') != 2)
+                        if (souslot.IdLot.StartsWith($"{Model.Lot.IdLot}."))
                         {
-                            Model.SousLot = souslot;
-                            @await Html.PartialAsync("LotPartial/EditSousLot", Model)
+                            if (souslot.IdLot.Count(c => c == '.') != 2)
+                            {
+                                Model.SousLot = souslot;
+                                @await Html.PartialAsync("LotPartial/EditSousLot", Model)
+                            }
                         }
                     }
-                }
+                </div>
             </div>
         </div>
     </div>
-</div>

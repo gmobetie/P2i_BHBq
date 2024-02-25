@@ -90,19 +90,78 @@ public class LotController : Controller
         // Supprimer tous les lots commençant par IdLot. de l'entrée
         var lotsToDelete = _context.Lots.Where(l => l.IdLot.StartsWith(existingLot.IdLot));
 
-        _context.Lots.RemoveRange(lotsToDelete);;
+        _context.Lots.RemoveRange(lotsToDelete);
+        ;
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Lots", new { idEntreprise = existingLot.IdEntreprise });
     }
 
-        [HttpPost]
-        public async Task<IActionResult> NewArticle(Article article, int IdEntreprise)
+    [HttpPost]
+    public async Task<IActionResult> NewArticle(Article article, int IdEntreprise)
+    {
+        await _context.Articles.AddAsync(article);
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Lots", new { idEntreprise = IdEntreprise });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteArticle(int id, int IdEntreprise)
+    {
+        var existingArticle = await _context.Articles.FindAsync(id);
+
+        if (existingArticle == null)
         {
-
-            await _context.Articles.AddAsync(article);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Lots", new { idEntreprise = IdEntreprise });
-
+            return NotFound();
         }
+
+        _context.Articles.Remove(existingArticle);
+        ;
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Lots", new { idEntreprise = IdEntreprise });
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> EditArticle(int id, int IdEntreprise, Article article)
+    {
+        var existingArticle = await _context.Articles.FindAsync(id);
+
+        if (existingArticle == null)
+        {
+            return NotFound();
+        }
+
+        // Copy the values from the Article object to the existing object only if the properties are not null
+        if (article.Libelle != null)
+        {
+            existingArticle.Libelle = article.Libelle;
+        }
+        if (article.IdLot != null)
+        {
+            existingArticle.IdLot = article.IdLot;
+        }
+        if (article.Unite != null)
+        {
+            existingArticle.Unite = article.Unite;
+        }
+        if (article.PrixH != null)
+        {
+            existingArticle.PrixH = article.PrixH;
+        }
+        if (article.PrixM != null)
+        {
+            existingArticle.PrixM = article.PrixM;
+        }
+        if (article.PrixB != null)
+        {
+            existingArticle.PrixB = article.PrixB;
+        }
+        if (article.Calcul != null)
+        {
+            existingArticle.Calcul = article.Calcul;
+        }
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Lots", new { idEntreprise = IdEntreprise });
+    }
 }

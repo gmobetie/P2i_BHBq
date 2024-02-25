@@ -159,7 +159,10 @@
                     </div>
                 </div><!-- End Vertically centered Modal-->
 
-
+                @{
+                    Model.TargetLotId = Model.SousLot.Id;
+                }
+                @await Html.PartialAsync("LotPartial/EditArticle", Model)
 
                 <!-- Boucle des lots terminaux -->
                 @foreach (var lotTerminal in Model.Lots)

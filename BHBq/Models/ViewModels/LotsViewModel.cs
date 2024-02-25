@@ -8,6 +8,7 @@ public class LotsViewModel
     public Lot Lot {get;set;} // Variable qui stocke temporairement le lot sélectionnée
     public Lot SousLot {get;set;} // Variable qui stocke temporairement le sous-lot sélectionnée
     public Lot LotTerminal {get;set;} // Variable qui stocke temporairement le lot terminal sélectionnée
+    public int TargetLotId {get;set;} // Variable qui stocke temporairement l'id du lot sélectionnée;
     public List<Entreprise> Entreprises { get; set; }
     public List<Lot> Lots { get; set; }
     public List<Article> Articles { get; set; }
