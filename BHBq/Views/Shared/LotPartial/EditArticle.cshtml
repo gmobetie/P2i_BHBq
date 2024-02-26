@@ -3,12 +3,13 @@
     Article temporaryArticle = new Article();
     Lot TargetLot = Model.Lots.FirstOrDefault(lot => lot.Id == Model.TargetLotId);
 }
-    
-<!-- Bouton d'ajout d'un article -->
-<div class="d-flex justify-content-end m-2">
-    <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
-        data-bs-target="#new-a-@TargetLot.Id">Ajouter un
-        article</button>
+<div class="col">
+    <!-- Bouton d'ajout d'un article -->
+    <div class="col d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
+            data-bs-target="#new-a-@TargetLot.Id">Ajouter un
+            article</button>
+    </div>
 </div>
 
 <!-- Modal d'ajout d'un article -->

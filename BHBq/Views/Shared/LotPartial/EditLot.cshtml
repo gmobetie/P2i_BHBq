@@ -11,7 +11,7 @@
 }
 
 
-<div class="accordion-item">
+<div class="accordion-item m-3">
     <div class="accordion-header d-flex justify-content-between align-items-center" id="heading-@Model.Lot.Id">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#collapse-@Model.Lot.Id" aria-expanded="false" aria-controls="collapse-@Model.Lot.Id">
@@ -101,15 +101,12 @@
             <div class="accordion" id="accordionLots-@Model.Lot.Id">
 
                 <div class="row">
-
                     <!-- Bouton d'ajout d'un sous-lot -->
-                    <div class="d-flex justify-content-end">
+                    <div class="col justify-content-start">
                         <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
                             data-bs-target="#new-s-@Model.Lot.Id">Ajouter un
                             sous-lot</button>
-                    </div>
-
-                    <!-- Modal d'ajout de sous-lot -->
+                    </div <!-- Modal d'ajout de sous-lot -->
                     <div class="modal fade" id="new-s-@Model.Lot.Id" tabindex="-1">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">

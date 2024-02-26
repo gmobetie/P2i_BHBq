@@ -89,9 +89,10 @@ public class LotController : Controller
 
         // Supprimer tous les lots commençant par IdLot. de l'entrée
         var lotsToDelete = _context.Lots.Where(l => l.IdLot.StartsWith(existingLot.IdLot));
+        var articlesToDelete = _context.Articles.Where(a => lotsToDelete.Any(l => l.Id == a.IdLot));
 
         _context.Lots.RemoveRange(lotsToDelete);
-        ;
+        _context.Articles.RemoveRange(articlesToDelete);
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Lots", new { idEntreprise = existingLot.IdEntreprise });
