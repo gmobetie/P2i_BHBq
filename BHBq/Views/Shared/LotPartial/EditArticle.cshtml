@@ -2,6 +2,7 @@
 @{
     Article temporaryArticle = new Article();
     Lot TargetLot = Model.Lots.FirstOrDefault(lot => lot.Id == Model.TargetLotId);
+    int variables = 0;
 }
 <div class="col">
     <!-- Bouton d'ajout d'un article -->
@@ -25,7 +26,7 @@
                     asp-route-IdEntreprise="@Model.Entreprise.Id">
                     <input type="hidden" asp-for="@temporaryArticle.IdLot" value="@TargetLot.Id" name="IdLot" />
 
-                    <div class="mb-3">
+                    <div class="col-md-12">
                         <input type="text" asp-for="@temporaryArticle.Libelle" class="form-control"
                             placeholder="Libellé" name="Libelle" required />
                     </div>
@@ -53,10 +54,6 @@
                             title="Veuillez entrer un nombre valide avec au maximum 2 décimales" />
                     </div>
 
-                    <div class="mb-3">
-                        <input type="text" asp-for="@temporaryArticle.Calcul" class="form-control"
-                            placeholder="Modèle de Calcul (format Latex)" name="Calcul" required />
-                    </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                         <button type="submit" class="btn btn-success">Ajouter</button>
@@ -93,6 +90,52 @@
                         <td>@article.PrixH</td>
                         <td>@article.PrixM</td>
                         <td>@article.PrixB</td>
+                        <td>
+                            <!-- Bouton de modification d'article -->
+                            <button type="button" class="btn btn-sm btn-light" data-bs-toggle="modal"
+                                data-bs-target="#editcalcul-@article.Id">
+                                @if (article.Calcul == null)
+                                {
+                                    <text>Non défini</text>
+                                }
+                                else
+                                {
+                                    @article.Calcul
+                                }
+                            </button>
+                            <!-- Modal de modification d'article -->
+                            <div class="modal fade" id="editcalcul-@article.Id" tabindex="-1">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Modèle de calcul de l'article : @article.Libelle</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post" class="row g-3" asp-controller="Lot" asp-action="EditCalcul"
+                                                asp-route-id="@article.Id" asp-route-IdEntreprise="@Model.Entreprise.Id">
+                                                <div class="col-md-12">
+                                                    <input asp-for="@temporaryArticle.Calcul" type="text" class="form-control"
+                                                        placeholder="Calcul" name="calcul" />
+                                                </div>
+                                                @for (int i = 1; i <= 4; i++)
+                                                {
+                                                    <div class="col-md-3">
+                                                        <select name="cp-@i" class="form-select" aria-label="Default select example"
+                                                            required>
+                                                            <option value="" selected>Paramètre @i</option>
+                                                            <!-- Ajoutez ici les options pour chaque variable -->
+                                                        </select>
+                                                    </div>
+                                                }
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                         <td>@article.Calcul</td>
 
                         <td class="text-end">
@@ -137,10 +180,6 @@
                                                     <input asp-for="@temporaryArticle.PrixB" type="text" class="form-control"
                                                         placeholder="Prix Bas" name="prixB" pattern="[0-9]+(\.[0-9]{1,2})?"
                                                         title="Veuillez entrer un nombre valide avec au maximum 2 décimales" />
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <input asp-for="@temporaryArticle.Calcul" type="text" class="form-control"
-                                                        placeholder="Modèle de Calcul (format Latex)" name="calcul" />
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"

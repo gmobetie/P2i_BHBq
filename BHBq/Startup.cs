@@ -55,9 +55,12 @@ public class Startup
                 MinHeight = 600, // Hauteur minimale de la fenêtre
                 MaxWidth = 1920, // Largeur maximale de la fenêtre
                 MaxHeight = 1080, // Hauteur maximale de la fenêtre
-                Center = true,
+                Center = true,  // Centrer la fenêtre
+                AutoHideMenuBar = true, // Masquer la barre de menu
+                Icon = Path.Combine(env.ContentRootPath, "build", "LogoBHBqIcon.png"), // Icône de la fenêtre
             };
             await Electron.WindowManager.CreateWindowAsync(options);
+            
         });
     }
 }

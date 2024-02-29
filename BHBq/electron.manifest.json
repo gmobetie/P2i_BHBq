@@ -13,9 +13,11 @@
     "copyright": "Copyright © 2020",
     "buildVersion": "1.0.0",
     "compression": "maximum",
+    "win": {
+      "icon": "../../../build/icon.ico"
+    },
     "directories": {
-      "output": "../../../bin/Desktop",
-      "buildResources": "Assets"
+      "output": "../../../bin/Desktop"
     },
     "extraResources": [
       {
@@ -31,9 +33,7 @@
         "filter": [ "**/*" ]
       },
       "**/*"
-    ],
-    "win": {
-      "icon": "Assets/LogoBHBqIcon.ico"
-    }
+    ]
   }
 }
+

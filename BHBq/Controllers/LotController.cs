@@ -165,4 +165,5 @@ public class LotController : Controller
         await _context.SaveChangesAsync();
         return RedirectToAction("Lots", new { idEntreprise = IdEntreprise });
     }
+
 }
