@@ -1,25 +1,31 @@
-@model List<Client>
+@model ClientViewModel
 @{
     ViewData["Title"] = "Clients";
-    Client target = new Client();
+    int? categorie=null;
 }
-
 <h1>@ViewData["Title"]</h1>
 
 <div class="pagetitle">
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Devis</a></li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+                    asp-action="Index">Dashboard</a>
+            </li>
             <li class="breadcrumb-item active">Clients</li>
         </ol>
     </nav>
 </div><!-- End Page Title -->
 
+
+
 <section class="section contact">
+
     <div class="row">
+
         <!-- Ajouter un nouveau client -->
         <div class="col text-center m-4">
-            <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal" data-bs-target="#new">
+            <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal"
+                data-bs-target="#new">
                 <i class="ri ri-add-line"></i>
                 <h3>Nouveau Client</h3>
             </button>
@@ -34,28 +40,37 @@
                     </div>
                     <div class="modal-body">
                         <form method="post" class="row g-3" asp-controller="Client" asp-action="NewClient">
-                            <div class="col-md-6">
-                                <input asp-for="@target.Nom" type="text" class="form-control" placeholder="Nom" name="nom" required>
+                            <div class="col-md-12">
+                                <input asp-for="@Model.TargetClient.Nom" maxlength="20" type="text" class="form-control"
+                                    placeholder="Nom du client" name="Nom" required>
                             </div>
                             <div class="col-md-6">
-                                <input asp-for="@target.Adresse" type="text" class="form-control" placeholder="Adresse" name="adresse" required>
-                            </div>
-                            <div class="col-12">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" asp-for="@target.Particulier">
-                                    <label class="form-check-label" for="particulier">
-                                        Particulier
-                                    </label>
-                                </div>
+                                <input asp-for="@Model.TargetClient.Adresse" type="text" class="form-control"
+                                    placeholder="Adresse" name="Adresse" required>
                             </div>
                             <div class="col-md-6">
-                                <input asp-for="@target.Siret" type="text" class="form-control" placeholder="Siret" name="siret">
+                                <select asp-for="@categorie" class="form-select" name="Categorie" required
+                                    aria-label="Default select example">
+                                    <option selected value="">Catégorie</option>
+                                    <option value="0">Particulier</option>
+                                    <option value="1">Professionnel</option>
+                                </select>
                             </div>
                             <div class="col-md-6">
-                                <input asp-for="@target.TvaIntracom" type="text" class="form-control" placeholder="TVA Intracommunautaire" name="tvaIntracom">
+                                <input asp-for="@Model.TargetClient.Siret" maxlength="14" minlength="14" type="text"
+                                    class="form-control" placeholder="Siret" name="Siret"
+                                    pattern="[0-9]{3}[0-9]{3}[0-9]{3}[0-9]{5}"
+                                    title="Le format du Siret doit être de 14 chiffres et respecter le format XXX XXX XXX XXXXX">
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.TargetClient.TvaIntracom" maxlength="12" minlength="12" type="text"
+                                    class="form-control" placeholder="TVA intracommunautaire" name="TvaIntracom"
+                                    pattern="[A-Z]{2}[0-9]{10}"
+                                    title="Le format du numéro de TVA intracommunautaire doit être de 12 caractères et commencer par deux lettres en majuscules suivies de 10 chiffres">
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Abandonner</button>
                                 <button type="submit" class="btn btn-success">Sauvegarder</button>
                             </div>
                         </form>
@@ -63,12 +78,17 @@
                 </div>
             </div>
         </div>
-
-        <div class="col">
-            @foreach (var client in Model)
-            {
-                @await Html.PartialAsync("ClientPartial/EditClient", client)
-            }
-        </div>
     </div>
+    </div>
+
+    <div class="col">
+        @foreach (var item in Model.Clients)
+        {
+            Model.TargetClient = item;
+            @await Html.PartialAsync("ClientPartial/EditClient")
+        }
+    </div>
+
+    </div>
+
 </section>

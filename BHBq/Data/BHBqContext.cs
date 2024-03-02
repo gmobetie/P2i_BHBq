@@ -10,6 +10,7 @@ public class BHBqContext : DbContext
     public DbSet<Projet> Projets { get; set; } = null!; // Informations Projets
     public DbSet<Article> Articles { get; set; } = null!; // Informations Articles
     public DbSet<CompteBancaire> ComptesBancaires { get; set; } = null!; // Informations Bancaires des entreprises
+    public DbSet<Parametre> Parametres { get; set; } = null!; // Paramètres de modélisation
 
     // Constructeur pour l'injection de dépendances (production)
     public BHBqContext(DbContextOptions<BHBqContext> options) : base(options) { }

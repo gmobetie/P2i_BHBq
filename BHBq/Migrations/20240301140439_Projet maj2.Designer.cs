@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHBq.Migrations
 {
     [DbContext(typeof(BHBqContext))]
-    partial class BHBqContextModelSnapshot : ModelSnapshot
+    [Migration("20240301140439_Projet maj2")]
+    partial class Projetmaj2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -63,12 +66,12 @@ namespace BHBq.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("Categorie")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Particulier")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Siret")
                         .HasColumnType("TEXT");
@@ -209,19 +212,14 @@ namespace BHBq.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("DateCreation")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Etat")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("IdClient")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("IdEntreprise")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("NomProjet")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

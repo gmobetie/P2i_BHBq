@@ -4,20 +4,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-public class ProjetViewModel
+public class ClientViewModel
 {
-    public int SelectedEntreprise { get; set; } // Variable qui stocke temporairement l'Id l'entreprise sélectionnée
-    public int SelectedClient { get; set; }
-    public List<SelectListItem> ListeEntreprises { get; set; }
+    public Projet TargetProjet { get; set; }
+    public Client TargetClient { get; set; }
     public List<SelectListItem> ListeClients { get; set; }
+    public List<Projet> Projets { get; set; }
+    public List<Client> Clients { get; set; }
     private readonly BHBqContext _context;
 
-    public ProjetViewModel()
+    public ClientViewModel()
     {
         var options = new DbContextOptionsBuilder<BHBqContext>()
             .UseSqlite($"Data Source=BHBq.db")
             .Options;
 
         _context = new BHBqContext(options);
+        Projets=_context.Projets.ToList();
+        Clients=_context.Clients.ToList();
     }
 }

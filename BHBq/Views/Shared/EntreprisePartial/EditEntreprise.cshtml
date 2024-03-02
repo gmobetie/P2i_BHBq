@@ -10,38 +10,34 @@
             <h3>@Model.TargetEntreprise.NomEntreprise</h3>
         </div>
         <div class="col text-end">
-            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise"
-                asp-route-id="@Model.TargetEntreprise.Id" method="post">
-                <!-- Delete -->
-                <button type="button" class="btn btn-lg" data-bs-toggle="modal"
-                    data-bs-target="#deleteModal-@Model.TargetEntreprise.Id">
-                    <i class="ri-delete-bin-2-line fs-2"></i>
-                </button>
+            <!-- Delete -->
+            <button type="button" class="btn btn-lg" data-bs-toggle="modal"
+                data-bs-target="#deleteModal-@Model.TargetEntreprise.Id">
+                <i class="ri-delete-bin-2-line fs-2"></i>
+            </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="deleteModal-@Model.TargetEntreprise.Id" tabindex="-1"
-                    aria-labelledby="deleteModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-center">
-                                Êtes-vous sûr de vouloir supprimer cette entreprise ?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise"
-                                    asp-route-id="@Model.TargetEntreprise.Id" method="post">
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
-                                </form>
-                            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@Model.TargetEntreprise.Id" tabindex="-1"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Êtes-vous sûr de vouloir supprimer cette entreprise ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <form asp-area="" asp-controller="Entreprise" asp-action="DeleteEntreprise"
+                                asp-route-id="@Model.TargetEntreprise.Id" method="post">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
@@ -98,8 +94,8 @@
                 <a class="btn btn-outline-secondary btn-sm" asp-controller="CompteBancaire"
                     asp-action="ComptesBancaires" asp-route-idEntreprise="@Model.TargetEntreprise.Id">Comptes
                     bancaires</a>
-                <a class="btn btn-outline-secondary btn-sm" asp-area="" asp-controller="Lot"
-                    asp-action="Lots" asp-route-idEntreprise="@Model.TargetEntreprise.Id">Lots</a>
+                <a class="btn btn-outline-secondary btn-sm" asp-area="" asp-controller="Lot" asp-action="Lots"
+                    asp-route-idEntreprise="@Model.TargetEntreprise.Id">Lots</a>
             </div>
         </div>
         <div class="col">

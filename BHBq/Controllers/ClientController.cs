@@ -8,7 +8,7 @@ namespace BHBq.Controllers;
 public class ClientController : Controller
 {
     private readonly BHBqContext _context;
-    public List<Client> clients { get; set; }
+    public ClientViewModel Listes { get; set; }
 
     public ClientController()
     {
@@ -17,17 +17,17 @@ public class ClientController : Controller
             .Options;
 
         _context = new BHBqContext(options);
-        clients = _context.Clients.ToList();
+        Listes = new ClientViewModel();
     }
 
     //Get toutes les clients
     public IActionResult Clients()
     {
-        return View(clients);
+        return View(Listes);
     }
 
     [HttpPost]
-    public async Task<IActionResult> EditClient(int id, Client client)
+    public async Task<IActionResult> EditClient(int id, Client client, int Categorie)
     {
         var existingClient = await _context.Clients.FindAsync(id);
 
@@ -45,13 +45,27 @@ public class ClientController : Controller
         {
             existingClient.Adresse = client.Adresse;
         }
-        existingClient.Particulier = client.Particulier;
+        if (client.Categorie!=null)
+        {
+            existingClient.Categorie = Categorie == 1;
+            if (client.Categorie == false)
+            {
+                existingClient.Siret = null;
+                existingClient.TvaIntracom = null;
+            }
+        }
 
         // Mettre à jour les propriétés spécifiques aux professionnels
-        if (client.Particulier == false)
+        if (client.Categorie == true)
         {
-            existingClient.Siret = client.Siret;
-            existingClient.TvaIntracom = client.TvaIntracom;
+            if (!string.IsNullOrEmpty(client.Siret))
+            {
+                existingClient.Siret = client.Siret;
+            }
+            if (!string.IsNullOrEmpty(client.TvaIntracom))
+            {
+                existingClient.TvaIntracom = client.TvaIntracom;
+            }
         }
 
         await _context.SaveChangesAsync();
@@ -59,17 +73,10 @@ public class ClientController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> NewClient(Client client)
+    public async Task<IActionResult> NewClient(Client client, int Categorie)
     {
-        var company = new Client
-        {
-            Nom = client.Nom,
-            Adresse = client.Adresse,
-            Particulier = client.Particulier,
-            Siret = client.TvaIntracom,
-        };
-
-        await _context.Clients.AddAsync(company);
+        client.Categorie = Categorie == 1;
+        await _context.Clients.AddAsync(client);
         await _context.SaveChangesAsync();
         return RedirectToAction("Clients");
     }

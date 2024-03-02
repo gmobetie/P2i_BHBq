@@ -1,52 +1,139 @@
-@model Client
+@model ClientViewModel
 @{
-    string modalId = $"myModal-{Model.Id}";
+    string modalId = $"myModal-{Model.TargetClient.Id}";
+    int? categorie=null;
 }
 
 <div class="info-box card">
-    <div class="col text-end">
-        <form asp-area="" asp-controller="Client" asp-action="DeleteClient" asp-route-id="@Model.Id"
-            method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce client?');">
-            <button type="submit" class="btn btn-outline-dark"><i class="ri-delete-bin-2-line fs-4"></i></button>
-        </form>
+    <div class="row">
+        <div class="col">
+            <i class="bi bi-geo-alt"></i>
+            <h3>@Model.TargetClient.Nom</h3>
+        </div>
+        <div class="col text-end">
+            <!-- Delete -->
+            <button type="button" class="btn btn-lg" data-bs-toggle="modal"
+                data-bs-target="#deleteModal-@Model.TargetClient.Id">
+                <i class="ri-delete-bin-2-line fs-2"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@Model.TargetClient.Id" tabindex="-1"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Êtes-vous sûr de vouloir supprimer ce client ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <form asp-area="" asp-controller="Client" asp-action="DeleteClient"
+                                asp-route-id="@Model.TargetClient.Id" method="post">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <i class="bi bi-person"></i>
-    <h3>@Model.Nom</h3>
-    <p>@Model.Adresse</p>
-    <button class="btn btn-outline-dark btn-sm mt-4" type="button" data-bs-toggle="modal"
-        data-bs-target="@($"#{modalId}")">Modifier les informations</button>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 justify-content-center">
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 label text-end">
+                    <h5>Adresse :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.TargetClient.Adresse</div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 text-end">
+                    <h5>Catégorie :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.TargetClient.Categorie</div>
+            </div>
+        </div>
+
+        @if (Model.TargetClient.Categorie == true)
+        {
+            <div class="col-lg-6 col-md-6 justify-content-center">
+                <div class="row m-2">
+                    <div class="col-lg-6 col-md-6 label text-end">
+                        <h5>SIRET :</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6">@Model.TargetClient.Siret</div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col-lg-6 col-md-6 text-end">
+                        <h5>N° TVA intracommunautaire :</h5>
+                    </div>
+                    <div class="col-lg-6 col-md-6">@Model.TargetClient.TvaIntracom</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="btn-group" role="group" aria-label="Actions">
+                <a class="btn btn-outline-secondary btn-sm" asp-controller="CompteBancaire"
+                    asp-action="ComptesBancaires" asp-route-idClient="@Model.TargetClient.Id">Comptes
+                    bancaires</a>
+                <a class="btn btn-outline-secondary btn-sm" asp-area="" asp-controller="Lot" asp-action="Lots"
+                    asp-route-idClient="@Model.TargetClient.Id">Lots</a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="text-end">
+                <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="modal"
+                    data-bs-target="#@modalId">Modifier</button>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="@modalId" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Mise à jour des informations de @Model.Nom</h5>
+                    <h5 class="modal-title">Mise à jour des informations de @Model.TargetClient.Nom</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form method="post" class="row g-3" asp-controller="Client" asp-action="EditClient"
-                        asp-route-Id="@Model.Id">
+                        asp-route-id="@Model.TargetClient.Id">
                         <div class="col-md-12">
-                            <input asp-for="Nom" type="text" class="form-control"
-                                placeholder="Nom du client" name="nom">
-                        </div>
-                        <div class="col-md-12">
-                            <input asp-for="Adresse" type="text" class="form-control" placeholder="Adresse"
-                                name="adresse">
-                        </div>
-                        <div class="col-md-12">
-                            <input asp-for="Particulier" type="checkbox" class="form-check-input"
-                                id="particulier" name="particulier">
-                            <label class="form-check-label" for="particulier">Particulier</label>
+                            <input asp-for="@Model.TargetClient.Nom" maxlength="20" type="text" class="form-control"
+                                placeholder="Nom du client" name="Nom">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="Siret" type="text" class="form-control" placeholder="Siret"
-                                name="siret">
+                            <input asp-for="@Model.TargetClient.Adresse" type="text" class="form-control"
+                                placeholder="Adresse" name="Adresse">
                         </div>
                         <div class="col-md-6">
-                            <input asp-for="TvaIntracom" type="text" class="form-control" placeholder="TVA Intracommunautaire"
-                                name="tvaIntracom">
+                            <select asp-for="@categorie" class="form-select" name="Categorie"
+                                aria-label="Default select example">
+                                <option selected value="">Catégorie</option>
+                                <option value="0">Particulier</option>
+                                <option value="1">Professionnel</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.TargetClient.Siret" maxlength="14" minlength="14" type="text"
+                                class="form-control" placeholder="Siret" name="Siret"
+                                pattern="[0-9]{3}[0-9]{3}[0-9]{3}[0-9]{5}"
+                                title="Le format du Siret doit être de 14 chiffres et respecter le format XXX XXX XXX XXXXX">
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.TargetClient.TvaIntracom" maxlength="12" minlength="12" type="text"
+                                class="form-control" placeholder="TVA intracommunautaire" name="TvaIntracom"
+                                pattern="[A-Z]{2}[0-9]{10}"
+                                title="Le format du numéro de TVA intracommunautaire doit être de 12 caractères et commencer par deux lettres en majuscules suivies de 10 chiffres">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>

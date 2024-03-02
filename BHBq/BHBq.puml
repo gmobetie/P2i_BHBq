@@ -70,9 +70,8 @@ class Projet #lightpink {
 class Param #lightgrey {
   + Id: int [PK]
   + IdProjet: int [FK]
-  + Param1: int
-  + Param2: int
-  + ...: int
+  + Nom: string
+  + Valeur: int
 
   + Param()
 }
