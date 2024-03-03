@@ -81,13 +81,8 @@
 
     <div class="row mt-4">
         <div class="col">
-            <div class="btn-group" role="group" aria-label="Actions">
-                <a class="btn btn-outline-secondary btn-sm" asp-controller="CompteBancaire"
-                    asp-action="ComptesBancaires" asp-route-idClient="@Model.TargetClient.Id">Comptes
-                    bancaires</a>
-                <a class="btn btn-outline-secondary btn-sm" asp-area="" asp-controller="Lot" asp-action="Lots"
-                    asp-route-idClient="@Model.TargetClient.Id">Lots</a>
-            </div>
+                <a class="btn btn-outline-secondary" asp-controller="Projet"
+                    asp-action="Projets" asp-route-idClient="@Model.TargetClient.Id">Projets</a>
         </div>
         <div class="col">
             <div class="text-end">

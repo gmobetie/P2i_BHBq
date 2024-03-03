@@ -1,0 +1,90 @@
+@model ClientViewModel
+@{
+    string modalId = $"myModal-{Model.TargetProjet.Id}";
+    int? categorie = null;
+}
+
+<div class="info-box card">
+    <div class="row">
+        <div class="col">
+            <i class="bi bi-geo-alt"></i>
+            <h3>@Model.TargetProjet.NomProjet</h3>
+        </div>
+        <div class="col text-end">
+            <!-- Delete -->
+            <button type="button" class="btn btn-lg" data-bs-toggle="modal"
+                data-bs-target="#deleteModal-@Model.TargetProjet.Id">
+                <i class="ri-delete-bin-2-line fs-2"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@Model.TargetProjet.Id" tabindex="-1"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Êtes-vous sûr de vouloir supprimer ce projet ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <form asp-area="" asp-controller="Projet" asp-action="DeleteProjet"
+                                asp-route-id="@Model.TargetProjet.Id" method="post">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        @if (Model.TargetProjet.Description != null)
+        {
+            <h5>Description</h5>
+            <p class="small fst-italic">@Model.TargetProjet.Description</p>
+        }
+
+    <div class="row mt-4">
+        <div class="col">
+            <a class="btn btn-outline-secondary" asp-controller="Projet" asp-action="Projets"
+                asp-route-idProjet="@Model.TargetProjet.Id">Projets</a>
+        </div>
+        <div class="col">
+            <div class="text-end">
+                <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="modal"
+                    data-bs-target="#@modalId">Modifier</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="@modalId" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mise à jour des informations de @Model.TargetProjet.NomProjet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="row g-3" asp-controller="Projet" asp-action="EditProjet" asp-route-id="@Model.TargetProjet.Id">
+                        <div class="col-md-12">
+                            <input asp-for="@Model.TargetProjet.NomProjet" maxlength="20" type="text"
+                                class="form-control" placeholder="Nom du projet" name="NomProjet">
+                        </div>
+                        <div class="col-md-12">
+                            <textarea asp-for="@Model.TargetProjet.Description" class="form-control"
+                                placeholder="Description" name="Description"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- Fin du Modal centré verticalement -->
+</div>

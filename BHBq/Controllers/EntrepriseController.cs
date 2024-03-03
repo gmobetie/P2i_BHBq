@@ -62,10 +62,7 @@ public class EntrepriseController : Controller
         {
             existingEntreprise.APE = entreprise.APE;
         }
-                if (!string.IsNullOrEmpty(entreprise.APE))
-        {
-            existingEntreprise.APE = entreprise.APE;
-        }
+        existingEntreprise.Description = entreprise.Description;
 
         await _context.SaveChangesAsync();
         return RedirectToAction("Entreprises");

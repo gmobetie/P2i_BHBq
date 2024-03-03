@@ -1,0 +1,82 @@
+@model ClientViewModel
+@{
+    ViewData["Title"] = "Gestion de projets";
+
+    List<Projet> projets = Model.Projets
+    .Where(l => l.IdClient == Model.TargetClient.Id)
+    .ToList();
+}
+<h1>@ViewData["Title"] - @Model.TargetClient.Nom</h1>
+
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+                    asp-action="Index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Client"
+                    asp-action="Clients">Clients</a>
+            </li>
+            <li class="breadcrumb-item active">Projets - @Model.TargetClient.Nom</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
+
+<section class="section contact">
+
+    <div class="row">
+
+        <!-- Ajouter un nouveau projet -->
+        <div class="col text-center m-4">
+            <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal"
+                data-bs-target="#new">
+                <i class="ri ri-add-line"></i>
+                <h3>Nouveau Projet</h3>
+            </button>
+        </div>
+
+        <div class="modal fade" id="new" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Nouveau Projet pour le client @Model.TargetClient.Nom</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" class="row g-3" asp-controller="Projet" asp-action="NewProjet">
+                            <input asp-for="@Model.TargetProjet.DateCreation" type="hidden" name="DateCreation" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            <input asp-for="@Model.TargetProjet.IdClient" type="hidden" name="IdClient" value="@Model.TargetClient.Id">
+                            <input asp-for="@Model.TargetProjet.Etat" type="hidden" name="Etat" value="0">
+                            <div class="col-md-12">
+                                <input asp-for="@Model.TargetProjet.NomProjet" maxlength="20" type="text" class="form-control"
+                                    placeholder="Nom du projet" name="NomProjet" required>
+                            </div>
+                            <div class="col-md-12">
+                                <textarea asp-for="@Model.TargetProjet.Description" class="form-control" placeholder="Description" name="Description"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Abandonner</button>
+                                <button type="submit" class="btn btn-success">Sauvegarder</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="col">
+        @foreach (var item in Model.Projets.Where(l => l.IdClient == Model.TargetClient.Id))
+        {
+            Model.TargetProjet = item;
+            @await Html.PartialAsync("ProjetPartial/EditProjet")
+        }
+    </div>
+
+    </div>
+
+</section>

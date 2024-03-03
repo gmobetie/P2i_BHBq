@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 public class EntrepriseViewModel
 {
-    private readonly BHBqContext _context;
-    public List<Entreprise> Entreprises;
-    public Entreprise TargetEntreprise;
-    public List<CompteBancaire> ComptesBancaires;
-    public CompteBancaire TargetCompteBancaire;
+    private readonly BHBqContext _context; 
+    public List<Entreprise> Entreprises{ get; set;}
+    public Entreprise TargetEntreprise {get; set;}
+    public List<CompteBancaire> ComptesBancaires {get; set;}
+    public CompteBancaire TargetCompteBancaire {get; set;}
 
     public EntrepriseViewModel()
     {

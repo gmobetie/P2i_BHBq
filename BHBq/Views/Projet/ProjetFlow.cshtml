@@ -3,6 +3,23 @@
     ViewData["Title"] = "Nouveau Devis";
 }
 
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+                    asp-action="Index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Client"
+                    asp-action="Clients">Clients</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Projet"
+                    asp-action="Projets" asp-route-idClient="@Model.TargetClient.Id">Projets - @Model.TargetClient.Nom</a>
+            </li>
+            <li class="breadcrumb-item active">Nouveau Projet - @Model.TargetClient.Nom</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
 <div class="mb-5 p-4 bg-white shadow-sm">
     <h3>Nouveau Projet</h3>
     <div id="stepper1" class="bs-stepper linear">
@@ -27,7 +44,7 @@
                 <button type="button" class="step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3"
                     aria-selected="false" disabled="disabled">
                     <span class="bs-stepper-circle">3</span>
-                    <span class="bs-stepper-label">Validation</span>
+                    <span class="bs-stepper-label">Informations</span>
                 </button>
             </div>
         </div>
@@ -38,8 +55,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">Choix de l'entreprise</label>
                         <div class="col-sm-10">
-                            <select name="cp-1"
-                                class="form-select" aria-label="Default select example" required>
+                            <select name="cp-1" class="form-select" aria-label="Default select example" required>
                                 <option value="" selected>Choisissez une entreprise</option>
                             </select>
                         </div>
@@ -50,8 +66,9 @@
                     <div class="row mb-3">
                         <label class="col-sm-2 col-form-label">Choix du client</label>
                         <div class="col-sm-10">
-                            <select asp-for="@Model.TargetProjet.IdClient" asp-items="@Model.ListeClients" class="form-select" id="form-stepper-3" name="cli-2"
-                                aria-label="Default select example" required>
+                            <select asp-for="@Model.TargetProjet.IdClient" asp-items="@Model.ListeClients"
+                                class="form-select" id="form-stepper-3" name="cli-2" aria-label="Default select example"
+                                required>
                                 <option value="" selected>Choisissez un client</option>
                             </select>
                         </div>
@@ -61,15 +78,15 @@
                     <button type="submit" class="btn btn-success btn-next-form m-2">Enregistrer le projet</button>
                 </div>
             </form>
-                <div id="test-l-3" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password"
-                            required>
-                        <div class="invalid-feedback">Please enter a password.</div>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-next-form m-2">Enregistrer le projet</button>
+            <div id="test-l-3" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password"
+                        name="password" required>
+                    <div class="invalid-feedback">Please enter a password.</div>
                 </div>
+                <button type="submit" class="btn btn-success btn-next-form m-2">Enregistrer le projet</button>
+            </div>
         </div>
     </div>
 </div>

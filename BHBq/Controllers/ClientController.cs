@@ -91,9 +91,13 @@ public class ClientController : Controller
             return NotFound();
         }
 
+        // Supprimer tous les projets avec des IdClient égaux à id
+        var projectsToDelete = await _context.Projets.Where(p => p.IdClient == id).ToListAsync();
+        _context.Projets.RemoveRange(projectsToDelete);
+
         _context.Clients.Remove(existingClient);
         await _context.SaveChangesAsync();
 
         return RedirectToAction("Clients");
     }
-}
+    }

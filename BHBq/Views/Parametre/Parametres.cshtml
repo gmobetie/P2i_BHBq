@@ -1,0 +1,72 @@
+@model ParametreViewModel
+@{
+  ViewData["Title"] = "Paramètres";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="pagetitle">
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+          asp-action="Index">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Paramètres</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+
+
+
+<section class="section">
+
+  <div class="row">
+
+    <!-- Ajouter une nouvelle entreprise -->
+    <div class="col text-center m-4">
+      <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal"
+        data-bs-target="#new">
+        <i class="ri ri-add-line fs-2"></i>
+        <h3>Nouvelle Entreprise</h3>
+      </button>
+    </div>
+
+    <div class="modal fade" id="new" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nouveau paramètre</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="NewEntreprise">
+              <div class="col-md-12">
+                <input asp-for="@Model.TargetParametre.Nom" maxlength="20" type="text" class="form-control"
+                  placeholder="Nom du paramètre" name="nom" required>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                <button type="submit" class="btn btn-success">Sauvegarder</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="iconslist">
+
+    <div class="icon">
+      <i class="ri-tools-fill"></i>
+      <div class="label">ri-24-hours-fill</div>
+    </div>
+    <div class="icon">
+      <i class="ri-24-hours-line"></i>
+      <div class="label">ri-24-hours-line</div>
+    </div>
+    <div class="icon">
+      <i class="ri-4k-fill"></i>
+      <div class="label">ri-4k-fill</div>
+    </div>
+
+</section>
