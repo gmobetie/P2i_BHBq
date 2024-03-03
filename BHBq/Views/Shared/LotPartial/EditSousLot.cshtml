@@ -21,7 +21,7 @@
     var newLTid = comptLT + 1;
 }
 
-<div class="accordion-item m-3">
+<div class="accordion-item m-2">
     <div class="accordion-header d-flex justify-content-between align-items-center" id="heading-@Model.SousLot.Id">
 
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -105,73 +105,70 @@
     </div>
 
     <div id="collapse-@Model.SousLot.Id" class="accordion-collapse collapse" aria-labelledby="heading-@Model.SousLot.Id"
-        data-bs-parent="#accordionLots-@Model.Lot.Id">
+        data-bs-parent="#accordionLots-@Model.SousLot.Id">
 
         <div class="accordion-body">
 
-            <!-- Accordion des lots terminaux -->
-            <div class="accordion" id="accordionLots-@Model.SousLot.Id">
-
-                <div class="row">
-                    <!-- Bouton d'ajout d'un lot terminal -->
-                    <div class="col justify-content-start">
-                        <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
-                            data-bs-target="#new-s-@Model.SousLot.Id">Ajouter un
-                            lot terminal</button>
-                    </div>
-
-                    <!-- Modal d'ajout de lot terminal -->
-                    <div class="modal fade" id="new-s-@Model.SousLot.Id" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Ajoutez un nouveau lot terminal à @Model.SousLot.Designation
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="post" class="row g-3" asp-controller="Lot" asp-action="NewLot">
-                                        <div class="col-md-12">
-                                            <input asp-for="@temporaryLot.IdEntreprise" type="hidden"
-                                                class="form-control" placeholder="IdEntreprise" name="IdEntreprise"
-                                                value="@Model.Entreprise.Id">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
-                                                placeholder="Désignation" name="designation" required>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input asp-for="@temporaryLot.IdLot" type="hidden" placeholder="IdLot"
-                                                name="idLot" value="@Model.SousLot.IdLot.@newLTid" required>
-                                        </div>
-                                        <div class="col-12">
-                                            <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
-                                                placeholder="Coéficient de Lot" name="coefPose"
-                                                pattern="[0-9]+(\.[0-9]+)?">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Abandonner</button>
-                                            <button type="submit" class="btn btn-success">Sauvegarder</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- End Vertically centered Modal-->
-
-                    @{
-                        Model.TargetLotId = Model.SousLot.Id;
-                    }
-                    @await Html.PartialAsync("LotPartial/EditArticle", Model)
-
+            <div class="row">
+                <!-- Bouton d'ajout d'un lot terminal -->
+                <div class="col justify-content-start">
+                    <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="modal"
+                        data-bs-target="#new-s-@Model.SousLot.Id">Ajouter un
+                        lot terminal</button>
                 </div>
 
-                <!-- Boucle des lots terminaux -->
-                @foreach (var lotTerminal in Model.Lots)
-                {
-                    if (lotTerminal.IdLot.StartsWith($"{Model.SousLot.IdLot}"))
+                <!-- Modal d'ajout de lot terminal -->
+                <div class="modal fade" id="new-s-@Model.SousLot.Id" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ajoutez un nouveau lot terminal à @Model.SousLot.Designation
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" class="row g-3" asp-controller="Lot" asp-action="NewLot">
+                                    <div class="col-md-12">
+                                        <input asp-for="@temporaryLot.IdEntreprise" type="hidden" class="form-control"
+                                            placeholder="IdEntreprise" name="IdEntreprise" value="@Model.Entreprise.Id">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryLot.Designation" type="text" class="form-control"
+                                            placeholder="Désignation" name="designation" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryLot.IdLot" type="hidden" placeholder="IdLot"
+                                            name="idLot" value="@Model.SousLot.IdLot.@newLTid" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <input asp-for="@temporaryLot.CoefPose" type="text" class="form-control"
+                                            placeholder="Coéficient de Lot" name="coefPose" pattern="[0-9]+(\.[0-9]+)?">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Abandonner</button>
+                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End Vertically centered Modal-->
+
+                @{
+                    Model.TargetLotId = Model.SousLot.Id;
+                }
+                @await Html.PartialAsync("LotPartial/EditArticle", Model)
+
+            </div>
+
+            <!-- Boucle des lots terminaux -->
+            @foreach (var lotTerminal in Model.Lots)
+            {
+                <!-- Accordion des lots terminaux -->
+                <div class="accordion" id="accordionLots-@lotTerminal.Id">
+                    @if (lotTerminal.IdLot.StartsWith($"{Model.SousLot.IdLot}"))
                     {
                         if (lotTerminal.IdLot.Count(c => c == '.') == 2)
                         {
@@ -180,8 +177,8 @@
                             ;
                         }
                     }
-                }
-            </div>
+                </div>
+            }
         </div>
     </div>
 </div>

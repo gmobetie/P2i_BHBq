@@ -73,16 +73,16 @@
 
               <div class="card-body">
                 <!-- Boucle des lots -->
-                <div class="accordion" id="accordionLots-@Model.Entreprise.Id">
                   @foreach (Lot lot in lots)
                   {
-                    if (!lot.IdLot.Contains("."))
+                  <div class="accordion" id="accordionLots-@lot.Id">
+                    @if (!lot.IdLot.Contains("."))
                     {
                       Model.Lot = lot;
                       @await Html.PartialAsync("LotPartial/EditLot", Model)
                     }
+                  </div>
                   }
-                </div>
 
               </div>
             </div>
