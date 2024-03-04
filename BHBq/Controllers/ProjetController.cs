@@ -33,9 +33,10 @@ public class ProjetController : Controller
         return View(Listes);
     }
 
-    public IActionResult ProjetFlow(int idClient)
+    public IActionResult ProjetFlow(int idProjet)
     {
-        Listes.TargetClient = _context.Clients.Find(idClient);
+        Listes.TargetProjet = _context.Projets.Find(idProjet);
+        Listes.TargetClient = _context.Clients.Find(Listes.TargetProjet.IdClient);
 
         // Récupérer les données de l'entreprise et des clients depuis la base de données
         var entreprises = _context.Entreprises.ToList();
@@ -126,4 +127,29 @@ public class ProjetController : Controller
         await _context.SaveChangesAsync();
         return RedirectToAction("Projets", new { idClient = existingProjet.IdClient });
     }
+
+    public async Task<IActionResult> UpdateParam(int idProjet, int idParam)
+    {
+        var existingProjet = await _context.Projets.FindAsync(idProjet);
+
+        if (existingProjet != null)
+        {
+            var paramTarget = await _context.Parametres.FirstOrDefaultAsync(p => p.Origine == null && p.Id == idParam);
+
+            if (paramTarget != null)
+            {
+                var clonedParameter = new Parametre
+                {
+                    Nom = paramTarget.Nom,
+                    Origine = paramTarget.Id,
+                    IdProjet = existingProjet.Id
+                };
+                _context.Parametres.Add(clonedParameter);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        return RedirectToAction("Projets", new { idClient = existingProjet.IdClient });
+    }
+
 }

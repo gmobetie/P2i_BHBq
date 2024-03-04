@@ -97,7 +97,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <form method="post" class="row g-3" asp-controller="CompteBancaire" asp-action="EditCompteBancaire" asp-route-id="@Model.TargetCompteBancaire.Id">
+                <form method="post" class="row g-3 needs-validation" asp-controller="CompteBancaire" asp-action="EditCompteBancaire" asp-route-id="@Model.TargetCompteBancaire.Id" novalidate>
                                 <input asp-for="@Model.TargetCompteBancaire.IdEntreprise" type="hidden"
                                  name="IdEntreprise" value="@Model.TargetEntreprise.Id" required>
                             <div class="col-md-6">
