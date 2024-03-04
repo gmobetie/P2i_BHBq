@@ -2,33 +2,19 @@
 @{
   ViewData["Title"] = "Paramètres";
 }
-<h1>@ViewData["Title"]</h1>
 
-<div class="pagetitle">
-  <nav>
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
-          asp-action="Index">Dashboard</a>
-      </li>
-      <li class="breadcrumb-item active">Paramètres</li>
-    </ol>
-  </nav>
-</div><!-- End Page Title -->
+<div class="row">
 
+  <div class="col d-flex align-items-center">
+    <h1> @ViewData["Title"]</h1>
+  </div>
 
-
-<section class="section">
-
-  <div class="row">
-
-    <!-- Ajouter une nouvelle entreprise -->
-    <div class="col text-center m-4">
-      <button type="button" class="info-box text-center btn btn-outline-secondary m-4" data-bs-toggle="modal"
-        data-bs-target="#new">
-        <i class="ri ri-add-line fs-2"></i>
-        <h3>Nouvelle Entreprise</h3>
-      </button>
-    </div>
+  <div class="col d-flex justify-content-end">
+    <!-- Ajouter un nouveau paramètre -->
+    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#new">
+      <i class="ri ri-add-line"></i>
+      <h5>Ajouter un paramètre</h5>
+    </button>
 
     <div class="modal fade" id="new" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
@@ -38,10 +24,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form method="post" class="row g-3" asp-controller="Entreprise" asp-action="NewEntreprise">
+            <form method="post" class="row g-3" asp-controller="Parametre" asp-action="NewParametre">
               <div class="col-md-12">
                 <input asp-for="@Model.TargetParametre.Nom" maxlength="20" type="text" class="form-control"
-                  placeholder="Nom du paramètre" name="nom" required>
+                  placeholder="Nom du paramètre" name="Nom" required>
+              </div>
+              <div class="col-md-12">
+                <textarea asp-for="@Model.TargetParametre.Explication" class="form-control"
+                  placeholder="Description du paramètre" name="Explication" rows="3"></textarea>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
@@ -54,19 +44,61 @@
     </div>
   </div>
 
-  <div class="iconslist">
+  <div class="pagetitle">
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+            asp-action="Index">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Paramètres</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
 
-    <div class="icon">
-      <i class="ri-tools-fill"></i>
-      <div class="label">ri-24-hours-fill</div>
-    </div>
-    <div class="icon">
-      <i class="ri-24-hours-line"></i>
-      <div class="label">ri-24-hours-line</div>
-    </div>
-    <div class="icon">
-      <i class="ri-4k-fill"></i>
-      <div class="label">ri-4k-fill</div>
-    </div>
+</div>
+
+<section class="section">
+
+  <div class="iconslist">
+    @foreach (var parametre in Model.Parametres)
+    {
+      <div class="icon">
+        <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
+          data-bs-original-title="@parametre.Explication">
+          <i class="ri-tools-fill"></i>
+          <h4>@parametre.Nom</h4>
+        </button>
+
+        <!-- Delete -->
+            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                data-bs-target="#deleteModal-@parametre.Id">
+                <i class="ri-delete-bin-line fs-6"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@parametre.Id" tabindex="-1"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Êtes-vous sûr de vouloir supprimer ce paramètre de modélisation ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <form asp-area="" asp-controller="Parametre" asp-action="DeleteParametre"
+                                asp-route-id="@parametre.Id" method="post">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+      </div>
+    }
 
 </section>

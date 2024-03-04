@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using BHBq.Models;
+using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,7 @@ namespace BHBq.Controllers;
 public class ParametreController : Controller
 {
     private readonly BHBqContext _context;
-    public List<Parametre> parametres { get; set; }
+    public ParametreViewModel DataLink { get; set; }
 
     public ParametreController()
     {
@@ -17,12 +18,14 @@ public class ParametreController : Controller
             .Options;
 
         _context = new BHBqContext(options);
+        DataLink = new ParametreViewModel();
+
     }
 
     //Get tous les parametres
     public IActionResult Parametres()
     {
-        return View();
+        return View(DataLink);
     }
 
     [HttpPost]

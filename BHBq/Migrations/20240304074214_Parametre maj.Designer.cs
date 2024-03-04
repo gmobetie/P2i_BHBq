@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BHBq.Migrations
 {
     [DbContext(typeof(BHBqContext))]
-    partial class BHBqContextModelSnapshot : ModelSnapshot
+    [Migration("20240304074214_Parametre maj")]
+    partial class Parametremaj
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -186,9 +189,6 @@ namespace BHBq.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Explication")
-                        .HasColumnType("TEXT");
 
                     b.Property<int?>("IdProjet")
                         .HasColumnType("INTEGER");
