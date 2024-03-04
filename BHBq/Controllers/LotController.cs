@@ -1,6 +1,8 @@
+using System.Data;
 using System.Diagnostics;
 using BHBq.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace BHBq.Controllers;
@@ -24,6 +26,11 @@ public class LotController : Controller
     public IActionResult Lots(int idEntreprise)
     {
         Listes.Entreprise = _context.Entreprises.Find(idEntreprise);
+
+        var listeParams = _context
+            .Parametres.Select(e => new SelectListItem { Text = e.Nom, Value = e.Id.ToString() })
+            .ToList();
+        Listes.ListeParams = listeParams;
 
         return View(Listes);
     }
@@ -166,4 +173,83 @@ public class LotController : Controller
         return RedirectToAction("Lots", new { idEntreprise = IdEntreprise });
     }
 
+    public async Task<IActionResult> EditCalcul(
+        int id,
+        int IdEntreprise,
+        Article article,
+        int param1,
+        int param2,
+        int param3,
+        int param4
+    )
+    {
+        var existingArticle = await _context.Articles.FindAsync(id);
+
+        try
+        {
+            string calculation = string.Format(article.Calcul, 1, 1, 1, 1);
+            DataTable table = new DataTable();
+            double result = Convert.ToDouble(table.Compute(calculation, String.Empty));
+        }
+        catch (Exception e)
+        {
+            return RedirectToAction("Error", "Error", new { Message = e.Message });
+        }
+
+        article.FormatCalcul = article.Calcul;
+
+        if (param1 != 0)
+        {
+            var param1Article = await _context.Parametres.FindAsync(param1);
+            article.FormatCalcul = article.FormatCalcul.Replace(
+                "{0}",
+                "{" + $"{param1Article.Nom}" + "}"
+            );
+        }
+        if (param2 != 0)
+        {
+            var param2Article = await _context.Parametres.FindAsync(param2);
+            article.FormatCalcul = article.FormatCalcul.Replace(
+                "{1}",
+                "{" + $"{param2Article.Nom}" + "}"
+            );
+        }
+        if (param3 != 0)
+        {
+            var param3Article = await _context.Parametres.FindAsync(param3);
+            article.FormatCalcul = article.FormatCalcul.Replace(
+                "{2}",
+                "{" + $"{param3Article.Nom}" + "}"
+            );
+        }
+        if (param4 != 0)
+        {
+            var param4Article = await _context.Parametres.FindAsync(param4);
+            article.FormatCalcul = article.FormatCalcul.Replace(
+                "{3}",
+                "{" + $"{param4Article.Nom}" + "}"
+            );
+        }
+
+        article.Calcul = article.Calcul.Replace("{0}", "{" + $"{param1}" + "}");
+        article.Calcul = article.Calcul.Replace("{1}", "{" + $"{param2}" + "}");
+        article.Calcul = article.Calcul.Replace("{2}", "{" + $"{param3}" + "}");
+        article.Calcul = article.Calcul.Replace("{3}", "{" + $"{param4}" + "}");
+
+        if (existingArticle == null)
+        {
+            return NotFound();
+        }
+
+        if (article.Calcul != null)
+        {
+            existingArticle.Calcul = article.Calcul;
+        }
+        if (article.FormatCalcul != null)
+        {
+            existingArticle.FormatCalcul = article.FormatCalcul;
+        }
+        await _context.SaveChangesAsync();
+        return RedirectToAction("Lots", new { idEntreprise = IdEntreprise });
+    }
 }

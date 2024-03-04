@@ -100,7 +100,7 @@
                                 }
                                 else
                                 {
-                                    @article.Calcul
+                                    @article.FormatCalcul
                                 }
                             </button>
                             <!-- Modal de modification d'article -->
@@ -117,26 +117,28 @@
                                                 asp-route-id="@article.Id" asp-route-IdEntreprise="@Model.Entreprise.Id">
                                                 <div class="col-md-12">
                                                     <input asp-for="@temporaryArticle.Calcul" type="text" class="form-control"
-                                                        placeholder="Calcul" name="calcul" />
+                                                        placeholder="Calcul" name="Calcul" />
                                                 </div>
                                                 @for (int i = 1; i <= 4; i++)
                                                 {
                                                     <div class="col-md-3">
-                                                        <select name="cp-@i" class="form-select" aria-label="Default select example"
-                                                            required>
-                                                            <option value="" selected>Paramètre @i</option>
-                                                            <!-- Ajoutez ici les options pour chaque variable -->
+                                                        <select asp-for="@variables" asp-items="@Model.ListeParams"
+                                                            class="form-select" id="form-stepper-3" name="param@(i)"
+                                                            aria-label="Default select example">
+                                                            <option value="" selected>Choississez un paramètre</option>
                                                         </select>
                                                     </div>
                                                 }
-
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                    <button type="submit" class="btn btn-success">Ajouter</button>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </td>
-                        <td>@article.Calcul</td>
 
                         <td class="text-end">
                             <!-- Bouton de modification d'article -->

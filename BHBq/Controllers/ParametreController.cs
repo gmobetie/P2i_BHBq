@@ -19,7 +19,6 @@ public class ParametreController : Controller
 
         _context = new BHBqContext(options);
         DataLink = new ParametreViewModel();
-
     }
 
     //Get tous les parametres

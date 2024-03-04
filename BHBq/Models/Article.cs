@@ -9,6 +9,7 @@ public class Article
     public string PrixM {get;set;}
     public string PrixB {get;set;}
     public string? Calcul {get;set;} // Stocke le calcul de prix en format Latex
+    public string? FormatCalcul {get;set;} // Stocke le calcul de prix en format texte
 
     // Constructeur par défaut
     public Article()
@@ -16,7 +17,7 @@ public class Article
     }
 
     // Constructeur paramétré
-    public Article(int idlot, string libelle, string unite, string prixH, string prixM, string prixB, string? calcul)
+    public Article(int idlot, string libelle, string unite, string prixH, string prixM, string prixB, string? calcul, string? formatCalcul)
     {
         IdLot=idlot;
         Libelle = libelle;
@@ -25,5 +26,6 @@ public class Article
         PrixM = prixM;
         PrixB = prixB;
         Calcul = calcul;
+        FormatCalcul = formatCalcul;
     }
 }

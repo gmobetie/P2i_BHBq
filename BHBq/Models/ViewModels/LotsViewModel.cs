@@ -2,6 +2,7 @@ using System.Diagnostics;
 using BHBq.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 public class LotsViewModel
 {
     public Entreprise Entreprise {get;set;} // Variable qui stocke temporairement l'entreprise sélectionnée
@@ -12,6 +13,8 @@ public class LotsViewModel
     public List<Entreprise> Entreprises { get; set; }
     public List<Lot> Lots { get; set; }
     public List<Article> Articles { get; set; }
+    public List<Parametre> Parametres { get; set; }
+    public List<SelectListItem> ListeParams { get; set; }
     private readonly BHBqContext _context;
 
     public LotsViewModel()
@@ -24,5 +27,6 @@ public class LotsViewModel
         Lots=_context.Lots.ToList();
         Entreprises=_context.Entreprises.ToList();
         Articles=_context.Articles.ToList();
+        Parametres=_context.Parametres.ToList();
     }
 }
