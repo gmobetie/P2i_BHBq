@@ -39,25 +39,50 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" class="row g-3" asp-controller="CompteBancaire" asp-action="NewCompteBancaire">
-                            <input asp-for="@Model.TargetCompteBancaire.IdEntreprise" type="hidden" name="IdEntreprise" value="@Model.TargetEntreprise.Id" required>
+                        <form method="post" class="row g-3 needs-validation" asp-controller="CompteBancaire"
+                            asp-action="NewCompteBancaire" novalidate>
+                            <input asp-for="@Model.TargetCompteBancaire.IdEntreprise" type="hidden" name="IdEntreprise"
+                                value="@Model.TargetEntreprise.Id" required>
                             <div class="col-md-6">
-                                <input asp-for="@Model.TargetCompteBancaire.NomBanque" type="text" class="form-control" placeholder="Nom de la Banque" name="nomBanque" required>
+                                <input asp-for="@Model.TargetCompteBancaire.NomBanque" type="text" class="form-control"
+                                    placeholder="Nom de la Banque" name="nomBanque" pattern="[A-Z]+" required>
+                                <div class="invalid-feedback">
+                                    Veuillez entrer un nom de banque valide (uniquement des majuscules).
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <input asp-for="@Model.TargetCompteBancaire.Adresse" type="text" class="form-control" placeholder="Adresse" name="adresse" required>
+                                <input asp-for="@Model.TargetCompteBancaire.Adresse" type="text" class="form-control"
+                                    placeholder="Adresse" name="adresse" required>
+                                <div class="invalid-feedback">
+                                    Veuillez entrer l'adresse.
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <input asp-for="@Model.TargetCompteBancaire.IBAN" type="text" class="form-control" placeholder="IBAN" name="iban" pattern="[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}[A-Z0-9]{0,16}" required>
+                                <input asp-for="@Model.TargetCompteBancaire.IBAN" type="text" class="form-control"
+                                    placeholder="IBAN" name="iban"
+                                    pattern="[A-Z]{2}[0-9]{2}[A-Z0-9]{4}[0-9]{7}[A-Z0-9]{0,16}" required>
+                                <div class="invalid-feedback">
+                                    Veuillez entrer un IBAN valide.
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <input asp-for="@Model.TargetCompteBancaire.BIC" type="text" class="form-control" placeholder="BIC" name="bic" pattern="[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?" required>
+                                <input asp-for="@Model.TargetCompteBancaire.BIC" type="text" class="form-control"
+                                    placeholder="BIC" name="bic" pattern="[A-Z]{6}[A-Z0-9]{2}([A-Z0-9]{3})?" required>
+                                <div class="invalid-feedback">
+                                    Veuillez entrer un BIC valide.
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <input asp-for="@Model.TargetCompteBancaire.NumCompte" type="text" class="form-control" placeholder="Numéro de compte bancaire" name="numCompte" pattern="[0-9]{11}" required>
+                                <input asp-for="@Model.TargetCompteBancaire.NumCompte" type="text" class="form-control"
+                                    placeholder="Numéro de compte bancaire" maxlength="11" minlenght="11" name="numCompte" pattern="[0-9]{11}"
+                                    required>
+                                <div class="invalid-feedback">
+                                    Veuillez entrer un numéro de compte bancaire valide.
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Abandonner</button>
                                 <button type="submit" class="btn btn-success">Sauvegarder</button>
                             </div>
                         </form>
