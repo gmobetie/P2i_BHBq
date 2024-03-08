@@ -42,16 +42,32 @@
         </div>
     </div>
 
-        @if (Model.TargetProjet.Description != null)
-        {
-            <h5>Description</h5>
-            <p class="small fst-italic">@Model.TargetProjet.Description</p>
-        }
+    @if (Model.TargetProjet.Description != null)
+    {
+        <h5>Description</h5>
+        <p class="small fst-italic">@Model.TargetProjet.Description</p>
+    }
 
     <div class="row mt-4">
         <div class="col">
-            <a class="btn btn-outline-secondary" asp-controller="Projet" asp-action="ProjetFlow"
-                asp-route-idProjet="@Model.TargetProjet.Id">Paramètres</a>
+
+            @if (!Model.TargetProjet.Init)
+            {
+                <a class="btn btn-outline-secondary" asp-controller="Projet" asp-action="CloneParams"
+                    asp-route-idProjet="@Model.TargetProjet.Id">
+                    Paramètres
+                    <i class="bi bi-x-circle-fill fs-5 text-danger"></i>
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-outline-secondary" asp-controller="Projet" asp-action="ProjetParametre"
+                    asp-route-idProjet="@Model.TargetProjet.Id">
+                    Paramètres
+                    <i class="bi bi-check-circle-fill fs-5 text-success"></i>
+                </a>
+            }
+
         </div>
         <div class="col">
             <div class="text-end">
@@ -69,7 +85,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" class="row g-3" asp-controller="Projet" asp-action="EditProjet" asp-route-id="@Model.TargetProjet.Id">
+                    <form method="post" class="row g-3" asp-controller="Projet" asp-action="EditProjet"
+                        asp-route-id="@Model.TargetProjet.Id">
                         <div class="col-md-12">
                             <input asp-for="@Model.TargetProjet.NomProjet" maxlength="20" type="text"
                                 class="form-control" placeholder="Nom du projet" name="NomProjet">

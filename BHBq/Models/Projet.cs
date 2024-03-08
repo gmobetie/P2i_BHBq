@@ -8,6 +8,7 @@ public class Projet
     public string? NomProjet { get; set; }
     public string? DateCreation { get; set; }
     public string? Description { get; set; }
+    public bool Init { get; set; }
 
     public Projet()
     {
@@ -15,7 +16,7 @@ public class Projet
     }
 
     // Constructeur avec paramètres pour initialiser les propriétés
-    public Projet(int id, int idClient, bool etat, string? nomProjet, string? dateCreation, string? description)
+    public Projet(int id, int idClient, bool etat, string? nomProjet, string? dateCreation, string? description, bool init=false)
     {
         Id = id;
         IdClient = idClient;
@@ -23,5 +24,6 @@ public class Projet
         NomProjet = nomProjet;
         DateCreation = dateCreation;
         Description = description;
+        Init = init;
     }
 }
