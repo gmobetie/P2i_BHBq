@@ -1,6 +1,7 @@
 @model ClientViewModel
 @{
   ViewData["Title"] = "Nouveau Devis";
+  int i = 0;
 }
 
 <div class="pagetitle">
@@ -20,42 +21,84 @@
   </nav>
 </div><!-- End Page Title -->
 
-<div class="row">
-  <div class="col">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Paramètres de modélisation @Model.TargetProjet.NomProjet</h5>
-        <!-- Horizontal Form -->
-        <form asp-controller="Projet" asp-action="UpdateParams" asp-route-idProjet="@Model.TargetProjet.Id"
-              class="needs-validation" novalidate>
-          <div class="row mb-3">
-            @foreach (var parametre in Model.Parametres)
-            {
-              if (parametre.IdProjet == Model.TargetProjet.Id)
+
+@if (Model.TargetProjet.Init == false)
+{
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Paramètres de modélisation @Model.TargetProjet.NomProjet</h5>
+          <!-- Horizontal Form -->
+          <form asp-controller="Projet" asp-action="UpdateParams" asp-route-idProjet="@Model.TargetProjet.Id"
+                class="needs-validation" novalidate>
+            <div class="row mb-3">
+              @foreach (var parametre in Model.Parametres)
               {
-                <div class="col-sm-3">
-                  <label for="@parametre.Id" class="col-form-label">@parametre.Nom</label>
-                  <input type="text" class="form-control" id="@parametre.Id" name="parametres[@parametre.Id].Valeur" required
-                         pattern="[0-9]+([.][0-9]+)?" asp-for="@Model.ProjetParametres[parametre.Id].Valeur" required>
-                  <div class="invalid-feedback">
-                    Veuillez entrer un nombre de type décimal.
+                if (parametre.IdProjet == Model.TargetProjet.Id)
+                {
+                  <div class="col-sm-3">
+                    <label for="@parametre.Id" class="col-form-label">@parametre.Nom</label>
+                    <input type="text" class="form-control" id="@parametre.Id" required
+                           pattern="[0-9]+([.][0-9]+)?" asp-for="@Model.ValeurParametres[i]" required>
+                    <div class="invalid-feedback">
+                      Veuillez entrer un nombre de type décimal.
+                    </div>
                   </div>
-                </div>
+                  i++;
+                }
               }
-            }
-          </div>
-          <div class="text-center m-1">
-            <button type="submit" class="btn btn-success">Sauvegarder les paramètres</button>
-          </div>
-        </form><!-- End Horizontal Form -->
-        <div class="text-center m-1">
-          <a type="button" class="btn btn-secondary" asp-controller="Projet" asp-action="ResetParams"
-            asp-route-idProjet="@Model.TargetProjet.Id">Réinitialiser</a>
+            </div>
+            <div class="text-center m-1">
+              <button type="submit" class="btn btn-success">Sauvegarder les paramètres</button>
+            </div>
+          </form><!-- End Horizontal Form -->
         </div>
       </div>
     </div>
   </div>
-</div>
+}
+else
+{
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Paramètres de modélisation @Model.TargetProjet.NomProjet</h5>
+          <!-- Horizontal Form -->
+          <form asp-controller="Projet" asp-action="UpdateParams" asp-route-idProjet="@Model.TargetProjet.Id"
+                class="needs-validation" novalidate>
+            <div class="row mb-3">
+              @foreach (var parametre in Model.Parametres)
+              {
+                if (parametre.IdProjet == Model.TargetProjet.Id)
+                {
+                  <div class="col-sm-3">
+                    <label for="@parametre.Id" class="col-form-label">@parametre.Nom</label>
+                    <input type="text" class="form-control" id="@parametre.Id"
+                           pattern="[0-9]+([.][0-9]+)?" asp-for="@Model.ValeurParametres[i]">
+                    <div class="invalid-feedback">
+                      Veuillez entrer un nombre de type décimal.
+                    </div>
+                  </div>
+                  i++;
+                }
+              }
+            </div>
+            <div class="text-center m-1">
+              <button type="submit" class="btn btn-success">Sauvegarder les paramètres</button>
+            </div>
+          </form><!-- End Horizontal Form -->
+          <div class="text-center m-1">
+            <a type="button" class="btn btn-secondary" asp-controller="Projet" asp-action="ResetParams"
+              asp-route-idProjet="@Model.TargetProjet.Id">Réinitialiser</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
 
 <!-- Stepper exemple -->
 

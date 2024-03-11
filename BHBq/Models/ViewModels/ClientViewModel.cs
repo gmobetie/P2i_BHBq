@@ -12,7 +12,7 @@ public class ClientViewModel
     public List<Projet> Projets { get; set; }
     public List<Client> Clients { get; set; }
     public List<Parametre> Parametres { get; set; }
-    public List<Parametre> ProjetParametres { get; set; }
+    public List<string?> ValeurParametres { get; set; }
     private readonly BHBqContext _context;
 
     public ClientViewModel()

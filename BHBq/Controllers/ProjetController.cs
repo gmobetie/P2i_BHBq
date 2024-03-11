@@ -95,17 +95,24 @@ public class ProjetController : Controller
         return RedirectToAction("Projets", new { idClient = existingProjet.IdClient });
     }
 
-    public async Task<IActionResult> UpdateParams(int idProjet, List<Parametre> parametres)
+    public async Task<IActionResult> UpdateParams(int idProjet, List<string?> ValeurParametres)
     {
+        var parametres = await _context.Parametres.Where(p => p.IdProjet == idProjet).ToListAsync();
         var existingProjet = await _context.Projets.FindAsync(idProjet);
-        foreach (var param in parametres)
+
+        for (int i = 0; i < parametres.Count(); i++)
         {
-            var existingParam = await _context.Parametres.FindAsync(param.Id);
-            if (existingParam != null)
+            if (ValeurParametres[i] != null)
             {
-                existingParam.Valeur = param.Valeur;
+                parametres[i].Valeur = ValeurParametres[i];
             }
         }
+
+        if (existingProjet.Init == false)
+        {
+            existingProjet.Init = true;
+        }
+
         await _context.SaveChangesAsync();
         return RedirectToAction("Projets", new { idClient = existingProjet.IdClient });
     }
@@ -127,7 +134,6 @@ public class ProjetController : Controller
                 };
                 _context.Parametres.Add(clonedParameter);
             }
-            existingProjet.Init = true;
             await _context.SaveChangesAsync();
         }
         return RedirectToAction("ProjetParametre", new { idProjet = existingProjet.Id });
