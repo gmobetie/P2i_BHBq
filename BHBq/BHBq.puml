@@ -104,7 +104,6 @@ class TVA #LightSalmon {
 
 class GammeAcompte #LightGoldenRodYellow {
   + Id: int [PK]
-  + Nom: string
   + Pourcentage1: double
   + Pourcentage2: double
   + Pourcentage3: double
