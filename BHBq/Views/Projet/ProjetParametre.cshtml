@@ -40,7 +40,7 @@
                   <div class="col-sm-3">
                     <label for="@parametre.Id" class="col-form-label">@parametre.Nom</label>
                     <input type="text" class="form-control" id="@parametre.Id" required
-                           pattern="[0-9]+([.][0-9]+)?" asp-for="@Model.ValeurParametres[i]" required>
+                           pattern="[0-9]+([.][0-9]+)?" asp-for="@Model.ValeurParametres[i]" placeholder="@parametre.Unite" required>
                     <div class="invalid-feedback">
                       Veuillez entrer un nombre de type décimal.
                     </div>
@@ -76,7 +76,7 @@ else
                   <div class="col-sm-3">
                     <label for="@parametre.Id" class="col-form-label">@parametre.Nom</label>
                     <input type="text" class="form-control" id="@parametre.Id"
-                           pattern="[0-9]+([.][0-9]+)?" asp-for="@Model.ValeurParametres[i]">
+                           pattern="[0-9]+([.][0-9]+)?" asp-for="@Model.ValeurParametres[i]" placeholder="@parametre.Unite">
                     <div class="invalid-feedback">
                       Veuillez entrer un nombre de type décimal.
                     </div>

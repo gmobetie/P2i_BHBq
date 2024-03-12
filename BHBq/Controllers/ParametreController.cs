@@ -27,6 +27,12 @@ public class ParametreController : Controller
         return View(DataLink);
     }
 
+    //Display des parametres généraux
+    public async Task<IActionResult> Global()
+    {
+        return View();
+    }
+
     [HttpPost]
     public async Task<IActionResult> EditParametre(int id, Parametre parametre)
     {

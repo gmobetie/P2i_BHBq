@@ -5,7 +5,7 @@
 
 <div class="row">
 
-  <div class="col d-flex align-items-center">
+  <div class="col d-flex align-items-center</div></div>">
     <h1> @ViewData["Title"]</h1>
   </div>
 
@@ -25,9 +25,28 @@
           </div>
           <div class="modal-body">
             <form method="post" class="row g-3" asp-controller="Parametre" asp-action="NewParametre">
-              <div class="col-md-12">
+              <div class="col-md-6">
                 <input asp-for="@Model.TargetParametre.Nom" maxlength="20" type="text" class="form-control"
                   placeholder="Nom du paramètre" name="Nom" required>
+              </div>
+              <div class="col-md-6">
+                <select asp-for="@Model.TargetParametre.Unite" class="form-control" name="Unite" required>
+                  <option value="">Unité de mesure</option>
+                  <option value="m²">m²</option>
+                  <option value="m³">m³</option>
+                  <option value="cm">cm</option>
+                  <option value="mm">mm</option>
+                  <option value="kg">kg</option>
+                  <option value="tonne">tonne</option>
+                  <option value="m">m</option>
+                  <option value="cm²">cm²</option>
+                  <option value="cm³">cm³</option>
+                  <option value="mm²">mm²</option>
+                  <option value="mm³">mm³</option>
+                  <option value="L">L</option>
+                  <option value="mL">mL</option>
+                  <option value="°C">°C</option>
+                </select>
               </div>
               <div class="col-md-12">
                 <textarea asp-for="@Model.TargetParametre.Explication" class="form-control"
@@ -62,43 +81,47 @@
   <div class="iconslist">
     @foreach (var parametre in Model.Parametres)
     {
-      <div class="icon">
-        <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
-          data-bs-original-title="@parametre.Explication">
-          <i class="ri-tools-fill"></i>
-          <h4>@parametre.Nom</h4>
-        </button>
+      if (parametre.IdProjet == null)
+      {
+        <div class="icon">
+          <button type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
+            data-bs-original-title="@parametre.Explication">
+            <i class="ri-tools-fill"></i>
+            <h4>@parametre.Nom</h4>
+            <h6>@parametre.Unite</h6>
+          </button>
 
-        <!-- Delete -->
-            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
-                data-bs-target="#deleteModal-@parametre.Id">
-                <i class="ri-delete-bin-line fs-6"></i>
-            </button>
+          <!-- Delete -->
+          <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+            data-bs-target="#deleteModal-@parametre.Id">
+            <i class="ri-delete-bin-line fs-6"></i>
+          </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="deleteModal-@parametre.Id" tabindex="-1"
-                aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body text-center">
-                            Êtes-vous sûr de vouloir supprimer ce paramètre de modélisation ?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <form asp-area="" asp-controller="Parametre" asp-action="DeleteParametre"
-                                asp-route-id="@parametre.Id" method="post">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                            </form>
-                        </div>
-                    </div>
+          <!-- Modal -->
+          <div class="modal fade" id="deleteModal-@parametre.Id" tabindex="-1" aria-labelledby="deleteModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body text-center">
+                  Êtes-vous sûr de vouloir supprimer ce paramètre de modélisation ?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                  <form asp-area="" asp-controller="Parametre" asp-action="DeleteParametre" asp-route-id="@parametre.Id"
+                    method="post">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                  </form>
+                </div>
+              </div>
             </div>
+          </div>
 
-      </div>
+        </div>
+      }
     }
 
 </section>

@@ -61,11 +61,18 @@
             }
             else
             {
-                <a class="btn btn-outline-secondary" asp-controller="Projet" asp-action="ProjetParametre"
-                    asp-route-idProjet="@Model.TargetProjet.Id">
-                    Paramètres
-                    <i class="bi bi-check-circle-fill fs-5 text-success"></i>
-                </a>
+                <div class="btn-group" role="group" aria-label="Actions">
+                    <a class="btn btn-outline-secondary" asp-controller="Projet" asp-action="ProjetParametre"
+                        asp-route-idProjet="@Model.TargetProjet.Id">
+                        Paramètres
+                        <i class="bi bi-check-circle-fill fs-5 text-success"></i>
+                    </a>
+                    <a class="btn btn-outline-secondary" asp-controller="Projet" asp-action="Documents"
+                        asp-route-idProjet="@Model.TargetProjet.Id">
+                        Documents
+                        <i class="bi bi-file-earmark-text-fill fs-5"></i>
+                    </a>
+                </div>
             }
 
         </div>

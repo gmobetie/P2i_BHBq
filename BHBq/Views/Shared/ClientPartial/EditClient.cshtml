@@ -55,7 +55,16 @@
                 <div class="col-lg-6 col-md-6 text-end">
                     <h5>Catégorie :</h5>
                 </div>
-                <div class="col-lg-6 col-md-6">@Model.TargetClient.Categorie</div>
+                <div class="col-lg-6 col-md-6">
+                    @if (Model.TargetClient.Categorie == true)
+                    {
+                        <span>Professionnel</span>
+                    }
+                    else
+                    {
+                        <span>Particulier</span>
+                    }
+                </div>
             </div>
         </div>
 

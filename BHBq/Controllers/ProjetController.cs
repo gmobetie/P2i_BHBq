@@ -121,8 +121,9 @@ public class ProjetController : Controller
     {
         var existingProjet = await _context.Projets.FindAsync(idProjet);
         var originParams = await _context.Parametres.Where(p => p.Origine == null).ToListAsync();
+        var projetParams = await _context.Parametres.Where(i => i.IdProjet == idProjet).ToListAsync();
 
-        if (existingProjet != null)
+        if (existingProjet != null && projetParams.Count == 0)
         {
             foreach (var param in originParams)
             {
@@ -130,7 +131,9 @@ public class ProjetController : Controller
                 {
                     Nom = param.Nom,
                     Origine = param.Id,
-                    IdProjet = existingProjet.Id
+                    IdProjet = existingProjet.Id,
+                    Explication = param.Explication,
+                    Unite = param.Unite,
                 };
                 _context.Parametres.Add(clonedParameter);
             }
