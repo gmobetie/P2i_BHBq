@@ -1,18 +1,18 @@
-class GammeAcompte
+public class GammeAcompte
 {
-    public int Id { get; set; }
-    public double Pourcentage1 { get; set; }
-    public double Pourcentage2 { get; set; }
-    public double Pourcentage3 { get; set; }
-    public double Pourcentage4 { get; set; }
-    public double Pourcentage5 { get; set; }
+    public string? Id { get; set; }
+    public string? Pourcentage1 { get; set; }
+    public string? Pourcentage2 { get; set; }
+    public string? Pourcentage3 { get; set; }
+    public string? Pourcentage4 { get; set; }
+    public string? Pourcentage5 { get; set; }
 
     public GammeAcompte()
     {
         // Constructeur vide
     }
 
-    public GammeAcompte(int id, double pourcentage1, double pourcentage2, double pourcentage3, double pourcentage4, double pourcentage5)
+    public GammeAcompte(string? id, string? pourcentage1, string? pourcentage2, string? pourcentage3, string? pourcentage4, string? pourcentage5)
     {
         Id = id;
         Pourcentage1 = pourcentage1;

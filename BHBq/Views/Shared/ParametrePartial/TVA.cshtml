@@ -1,0 +1,110 @@
+@model ParametreViewModel
+@{
+    TVA temporaryTVA = new TVA();
+}
+
+<div class="col">
+    <!-- Bouton d'ajout d'un article -->
+    <div class="col d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-lg btn-dark" data-bs-toggle="modal" data-bs-target="#new-a-TVA">Nouvelle
+            TVA</button>
+    </div>
+
+    <!-- Modal d'ajout d'un article -->
+    <div class="modal fade" id="new-a-TVA" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter une nouvelle TVA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="row g-3 needs-validation" asp-controller="Parametre" asp-action="NewTVA"
+                        novalidate>
+                        <div class="col-md-6">
+                            <input asp-for="@temporaryTVA.Code" type="text" class="form-control" placeholder="Code"
+                                name="Code" pattern="[A-Z]{1}" required>
+                            <div class="invalid-feedback">
+                                Le code doit être une lettre majuscule.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@temporaryTVA.Taux" type="text" class="form-control" placeholder="Taux"
+                                name="Taux" pattern="^(0(\.\d+)?|1(\.0+)?)$" required>
+                            <div class="invalid-feedback">
+                                Le taux doit être compris entre 0 et 1 de forme 0.00.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boucle des Articles -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Taux</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tva in Model.TVAs)
+            {
+                <tr>
+                    <td>@tva.Code</td>
+                    <td>@tva.Taux</td>
+                    <td class="text-center">
+                        <!-- Bouton de modification d'article -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#editarticle-@tva.Id">Modifier</button>
+                        <!-- Bouton de suppression d'article -->
+                        <form asp-area="" asp-controller="Parametre" asp-action="DeleteTVA" asp-route-id="@tva.Id"
+                            method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                <!-- Modal de modification d'article -->
+                <div class="modal fade" id="editarticle-@tva.Id" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modifier la TVA de type @tva.Code</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" class="row g-3 needs-validation" asp-controller="Parametre"
+                                    asp-action="EditTVA" asp-route-id="@tva.Id" novalidate>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryTVA.Code" type="text" class="form-control" id="Code"
+                                            placeholder="Code" name="Code" pattern="[A-Z]{1}">
+                                        <div class="invalid-feedback">
+                                            Le code doit être une lettre majuscule.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryTVA.Taux" type="text" class="form-control" id="Taux"
+                                            placeholder="Taux" name="Taux" pattern="^(0(\.\d+)?|1(\.0+)?)$">
+                                        <div class="invalid-feedback">
+                                            Le taux doit être compris entre 0 et 1 de forme 0.00.
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Abandonner</button>
+                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </tbody>
+    </table>

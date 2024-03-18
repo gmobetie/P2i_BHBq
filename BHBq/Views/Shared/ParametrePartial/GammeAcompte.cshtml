@@ -1,0 +1,158 @@
+@model ParametreViewModel
+@{
+    GammeAcompte temporaryGammeAcompte = new GammeAcompte();
+}
+
+<div class="col">
+    <!-- Bouton d'ajout d'un article -->
+    <div class="col d-flex justify-content-end m-2">
+        <button type="button" class="btn btn-lg btn-dark" data-bs-toggle="modal" data-bs-target="#new-a-acompte">Nouvelle
+            Gamme Acompte</button>
+    </div>
+
+    <!-- Modal d'ajout d'un article -->
+    <div class="modal fade" id="new-a-acompte" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ajouter une nouvelle Gamme Acompte</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="row g-3 needs-validation" asp-controller="Parametre" asp-action="NewGammeAcompte"
+                        novalidate>
+                        <div class="col-md-6">
+                            <input asp-for="@temporaryGammeAcompte.Pourcentage1" type="text" class="form-control" placeholder="Pourcentage 1"
+                                name="Pourcentage1" required>
+                            <div class="invalid-feedback">
+                                Le pourcentage 1 est requis.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@temporaryGammeAcompte.Pourcentage2" type="text" class="form-control" placeholder="Pourcentage 2"
+                                name="Pourcentage2" required>
+                            <div class="invalid-feedback">
+                                Le pourcentage 2 est requis.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@temporaryGammeAcompte.Pourcentage3" type="text" class="form-control" placeholder="Pourcentage 3"
+                                name="Pourcentage3" required>
+                            <div class="invalid-feedback">
+                                Le pourcentage 3 est requis.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@temporaryGammeAcompte.Pourcentage4" type="text" class="form-control" placeholder="Pourcentage 4"
+                                name="Pourcentage4" required>
+                            <div class="invalid-feedback">
+                                Le pourcentage 4 est requis.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@temporaryGammeAcompte.Pourcentage5" type="text" class="form-control" placeholder="Pourcentage 5"
+                                name="Pourcentage5" required>
+                            <div class="invalid-feedback">
+                                Le pourcentage 5 est requis.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Boucle des Gamme Acompte -->
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Pourcentage 1</th>
+                <th scope="col">Pourcentage 2</th>
+                <th scope="col">Pourcentage 3</th>
+                <th scope="col">Pourcentage 4</th>
+                <th scope="col">Pourcentage 5</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var gammeAcompte in Model.GammeAcomptes)
+            {
+                <tr>
+                    <td>@gammeAcompte.Pourcentage1</td>
+                    <td>@gammeAcompte.Pourcentage2</td>
+                    <td>@gammeAcompte.Pourcentage3</td>
+                    <td>@gammeAcompte.Pourcentage4</td>
+                    <td>@gammeAcompte.Pourcentage5</td>
+                    <td class="text-center">
+                        <!-- Bouton de modification de Gamme Acompte -->
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#editgammeacompte-@gammeAcompte.Id">Modifier</button>
+                        <!-- Bouton de suppression de Gamme Acompte -->
+                        <form asp-area="" asp-controller="Parametre" asp-action="DeleteGammeAcompte" asp-route-id="@gammeAcompte.Id"
+                            method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                <!-- Modal de modification de Gamme Acompte -->
+                <div class="modal fade" id="editgammeacompte-@gammeAcompte.Id" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Modifier la Gamme Acompte</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" class="row g-3 needs-validation" asp-controller="Parametre"
+                                    asp-action="EditGammeAcompte" asp-route-id="@gammeAcompte.Id" novalidate>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryGammeAcompte.Pourcentage1" type="text" class="form-control" id="Pourcentage1"
+                                            placeholder="Pourcentage 1" name="Pourcentage1">
+                                        <div class="invalid-feedback">
+                                            Le pourcentage 1 est requis.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryGammeAcompte.Pourcentage2" type="text" class="form-control" id="Pourcentage2"
+                                            placeholder="Pourcentage 2" name="Pourcentage2">
+                                        <div class="invalid-feedback">
+                                            Le pourcentage 2 est requis.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryGammeAcompte.Pourcentage3" type="text" class="form-control" id="Pourcentage3"
+                                            placeholder="Pourcentage 3" name="Pourcentage3">
+                                        <div class="invalid-feedback">
+                                            Le pourcentage 3 est requis.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryGammeAcompte.Pourcentage4" type="text" class="form-control" id="Pourcentage4"
+                                            placeholder="Pourcentage 4" name="Pourcentage4">
+                                        <div class="invalid-feedback">
+                                            Le pourcentage 4 est requis.
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input asp-for="@temporaryGammeAcompte.Pourcentage5" type="text" class="form-control" id="Pourcentage5"
+                                            placeholder="Pourcentage 5" name="Pourcentage5">
+                                        <div class="invalid-feedback">
+                                            Le pourcentage 5 est requis.
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Abandonner</button>
+                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </tbody>
+    </table>

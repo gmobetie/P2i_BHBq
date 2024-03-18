@@ -1232,3 +1232,11 @@ h6 {
   color: #472B29;
 }
 
+.nav-link {
+  color: #472B29;
+}
+
+.nav-link:hover{
+  color: #BC633C;
+}
+
