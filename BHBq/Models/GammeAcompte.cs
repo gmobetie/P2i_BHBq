@@ -1,6 +1,7 @@
 public class GammeAcompte
 {
-    public string? Id { get; set; }
+    public int Id { get; set; }
+    public string Contexte { get; set; }
     public string? Pourcentage1 { get; set; }
     public string? Pourcentage2 { get; set; }
     public string? Pourcentage3 { get; set; }
@@ -12,9 +13,9 @@ public class GammeAcompte
         // Constructeur vide
     }
 
-    public GammeAcompte(string? id, string? pourcentage1, string? pourcentage2, string? pourcentage3, string? pourcentage4, string? pourcentage5)
+    public GammeAcompte(string contexte, string? pourcentage1, string? pourcentage2, string? pourcentage3, string? pourcentage4, string? pourcentage5)
     {
-        Id = id;
+        Contexte = contexte;
         Pourcentage1 = pourcentage1;
         Pourcentage2 = pourcentage2;
         Pourcentage3 = pourcentage3;
