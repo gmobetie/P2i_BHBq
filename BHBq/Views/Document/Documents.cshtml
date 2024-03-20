@@ -1,0 +1,49 @@
+@model ClientViewModel
+@{
+    ViewData["Title"] = "Documents";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+                    asp-action="Index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Client"
+                    asp-action="Clients">Clients</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Projet"
+                    asp-action="Projets" asp-route-idClient="@Model.TargetClient.Id">Projets - @Model.TargetClient.Nom</a>
+            </li>
+            <li class="breadcrumb-item active">Documents - Projet @Model.TargetProjet.NomProjet</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+
+
+<section class="section contact">
+
+    <div class="row">
+
+        <!-- Ajouter un nouveau document -->
+        <div class="col text-center m-4">
+            <a asp-controller="Document" asp-action="DocumentFlow" asp-route-idProjet="@Model.TargetProjet.Id" class="info-box text-center btn btn-outline-secondary m-4">
+                <i class="ri ri-add-line"></i>
+                <h3>Nouveau Document</h3>
+            </a>
+        </div>
+    </div>
+
+    <div class="col">
+        @foreach (var item in Model.Documents)
+        {
+            Model.TargetDocument = item;
+            @await Html.PartialAsync("DocumentPartial/EditDocument")
+        }
+    </div>
+
+    </div>
+
+</section>

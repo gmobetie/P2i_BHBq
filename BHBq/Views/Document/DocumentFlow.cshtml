@@ -1,0 +1,100 @@
+@model ClientViewModel
+@{
+    ViewData["Title"] = "Nouveau Document";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Dashboard"
+                    asp-action="Index">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Client"
+                    asp-action="Clients">Clients</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Projet" asp-action="Projets"
+                    asp-route-idClient="@Model.TargetClient.Id">Projets - @Model.TargetClient.Nom</a>
+            </li>
+            <li class="breadcrumb-item"><a class="navbar-brand" asp-area="" asp-controller="Document"
+                    asp-action="Documents" asp-route-idProjet="@Model.TargetProjet.Id">Documents - Projet
+                    @Model.TargetProjet.NomProjet</a>
+            <li class="breadcrumb-item active">Paramètres - @Model.TargetProjet.NomProjet</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="mb-5 p-4 bg-white shadow-sm">
+    <h3>Création d'un nouveau document</h3>
+    <div id="stepper1" class="bs-stepper linear">
+        <div class="bs-stepper-header" role="tablist">
+            <div class="step" data-target="#test-l-1">
+                <button type="button" class="step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1"
+                    aria-selected="false" disabled="disabled">
+                    <span class="bs-stepper-circle">1</span>
+                    <span class="bs-stepper-label">Type de document</span>
+                </button>
+            </div>
+            <div class="bs-stepper-line"></div>
+            <div class="step" data-target="#test-l-2">
+                <button type="button" class="step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2"
+                    aria-selected="false" disabled="disabled">
+                    <span class="bs-stepper-circle">2</span>
+                    <span class="bs-stepper-label">Choix de l'entreprise</span>
+                </button>
+            </div>
+            <div class="bs-stepper-line"></div>
+            <div class="step active" data-target="#test-l-3">
+                <button type="button" class="step-trigger" role="tab" id="stepper1trigger3" aria-controls="test-l-3"
+                    aria-selected="true">
+                    <span class="bs-stepper-circle">3</span>
+                    <span class="bs-stepper-label">Validate</span>
+                </button>
+            </div>
+        </div>
+        <div class="bs-stepper-content">
+            <form method="post" class="needs-validation" asp-controller="Document" asp-action="NewDocument" novalidate>
+                <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
+
+                    <select asp-for="@Model.TargetDocument.Type" class="form-select" id="form-stepper-1" name="Type"
+                        aria-label="Default select example" required>
+                        <option value="" selected>Choisissez un type de document</option>
+                        <option value="0">Devis</option>
+                        <option value="1">Acompte</option>
+                        <option value="2">Solde</option>
+                    </select>
+                    <button class="btn btn-secondary btn-next-form m-2">Suivant</button>
+
+                </div>
+
+                <div id="test-l-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
+
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Choix du client</label>
+                        <div class="col-sm-10">
+                            <select asp-for="@Model.TargetProjet.IdClient" asp-items="@Model.ListeEntreprises"
+                                class="form-select" id="form-stepper-3" name="cli-2" aria-label="Default select example"
+                                required>
+                                <option value="" selected>Choisissez une entreprise</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary btn-previous-form m-2"
+                        onclick="stepper1.previous()">Précédent</button>
+                    <button type="submit" class="btn btn-secondary btn-next-form m-2">Suivant</button>
+
+                </div>
+
+                <div id="test-l-3" role="tabpanel" class="bs-stepper-pane text-center active dstepper-block"
+                    aria-labelledby="stepper1trigger3">
+
+
+
+                    <button class="btn btn-primary mt-5" onclick="stepper1.previous()">Précédent</button>
+                    <button type="submit" class="btn btn-primary mt-5">Sauvegarder</button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

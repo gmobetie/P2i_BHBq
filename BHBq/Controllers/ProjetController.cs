@@ -146,31 +146,6 @@ public class ProjetController : Controller
     {
         Listes.TargetProjet = _context.Projets.Find(idProjet);
         Listes.TargetClient = _context.Clients.Find(Listes.TargetProjet.IdClient);
-/* 
-        // Récupérer les données de l'entreprise et des clients depuis la base de données
-        var entreprises = _context.Entreprises.ToList();
-        var listeEntreprises = entreprises
-            .Select(
-                e =>
-                    new SelectListItem
-                    {
-                        Text = e.NomEntreprise, // Supposons que le nom de l'entreprise est stocké dans une propriété "Name"
-                        Value = e.Id.ToString() // Supposons que l'ID de l'entreprise est stocké dans une propriété "Id"
-                    }
-            )
-            .ToList();
-
-        var clients = _context.Clients.ToList();
-        var listeClients = clients
-            .Select(
-                e =>
-                    new SelectListItem
-                    {
-                        Text = e.Nom, // Supposons que le nom de l'entreprise est stocké dans une propriété "Name"
-                        Value = e.Id.ToString() // Supposons que l'ID de l'entreprise est stocké dans une propriété "Id"
-                    }
-            )
-            .ToList(); */
 
         return View(Listes);
     }

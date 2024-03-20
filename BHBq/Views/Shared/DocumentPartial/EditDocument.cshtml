@@ -1,0 +1,132 @@
+@model ClientViewModel
+@{
+    string modalId = $"myModal-{Model.TargetDocument.Id}";
+}
+
+<div class="info-box card">
+    <div class="row">
+        <div class="col">
+            <i class="bi bi-geo-alt"></i>
+            <h3>@Model.TargetDocument.Type</h3>
+        </div>
+        <div class="col text-end">
+            <!-- Delete -->
+            <button type="button" class="btn btn-lg" data-bs-toggle="modal"
+                data-bs-target="#deleteModal-@Model.TargetDocument.Id">
+                <i class="ri-delete-bin-2-line fs-2"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal-@Model.TargetDocument.Id" tabindex="-1"
+                aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            Êtes-vous sûr de vouloir supprimer ce document ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <form asp-area="" asp-controller="Document" asp-action="DeleteDocument"
+                                asp-route-id="@Model.TargetDocument.Id" method="post">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-md-6 justify-content-center">
+
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 text-end">
+                    <i class="bi bi-credit-card"></i>
+                    <h5>Numéro :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.TargetDocument.Num</div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 text-end">
+                    <i class="bi bi-geo-alt"></i>
+                    <h5>Origine :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.TargetDocument.Origine</div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-6 justify-content-center">
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 label text-end">
+                    <i class="bi bi-credit-card-2-front"></i>
+                    <h5>Type :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.TargetDocument.Type</div>
+            </div>
+
+            <div class="row m-2">
+                <div class="col-lg-6 col-md-6 text-end">
+                    <i class="bi bi-credit-card-2-back"></i>
+                    <h5>Escompte :</h5>
+                </div>
+                <div class="col-lg-6 col-md-6">@Model.TargetDocument.Escompte</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <div class="text-end">
+                <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="modal"
+                    data-bs-target="#@modalId">Modifier</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="@modalId" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mise à jour des informations du document
+                        N°@Model.TargetDocument.Num</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" class="row g-3 needs-validation" asp-controller="Document"
+                        asp-action="EditDocument" asp-route-id="@Model.TargetDocument.Id" novalidate>
+
+                        <input asp-for="@Model.TargetDocument.IdEntreprise" type="hidden" name="IdEntreprise"
+                            required>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.TargetDocument.Type" type="text" class="form-control"
+                                placeholder="Type" name="type">
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.TargetDocument.Num" type="text" class="form-control"
+                                placeholder="Numéro" name="num">
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.TargetDocument.Origine" type="text" class="form-control"
+                                placeholder="Origine" name="origine">
+                        </div>
+                        <div class="col-md-6">
+                            <input asp-for="@Model.TargetDocument.Escompte" type="checkbox" class="form-check-input"
+                                name="escompte">
+                            <label class="form-check-label" for="escompte">Escompte</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abandonner</button>
+                            <button type="submit" class="btn btn-success">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- Fin du Modal centré verticalement -->
+</div>

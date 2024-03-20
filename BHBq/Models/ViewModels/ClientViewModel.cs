@@ -8,10 +8,12 @@ public class ClientViewModel
 {
     public Projet TargetProjet { get; set; }
     public Client TargetClient { get; set; }
-    public List<SelectListItem> ListeClients { get; set; }
+    public Document TargetDocument { get; set; }
     public List<Projet> Projets { get; set; }
     public List<Client> Clients { get; set; }
     public List<Parametre> Parametres { get; set; }
+    public List<Document> Documents { get; set; }
+    public List<SelectListItem> ListeEntreprises { get; set; }
     public List<string?> ValeurParametres { get; set; }
     private readonly BHBqContext _context;
 
@@ -25,5 +27,6 @@ public class ClientViewModel
         Projets=_context.Projets.ToList();
         Clients=_context.Clients.ToList();
         Parametres = _context.Parametres.ToList();
+        Documents = _context.Documents.ToList();
     }
 }

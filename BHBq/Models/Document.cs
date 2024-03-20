@@ -1,7 +1,7 @@
 public class Document
 {
     public int Id { get; set; }
-    public string Type { get; set; }
+    public int Type { get; set; }
     public int IdProjet { get; set; }
     public int IdAcompte { get; set; }
     public int IdTVA { get; set; }
@@ -15,7 +15,7 @@ public class Document
         // Empty constructor
     }
 
-    public Document(string type, int idProjet, int idAcompte, int idTVA, int idEntreprise, bool escompte, int origine, string num)
+    public Document(int type, int idProjet, int idAcompte, int idTVA, int idEntreprise, bool escompte, int origine, string num)
     {
         Type = type;
         IdProjet = idProjet;
